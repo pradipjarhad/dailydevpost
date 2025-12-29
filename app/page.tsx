@@ -12,13 +12,13 @@ export default function Page() {
   
   // Runtime filtering - this happens on each request
   const today = new Date()
-  // Use local midnight to avoid timezone-related mismatches when comparing dates
-  today.setHours(0, 0, 0, 0)
+  // Compare using UTC date-only strings (YYYY-MM-DD) to avoid timezone/build-server
+  // differences excluding posts that are dated 'today' in another timezone.
+  const todayDate = today.toISOString().slice(0, 10)
 
   sortedPosts = sortedPosts.filter((post) => {
-    const postDate = new Date(post.date)
-    postDate.setHours(0, 0, 0, 0)
-    return postDate <= today
+    const postDateStr = new Date(post.date).toISOString().slice(0, 10)
+    return postDateStr <= todayDate
   })
   
   const posts = allCoreContent(sortedPosts)
