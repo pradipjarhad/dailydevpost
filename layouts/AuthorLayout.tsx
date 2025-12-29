@@ -24,7 +24,7 @@ export default function AuthorLayout({ children, content }: Props) {
             {avatar && (
               <Image
                 src={avatar}
-                alt="avatar"
+                alt="Pradip Jarhad | Daily Dev Post"
                 width={192}
                 height={192}
                 className="rounded-but-slightly h-48 w-48"
