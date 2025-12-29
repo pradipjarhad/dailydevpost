@@ -2,6 +2,10 @@ import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import Main from './Main'
 
+// Revalidate the homepage every 60 seconds so newly published posts show up
+// shortly after deployment without a full redeploy.
+export const revalidate = 60
+
 export default function Page() {
   // Sort posts by date
   let sortedPosts = sortPosts(allBlogs)

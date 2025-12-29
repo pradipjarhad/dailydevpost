@@ -6,6 +6,9 @@ import { genPageMetadata } from 'app/seo'
 const POSTS_PER_PAGE = 10
 
 export const metadata = genPageMetadata({ title: 'Blog' })
+// Revalidate the blog listing every 60 seconds in production so newly published posts
+// (with today's date) get picked up without a full redeploy.
+export const revalidate = 60
 
 export default function BlogPage() {
   // Sort posts by date
