@@ -50,6 +50,9 @@ const siteMetadata = {
     // Select a provider and use the environment variables associated to it
     // https://vercel.com/docs/environment-variables
     provider: 'giscus', // supported providers: giscus, utterances, disqus
+    // Which content types should have comments enabled (scalable):
+    // e.g. ['blog', 'projects']
+    enableFor: ['blog'],
     giscusConfig: {
       // Visit the link below, and follow the steps in the 'configuration' section
       // https://giscus.app/

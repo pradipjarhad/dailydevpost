@@ -30,10 +30,14 @@ interface LayoutProps {
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags } = content
   const basePath = path.split('/')[0]
+  const commentsEnabled =
+    siteMetadata.comments?.provider &&
+    (siteMetadata.comments as any)?.enableFor?.includes('blog') &&
+    (content as any).frontmatter?.comments !== false
 
   return (
     <SectionContainer>
-      <ScrollTopAndComment />
+      <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-6">
@@ -89,7 +93,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>
               </div>
-              {siteMetadata.comments && slug && (
+              {commentsEnabled && slug && (
                 <div
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
                   id="comment"

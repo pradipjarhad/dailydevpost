@@ -18,10 +18,14 @@ interface LayoutProps {
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
   const { path, slug, date, title } = content
+  const commentsEnabled =
+    siteMetadata.comments?.provider &&
+    (siteMetadata.comments as any)?.enableFor?.includes('blog') &&
+    (content as any).frontmatter?.comments !== false
 
   return (
     <SectionContainer>
-      <ScrollTopAndComment />
+      <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article>
         <div>
           <header>
@@ -43,7 +47,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
             </div>
-            {siteMetadata.comments && slug && (
+            {commentsEnabled && slug && (
               <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">
                 <Comments slug={slug} />
               </div>
