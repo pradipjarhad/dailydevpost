@@ -89,7 +89,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>
               </div>
-              {siteMetadata.comments && (
+              {siteMetadata.comments && slug && (
                 <div
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
                   id="comment"

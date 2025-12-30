@@ -1,5 +1,6 @@
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
+import { filterPostsByPublishDate } from 'app/utils'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { genPageMetadata } from 'app/seo'
 
@@ -14,16 +15,9 @@ export default function BlogPage() {
   // Sort posts by date
   let posts = sortPosts(allBlogs)
   
-  // Runtime filtering - this happens on each request
-  const today = new Date()
-  // Compare using UTC date-only strings (YYYY-MM-DD) to avoid timezone/build-server
-  // differences excluding posts that are dated 'today' in another timezone.
-  const todayDate = today.toISOString().slice(0, 10)
-
-  posts = posts.filter((post) => {
-    const postDateStr = new Date(post.date).toISOString().slice(0, 10)
-    return postDateStr <= todayDate
-  })
+  // Runtime filtering - use shared helper that respects production env and scheduled
+  // publish hour (see `SCHEDULED_POST_PUBLISH_HOUR` in `app/config.ts`).
+  posts = filterPostsByPublishDate(posts)
   
   const filteredPosts = allCoreContent(posts)
 
