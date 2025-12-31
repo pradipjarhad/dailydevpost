@@ -5,7 +5,7 @@ const siteMetadata = {
   headerTitle: 'Daily Dev Post',
   description: 'Blogging about React JS, JavaScript, HTML, CSS, Generative AI',
   language: 'en-us',
-  theme: 'system', // system, dark or light
+  theme: 'dark', // system, dark or light
   siteUrl: 'https://dailydevpost.com',
   siteRepo: 'https://github.com/pradipjarhad/dailydevpost',
   siteLogo: '',
