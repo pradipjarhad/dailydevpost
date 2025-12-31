@@ -10,7 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 interface LayoutProps {
-  content: CoreContent<Blog>
+  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
   children: ReactNode
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
@@ -20,8 +20,8 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
   const { path, slug, date, title } = content
   const commentsEnabled =
     siteMetadata.comments?.provider &&
-    (siteMetadata.comments as any)?.enableFor?.includes('blog') &&
-    (content as any).frontmatter?.comments !== false
+    (siteMetadata.comments as unknown as { enableFor?: string[] })?.enableFor?.includes('blog') &&
+    content.frontmatter?.comments !== false
 
   return (
     <SectionContainer>

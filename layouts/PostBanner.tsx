@@ -11,7 +11,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 interface LayoutProps {
-  content: CoreContent<Blog>
+  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
   children: ReactNode
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
@@ -21,8 +21,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
   const { slug, title, images } = content
   const commentsEnabled =
     siteMetadata.comments?.provider &&
-    (siteMetadata.comments as any)?.enableFor?.includes('blog') &&
-    (content as any).frontmatter?.comments !== false
+    (siteMetadata.comments as unknown as { enableFor?: string[] })?.enableFor?.includes('blog') &&
+    content.frontmatter?.comments !== false
   const displayImage =
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 

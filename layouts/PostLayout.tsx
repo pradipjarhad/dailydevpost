@@ -20,7 +20,7 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
 }
 
 interface LayoutProps {
-  content: CoreContent<Blog>
+  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
   authorDetails: CoreContent<Authors>[]
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
@@ -32,8 +32,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const basePath = path.split('/')[0]
   const commentsEnabled =
     siteMetadata.comments?.provider &&
-    (siteMetadata.comments as any)?.enableFor?.includes('blog') &&
-    (content as any).frontmatter?.comments !== false
+    (siteMetadata.comments as unknown as { enableFor?: string[] })?.enableFor?.includes('blog') &&
+    content.frontmatter?.comments !== false
 
   return (
     <SectionContainer>
