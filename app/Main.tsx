@@ -20,10 +20,10 @@ export default function Home({ posts }) {
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags, thumbnail } = post
             return (
-              <li key={slug} className="py-12">
+              <li key={slug} className="py-8 sm:py-12">
                 <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                    <div className="flex flex-col justify-center space-y-5 xl:col-span-3">
+                  <div className="space-y-2 md:grid md:grid-cols-4 md:items-baseline md:space-y-0">
+                    <div className="flex flex-col justify-center space-y-5 md:col-span-3">
                       {' '}
                       {/* Added flex and justify-center here */}
                       <div className="space-y-6">
@@ -59,24 +59,26 @@ export default function Home({ posts }) {
                         </Link>
                       </div>
                     </div>
-                    <dl className="xl:col-start-1 xl:row-start-1 xl:self-center">
+                    <dl className="md:col-start-1 md:row-start-1 md:self-center">
                       {' '}
                       {/* Added self-center here */}
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                         <Link href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
                           {thumbnail && (
-                            <Image
-                              src={thumbnail}
-                              alt={title}
-                              className="main-thumbnail"
-                              width="250"
-                              height="350"
-                              placeholder="blur"
-                              blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
-                              quality="95"
-                            />
-                          )}
+                              <div className="w-full max-w-[220px] md:max-w-[250px] mx-auto md:mx-0 rounded-md overflow-hidden shadow-sm">
+                                <Image
+                                  src={thumbnail}
+                                  alt={title}
+                                  className="w-full h-auto object-cover"
+                                  width={250}
+                                  height={350}
+                                  placeholder="blur"
+                                  blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
+                                  quality={95}
+                                />
+                              </div>
+                            )}
                         </Link>
                       </dd>
                     </dl>
