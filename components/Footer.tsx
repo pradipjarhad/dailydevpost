@@ -18,6 +18,10 @@ export default function Footer() {
           <SocialIcon kind="stackExchange" href={siteMetadata.stackExchange} size={6} />
           <SocialIcon kind="kofi" href={siteMetadata.kofi} size={6} />
         </div>
+        <div className="mb-3 flex space-x-4">
+          <Link href="/privacy-policy">Privacy Policy</Link>
+          <Link href="/terms-and-conditions">Terms and Conditions</Link>
+        </div>
         <div className="mb-8 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
