@@ -23,7 +23,7 @@ export default function Footer() {
           <Link href="/terms-and-conditions">Terms and Conditions</Link>
         </div>
         <div className="mb-8 flex space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>{`© ${new Date().getFullYear()}`}</div>
+          <div>{`© 2025-${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
           <Link href="/">{siteMetadata.title}</Link>
           <div>{` • `}</div>

@@ -17,8 +17,8 @@ const siteMetadata = {
   facebook: '',
   youtube: '',
   linkedin: 'https://www.linkedin.com/in/pradipjarhad',
-  instagram: 'https://www.instagram.com/pradip.jarhad/',
-  kofi: 'https://ko-fi.com/pradipjarhad',
+  instagram: 'https://www.instagram.com/dailydevpost/',
+  kofi: 'https://ko-fi.com/dailydevpost',
   locale: 'en-US',
   analytics: {
     // If you want to use an analytics provider you have to add it to the

@@ -89,7 +89,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-10 pointer-events-none">☕</div>
                 <p className="flex items-center relative z-10">
                   <span role="img" aria-label="Coffee" className="mr-2">☕</span>
-                  Did you like the article? <Link href="https://ko-fi.com/pradipjarhad" className="ml-1 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">Support me on Ko-Fi!</Link>
+                  Did you like the article? <Link href="https://ko-fi.com/dailydevpost" className="ml-1 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">Support me on Ko-Fi!</Link>
                 </p>
               </div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
