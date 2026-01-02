@@ -1,22 +1,28 @@
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Link from './Link'
+import Image from './Image'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import logo from "../public/static/images/logo.png"
 
 const Header = () => {
   return (
     <header className="flex items-center justify-between py-10">
       <div>
   <Link href="/" aria-label={siteMetadata.headerTitle}>
-    <div className="flex items-center justify-between">
+    <div className="flex items-center space-x-3">
+      <Image
+        src={logo}
+        alt={`${siteMetadata.headerTitle} logo`}
+        width={40}
+        height={40}
+        className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+      />
       {typeof siteMetadata.headerTitle === 'string' ? (
-        <div className="text-xl sm:text-3xl font-semibold">
+        <div className="text-2xl sm:text-3xl leading-tight font-semibold">
           {siteMetadata.headerTitle}
-          {/* <div className="text-xs sm:text-sm font-normal">
-            {siteMetadata.description}
-          </div> */}
         </div>
       ) : (
         siteMetadata.headerTitle
