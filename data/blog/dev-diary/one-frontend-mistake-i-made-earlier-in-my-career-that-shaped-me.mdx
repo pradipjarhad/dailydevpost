@@ -1,0 +1,317 @@
+---
+title: "One Frontend Mistake I Made Earlier in My Career That Shaped Me"
+date: 2026-01-03
+slug: "dev-diary/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me.png'
+draft: false
+summary: I once believed working frontend code was enough. This post explores the mistake that taught me why clarity, readability, and changeability matter more than just making things work.
+---
+
+When I look back at my early years as a frontend software developer, I don’t remember specific features I built or tickets I closed. Most of that is blurry now.
+
+What I remember clearly is one mistake.
+
+Not because it broke production or caused a big incident, but because it quietly shaped how I think about frontend work even today.
+
+The mistake was simple:
+
+**I focused more on making things work than making them understandable.**
+
+At the time, I didn’t see this as a mistake at all. In fact, I thought I was doing well.
+
+## What I Thought “Good Frontend Work” Meant
+
+Earlier in my career, my definition of good frontend work was very narrow.
+
+Good meant:
+
+- The UI works  
+- The feature matches the design  
+- The bug is fixed  
+- The ticket is closed  
+
+If the code compiled and the screen behaved as expected, I felt successful.
+
+I didn’t think much about:
+
+- Who would read this code later  
+- How easy it would be to change  
+- What would happen when requirements changed  
+
+I assumed those problems belonged to “future me” or someone else.
+
+That assumption was the mistake.
+
+## How This Mistake Showed Up in My Code
+
+At first glance, my code looked fine.
+
+Components worked. State updated. Effects ran. Users could click buttons and see results.
+
+But underneath, there were patterns that slowly caused trouble:
+
+- Components doing too many things  
+- State scattered across different levels without clear reason  
+- Logic hidden inside effects  
+- Names that made sense only in the moment  
+
+None of this caused immediate failure.
+
+That’s why the mistake was easy to ignore.
+
+## Why It Felt Like the Right Approach Back Then
+
+At that stage, I was under pressure to deliver.
+
+- Deadlines mattered  
+- Feedback came fast  
+- Speed was rewarded  
+
+When a bug appeared, the fastest fix felt like the best fix.
+
+If adding a condition solved the issue, I added it.  
+If another state variable made things work, I added it.  
+If an effect fixed timing issues, I added it.
+
+I didn’t ask if the solution made the code clearer.
+
+I asked if it worked.
+
+And usually, it did.
+
+## The First Signs of Trouble
+
+The problem didn’t show up immediately.
+
+It showed up weeks later.
+
+I would open a file I wrote myself and think:
+
+> “Why is this here?”
+
+I had to re-read my own code carefully just to understand what it was doing.
+
+At first, I blamed time.  
+“I just forgot,” I told myself.
+
+But it kept happening.
+
+That’s when I realized something uncomfortable:
+
+**If I couldn’t understand my own code, others wouldn’t either.**
+
+## When This Mistake Started Costing Real Time
+
+The real impact became clear during changes.
+
+Not new features.  
+Changes.
+
+A small request like:
+
+> “Can we change this behavior slightly?”
+
+Suddenly required:
+
+- Touching multiple files  
+- Being careful not to break unrelated things  
+- Testing paths I didn’t fully understand anymore  
+
+What should have been a simple change became risky.
+
+The code worked, but it resisted change.
+
+## How Bugs Became Harder to Fix
+
+Bugs also became strange.
+
+Instead of clear failures, I got:
+
+- Bugs that appeared only in specific flows  
+- Issues that depended on timing  
+- Problems that disappeared when I logged values  
+
+Fixing these bugs felt like guesswork.
+
+I wasn’t reasoning about the code.  
+I was experimenting with it.
+
+That’s when I realized my earlier shortcuts were coming back to collect interest.
+
+## The Moment It Finally Clicked
+
+There was one day when I had to debug an issue in a component I wrote months earlier.
+
+I spent hours tracing logic.  
+Reading conditions.  
+Following state updates.
+
+At some point, I stopped and thought:
+
+> “This code is doing too much.”
+
+Not because it was large.  
+But because its purpose was unclear.
+
+That moment stayed with me.
+
+I realized I had been writing code for the machine, not for humans.
+
+## What I Was Actually Optimizing For
+
+Without realizing it, I was optimizing for:
+
+- Speed of writing  
+- Speed of fixing  
+- Short-term results  
+
+I wasn’t optimizing for:
+
+- Clarity  
+- Ease of change  
+- Long-term understanding  
+
+The mistake wasn’t lack of skill.
+
+It was lack of patience.
+
+## What Changed After That Realization
+
+I didn’t suddenly become a great developer overnight.
+
+But my questions changed.
+
+Before writing code, I started asking:
+
+- What is this component responsible for?  
+- What problem does this state solve?  
+- Can someone understand this without context?  
+
+While reviewing my own work, I asked:
+
+- Is this obvious?  
+- Is this hiding complexity or revealing it?  
+- Would I trust myself to modify this later?  
+
+These questions slowed me down.
+
+And that was a good thing.
+
+## Learning to Stop Early Instead of Fixing Later
+
+Earlier, I would keep adding until things worked.
+
+Now, I learned to stop earlier.
+
+Instead of:
+
+> “Let me add one more condition,”
+
+I started thinking:
+
+> “Why does this need a condition at all?”
+
+Instead of:
+
+> “Let me manage this with state,”
+
+I asked:
+
+> “Is state even needed here?”
+
+This shift removed more code than it added.
+
+## Accepting That “Working” Is Not Enough
+
+This was the hardest lesson.
+
+Code that works is not necessarily good code.
+
+Working code can still:
+
+- Confuse readers  
+- Hide assumptions  
+- Create fragile behavior  
+
+Earlier, I treated “working” as the finish line.
+
+Now, I see it as the starting point.
+
+## How This Mistake Still Shapes Me Today
+
+Even now, I sometimes feel the old instinct.
+
+When I’m tired.  
+When I’m rushed.  
+When I want to move on.
+
+The instinct says:
+
+> “Just make it work.”
+
+That’s when I pause.
+
+I remind myself how expensive unclear code becomes later.
+
+Not immediately.  
+Later.
+
+That memory keeps me careful.
+
+## What This Mistake Taught Me About Frontend Work
+
+Frontend development is not just about screens and clicks.
+
+It’s about:
+
+- Managing complexity  
+- Making behavior predictable  
+- Helping future changes feel safe  
+
+UI code lives close to users.  
+It changes often.  
+It’s touched by many people.
+
+That makes clarity even more important.
+
+## A Small Habit That Came From This Lesson
+
+One habit changed everything for me.
+
+Before finishing a piece of code, I now try to explain it to myself in simple words.
+
+If I can’t explain:
+
+- What this does  
+- Why it exists  
+- What would break if it changed  
+
+Then the code isn’t ready yet.
+
+This habit alone prevented many future problems.
+
+## Why This Was a Valuable Mistake
+
+I’m glad I made this mistake early.
+
+Because it taught me something deeper than syntax or patterns.
+
+It taught me that frontend code is read far more than it is written.
+
+And writing for readers is harder than writing for execution.
+
+## Final Thought
+
+The mistake I made wasn’t using the wrong tool or pattern.
+
+It was believing that working code was enough.
+
+Today, I know better.
+
+**Good frontend code doesn’t just work.  
+It explains itself.**
+
+That lesson shaped how I write, how I review, and how I think.
+
+And it’s still shaping me, one line at a time.
