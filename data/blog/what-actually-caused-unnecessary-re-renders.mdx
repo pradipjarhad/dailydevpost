@@ -1,0 +1,323 @@
+---
+title: "What Actually Caused Unnecessary Re-renders (In My Experience)"
+date: 2026-01-11
+slug: "dev-diary/data/blog/dev-diary/what-actually-caused-unnecessary-re-renders"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/what-actually-caused-unnecessary-re-renders.png'
+draft: false
+summary: A real world breakdown of common React mistakes that cause unnecessary re-renders. Learn why they happen, how they sneak in, and what actually fixed them.
+---
+
+I did not notice unnecessary re-renders at first.
+
+Not because they were not happening.  
+But because everything worked.
+
+The UI looked fine.  
+The data showed up.  
+The buttons clicked.  
+The page did not crash.
+
+So I assumed everything was fine.
+
+Only later, when the app grew a bit, when components became heavier, and when interactions started feeling slightly sluggish, I realized something was off. Not broken. Just inefficient.
+
+This article is not about performance theory.  
+It is about the very normal mistakes that caused unnecessary re-renders in my own projects.
+
+No buzzwords.  
+No “just memoize everything” advice.  
+Just boring, real reasons things re-rendered when they did not need to.
+
+## First, Re-renders Are Not the Enemy
+
+Before getting into causes, one important thing.
+
+Re-renders themselves are not bad.
+
+React re-rendering a component is usually cheap. The problem starts when:
+
+- Components re-render more often than they should  
+- Heavy components re-render because of unrelated changes  
+- The reason for re-rendering is unclear or accidental  
+
+Most unnecessary re-renders do not come from complex logic.  
+They come from small, quiet decisions we do not think about.
+
+## 1. Passing New Objects and Arrays Every Render
+
+This was probably my biggest and most common mistake.
+
+Example:
+
+```jsx
+<MyComponent options={{ theme: "dark", size: "large" }} />
+```
+
+It looks harmless.
+
+But every time the parent renders, that object is created again.
+
+React sees a new reference and assumes the props changed.  
+So `MyComponent` re-renders.
+
+Even if:
+
+- The values are the same  
+- The UI does not need to change  
+- Nothing meaningful happened  
+
+The same issue happens with arrays:
+
+```jsx
+<Chart data={[1, 2, 3]} />
+```
+
+Every render creates a new array.  
+New reference means a re-render.
+
+What confused me at first was my mental model.
+
+I thought, “The values did not change, so why would React care?”
+
+But React does not compare values.  
+It compares references.
+
+Once that clicked, many mystery re-renders stopped being mysterious.
+
+## 2. Inline Functions Passed as Props
+
+Another quiet troublemaker.
+
+```jsx
+<Button onClick={() => handleSave(id)} />
+```
+
+This looks normal. And in many cases, it is fine.
+
+But here is what actually happens:
+
+- The parent renders  
+- A new function is created  
+- The child receives a new function reference  
+- The child re-renders  
+
+This becomes a real problem when:
+
+- The child is memoized  
+- The child is heavy  
+- The function is passed deep into the component tree  
+
+What made this worse in my own apps was passing callbacks through multiple layers of components that did not even use them.
+
+One small state change at the top caused new functions, new props, and re-renders all the way down.
+
+At the time, I blamed React.
+
+It was not React.  
+It was me casually creating new functions on every render.
+
+## 3. State Living Too High in the Tree
+
+This one hurt a bit because it felt architecturally correct.
+
+I used to think, “If multiple components need this state, lift it up.”
+
+That idea is not wrong.  
+But I took it too far.
+
+I lifted state into parents that rendered large sections of the UI, even when only one small child actually cared about the change.
+
+So every state update caused:
+
+- The parent to re-render  
+- All children to re-render  
+- Unrelated components to update  
+
+What I learned is that state placement matters more than I expected.
+
+Sometimes the better option is to keep state closer to where it is used, accept a bit of duplication, and avoid wide re-renders across the tree.
+
+Single source of truth is useful.  
+Single source of unnecessary re-renders is not.
+
+## 4. Using One Big State Object for Everything
+
+This mistake was subtle.
+
+```jsx
+const [state, setState] = useState({
+  user: null,
+  theme: "dark",
+  isLoading: false,
+  modalOpen: false,
+});
+```
+
+It looks clean and organized.
+
+Until you do this:
+
+```jsx
+setState(prev => ({ ...prev, modalOpen: true }));
+```
+
+Now the entire state object gets a new reference.
+
+Every component that consumes any part of that state re-renders, even if it:
+
+- Only cares about `theme`  
+- Only uses `user`  
+- Does not care about `modalOpen`  
+
+The issue was grouping unrelated concerns together.
+
+A small UI toggle caused updates across parts of the app that had nothing to do with it.
+
+Splitting state into smaller, focused pieces reduced re-renders more than any memoization trick I tried later.
+
+## 5. Using Context for Frequently Changing Values
+
+Context felt magical at first.
+
+- No prop drilling  
+- Clean APIs  
+- Easy access everywhere  
+
+So I put things like:
+
+- Input values  
+- Hover states  
+- Active tabs  
+- Temporary UI flags  
+
+into context.
+
+That was a mistake.
+
+Every time a context value changes, **all** consuming components re-render.
+
+Even if they only use a tiny part of the value.
+
+The real problem was that I used context for convenience, not stability.
+
+Context works well for:
+
+- Auth information  
+- Themes  
+- Language  
+- Rarely changing data  
+
+It works poorly for:
+
+- Rapidly changing UI state  
+- Values updated on every keystroke  
+
+Once I moved those back into local state, many re-render issues disappeared.
+
+## 6. Derived Values Recomputed on Every Render
+
+This one did not always cause extra re-renders, but it made renders heavier than necessary.
+
+Example:
+
+```jsx
+const filteredItems = items.filter(item => item.active);
+```
+
+This is fine when the list is small or the component rarely renders.
+
+But when the list is large and the component re-renders often, that work runs every single time.
+
+The re-render itself was sometimes necessary.  
+The expensive work inside it was not.
+
+This taught me to separate two questions:
+
+- Should this component re-render?  
+- How expensive is this render?  
+
+Even necessary re-renders can feel unnecessary if they do too much work.
+
+## 7. Parent Components Re-rendering for Unrelated Reasons
+
+Sometimes the child component was not the problem at all.
+
+The parent re-rendered because:
+
+- An unrelated piece of state changed  
+- A layout toggle happened  
+- An effect ran  
+
+The child re-rendered simply because it lived under that parent.
+
+This happened often in layout components like dashboards, pages with sidebars, or wrappers handling routing and authentication.
+
+The lesson was simple.
+
+If a parent re-renders often, everything under it pays the price.
+
+Breaking large components into smaller boundaries with clearer responsibilities reduced re-renders without touching performance tools.
+
+## 8. Blindly Trusting “It Is Probably Fine”
+
+This one was about mindset.
+
+For a long time, I assumed:
+
+- React is fast  
+- Browsers are fast  
+- My app is small  
+
+So I did not question re-renders.
+
+The moment I started:
+
+- Using the React DevTools profiler  
+- Logging renders with simple `console.log`  
+- Watching what actually re-rendered  
+
+I realized how much was happening behind the scenes.
+
+Not catastrophic.  
+Just unnecessary.
+
+## What I Stopped Doing
+
+I stopped:
+
+- Passing inline objects everywhere  
+- Lifting state automatically  
+- Using context as a shortcut  
+- Grouping unrelated state  
+- Assuming re-renders never matter  
+
+## What I Started Doing
+
+I started:
+
+- Being intentional with props  
+- Keeping state close to where it is used  
+- Letting components own their own behavior  
+- Accepting small duplication over wide re-renders  
+
+No magic fixes.  
+Just fewer accidental decisions.
+
+## Final Thought
+
+Most unnecessary re-renders are not caused by lack of knowledge.
+
+They are caused by habits, defaults, and decisions that feel clean at the time.
+
+The biggest improvement came when I stopped asking:
+
+“How do I stop this from re-rendering?”
+
+And started asking:
+
+“Why is this re-rendering in the first place?”
+
+Once you can answer that calmly, the fix is usually obvious.
+
+And often simple.
