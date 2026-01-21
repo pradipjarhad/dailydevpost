@@ -55,3 +55,5 @@ yarn-error.log*
 .cursor/
 .cursor-rules/
 .mdc
+pnpm-lock.yaml
+next-env.d.ts

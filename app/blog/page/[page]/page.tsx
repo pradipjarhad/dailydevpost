@@ -14,21 +14,22 @@ export const generateStaticParams = async () => {
   return paths
 }
 
-export default function Page({ params }: { params: { page: string } }) {
+export default async function Page(props: { params: Promise<{ page: string }> }) {
+  const params = await props.params
   const pageNumber = parseInt(params.page as string)
   // Sort posts by date
   let posts = sortPosts(allBlogs)
-  
+
   // Runtime filtering - this happens on each request
   const today = new Date()
   today.setUTCHours(0, 0, 0, 0)
-  
+
   posts = posts.filter((post) => {
     const postDate = new Date(post.date)
     postDate.setUTCHours(0, 0, 0, 0)
     return postDate <= today
   })
-  
+
   const filteredPosts = allCoreContent(posts)
 
   const initialDisplayPosts = filteredPosts.slice(

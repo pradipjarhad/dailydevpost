@@ -7,7 +7,8 @@ import tagData from 'app/tag-data.json' with { type: 'json' };
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 
-export async function generateMetadata({ params }: { params: { tag: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ tag: string }> }): Promise<Metadata> {
+  const params = await props.params
   const tag = decodeURI(params.tag)
   return genPageMetadata({
     title: tag,
@@ -30,23 +31,24 @@ export const generateStaticParams = async () => {
   return paths
 }
 
-export default function TagPage({ params }: { params: { tag: string } }) {
+export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
+  const params = await props.params
   const tag = params.tag
   // Capitalize first letter and convert spaces to hyphens
   const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
-  
+
   let sortedPosts = sortPosts(allBlogs)
-  
+
   // Runtime filtering - this happens on each request
   const today = new Date()
   today.setUTCHours(0, 0, 0, 0)
-  
+
   sortedPosts = sortedPosts.filter((post) => {
     const postDate = new Date(post.date)
     postDate.setUTCHours(0, 0, 0, 0)
     return postDate <= today
   })
-  
+
   // Filter by tags
   const posts = allCoreContent(
     sortedPosts.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag))

@@ -1,0 +1,360 @@
+---
+title: "One Mistake I Made with useEffect And How I Think About It Now"
+date: 2026-01-08
+slug: "dev-diary/data/blog/dev-diary/one-mistake-i-made-with-useEffect-and-how-i-think-about-it-now"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/one-mistake-i-made-with-useEffect-and-how-i-think-about-it-now.png'
+draft: false
+summary: I thought I understood useEffect but I was using it in the wrong places. This post explains the mental model mistake and how thinking differently made my React components simpler.
+---
+
+For a long time, I thought I understood useEffect.
+
+I knew when it ran.  
+I knew about the dependency array.  
+I knew how to fetch data inside it.  
+I knew how to clean up effects.
+
+If someone asked me, “Do you know useEffect?”  
+I would confidently say yes.
+
+And yet, for months maybe even years I was using it wrong.
+
+Not in a way that caused obvious bugs.  
+Not in a way that crashed apps.
+
+But in a quiet way.
+
+A way that made my components harder to understand.  
+A way that slowly increased mental load.  
+A way that made debugging feel confusing instead of logical.
+
+The mistake wasn’t about syntax.
+
+The mistake was how I thought about useEffect.
+
+This post is about that mistake, and how my mental model has changed since.
+
+
+## The Mistake: Treating useEffect as “When Something Changes, Do This”
+
+This was my original mental model:
+
+“Whenever something changes, I’ll use useEffect to react to it.”
+
+Sounds reasonable, right?
+
+So my components started looking like this:
+
+```jsx
+useEffect(() => {
+  setTotal(price * quantity);
+}, [price, quantity]);
+```
+
+Or this:
+
+```jsx
+useEffect(() => {
+  if (user) {
+    fetchUserDetails(user.id);
+  }
+}, [user]);
+```
+
+Or worse this:
+
+```jsx
+useEffect(() => {
+  if (formSubmitted) {
+    submitForm();
+  }
+}, [formSubmitted]);
+```
+
+At the time, I felt productive.
+
+Whenever I needed something to “happen”, I reached for useEffect.
+
+State changed → effect runs → job done.
+
+But slowly, problems started piling up.
+
+
+## The First Crack: Effects Running When I Didn’t Expect Them To
+
+I’d see logs firing twice.
+
+API calls happening again for no clear reason.
+
+State updates triggering more state updates.
+
+Then I’d do the classic things:
+
+- Add conditions inside the effect  
+- Add eslint-disable comments  
+- Remove dependencies “because it works”  
+- Wrap logic in useCallback without fully knowing why  
+
+The code still worked.
+
+But it felt fragile.
+
+Like touching one line would break three others.
+
+That’s when I realized something important:
+
+My problem wasn’t useEffect.  
+My problem was overusing it for things that weren’t effects.
+
+
+## What useEffect Is Actually For (In Simple Words)
+
+Here’s the sentence that finally clicked for me:
+
+**useEffect is for syncing React with things outside React.**
+
+That’s it.
+
+Not “run code when state changes.”  
+Not “do something after render.”  
+Not “React lifecycle replacement.”
+
+It’s for side effects.
+
+Things that React itself does not control.
+
+Examples:
+
+- Fetching data from a server  
+- Talking to browser APIs  
+- Setting up event listeners  
+- Subscribing to sockets  
+- Updating document.title  
+- Using timers or intervals  
+
+If the thing you’re doing only affects React state, chances are:
+
+You don’t need useEffect.
+
+
+## The Big Realization: Derived State Is Not an Effect
+
+Let’s go back to this example:
+
+```jsx
+useEffect(() => {
+  setTotal(price * quantity);
+}, [price, quantity]);
+```
+
+This was one of my most common patterns.
+
+But now, I see the problem clearly.
+
+`total` is derived from other state.
+
+It’s not a side effect.  
+It’s a calculation.
+
+So why store it in state?
+
+The better version:
+
+```jsx
+const total = price * quantity;
+```
+
+That’s it.
+
+No effect.  
+No extra render.  
+No dependency array.
+
+Cleaner. Faster. Easier to read.
+
+This single shift removed so many unnecessary effects from my code.
+
+
+## Another Mistake: Using useEffect to Handle User Actions
+
+This one took me longer to admit.
+
+I used to do this:
+
+```jsx
+const [submitted, setSubmitted] = useState(false);
+
+useEffect(() => {
+  if (submitted) {
+    submitForm();
+  }
+}, [submitted]);
+```
+
+Why did I do this?
+
+Because I thought effects were the “right place” for logic.
+
+But look closely.
+
+The user clicks a button.  
+That’s an event.
+
+Events should be handled in event handlers, not effects.
+
+The better version:
+
+```jsx
+const handleSubmit = () => {
+  submitForm();
+};
+```
+
+No state flag.  
+No effect.  
+No indirection.
+
+Just direct intent.
+
+This change made my components feel more honest.
+
+
+## The Rule I Follow Now
+
+Today, before writing useEffect, I ask myself one question:
+
+**What external thing am I syncing with?**
+
+If I don’t have a clear answer, I stop.
+
+Some examples where useEffect does make sense:
+
+```jsx
+useEffect(() => {
+  document.title = `Cart (${items.length})`;
+}, [items.length]);
+```
+
+```jsx
+useEffect(() => {
+  const id = setInterval(refreshData, 5000);
+  return () => clearInterval(id);
+}, []);
+```
+
+```jsx
+useEffect(() => {
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+```
+
+Notice something?
+
+All of these involve things outside React.
+
+That’s the difference.
+
+
+## Dependency Arrays Were Never the Real Problem
+
+I used to think dependency arrays were the hardest part of useEffect.
+
+“What should I put in here?”  
+“Why is ESLint yelling at me?”  
+“Why does adding this break everything?”
+
+But now I see it differently.
+
+If the effect is correct,  
+the dependency array is usually obvious.
+
+If the dependency array feels confusing,  
+the effect is probably doing too much.
+
+Most of my dependency struggles disappeared when I stopped abusing useEffect.
+
+
+## How This Changed the Way I Write Components
+
+**Before:**
+
+- Lots of useEffect  
+- State for everything  
+- Logic scattered across hooks  
+- Hard to trace flow  
+
+**Now:**
+
+- Fewer effects  
+- More inline logic  
+- Clear event handlers  
+- Derived values instead of stored state  
+
+My components became:
+
+- Easier to read  
+- Easier to debug  
+- Easier to change  
+
+Not because I learned a new trick.
+
+But because I removed unnecessary complexity.
+
+
+## A Quiet Benefit: Debugging Became Boring (In a Good Way)
+
+Earlier, debugging felt like detective work.
+
+“Why did this effect run?”  
+“Which dependency changed?”  
+“Who triggered this state update?”
+
+Now, things are more straightforward.
+
+Events cause actions.  
+State derives values.  
+Effects sync with external systems.
+
+When something breaks, I usually know where to look.
+
+That alone is worth the change.
+
+
+## What I Wish I Had Known Earlier
+
+If I could tell my past self one thing about useEffect, it would be this:
+
+Don’t reach for useEffect first.
+
+Try to write the component without it.
+
+Add it only when React needs to talk to the outside world.
+
+useEffect is powerful.
+
+But power tools are dangerous when used everywhere.
+
+
+## Final Thoughts
+
+This wasn’t a dramatic “aha” moment.
+
+No tweet-worthy insight.  
+No conference talk revelation.
+
+Just a slow realization after writing a lot of code and feeling uneasy about it.
+
+Sometimes improving as a developer isn’t about learning more.
+
+It’s about thinking less, but more clearly.
+
+And for me, that started by admitting one simple mistake:
+
+I was using useEffect for things that weren’t effects.
+
+Once that clicked, everything got quieter.
+
+And that quiet  
+That’s usually a sign you’re doing something right.
