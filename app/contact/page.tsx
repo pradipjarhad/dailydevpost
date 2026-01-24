@@ -1,5 +1,6 @@
 import { genPageMetadata } from 'app/seo'
 import siteMetadata from '@/data/siteMetadata'
+import ContactForm from '@/components/ContactForm'
 
 export const metadata = genPageMetadata({ title: 'Contact' })
 
@@ -30,60 +31,7 @@ export default function Contact() {
                         </div>
                     </div>
                     <div className="pt-8 pb-8 xl:col-span-2">
-                        <form
-                            method="POST"
-                            name="contact"
-                            data-netlify="true"
-                            className="flex flex-col space-y-4"
-                        >
-                            <input type="hidden" name="form-name" value="contact" />
-                            <div>
-                                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
-                                    placeholder="Your Name (Optional)"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                    Email <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    required
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
-                                    placeholder="you@example.com"
-                                />
-                            </div>
-                            <div>
-                                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
-                                    Message <span className="text-red-500">*</span>
-                                </label>
-                                <textarea
-                                    name="message"
-                                    id="message"
-                                    rows={4}
-                                    required
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 sm:text-sm"
-                                    placeholder="Your message..."
-                                ></textarea>
-                            </div>
-                            <div>
-                                <button
-                                    type="submit"
-                                    className="inline-flex justify-center rounded-md border border-transparent bg-primary-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-400"
-                                >
-                                    Send Message
-                                </button>
-                            </div>
-                        </form>
+                        <ContactForm />
                     </div>
                 </div>
             </div>
