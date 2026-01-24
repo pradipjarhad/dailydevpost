@@ -1,0 +1,288 @@
+---
+title: "What Debugging Taught Me That Tutorials Didn’t"
+date: 2026-01-22
+slug: "dev-diary/what-debugging-taught-me-that-tutorials-didn’t"
+tags: ['dev-diary','react']
+thumbnail: '/static/images/blog/dev-diary/what-debugging-taught-me-that-tutorials-didn’t.png'
+draft: false
+summary: What debugging taught me that tutorials never did. A real, honest look at how debugging changed the way I think about code, bugs and learning as a developer.
+---
+
+Tutorials made me feel confident.
+
+Debugging made me honest.
+
+That’s probably the simplest way I can explain the difference.
+
+When I started learning frontend development, tutorials felt safe. Someone else had already walked the path. The code worked. The screen showed the same output as the video. If something broke, it usually meant I missed a step.
+
+Debugging did not feel like that.
+
+Debugging felt uncomfortable. Quiet. Slow. Sometimes humiliating.
+
+And yet, most of the real lessons I carry today didn’t come from tutorials. They came from staring at broken behavior and asking myself, **“Why is this happening?”**
+
+This post is about those lessons.
+
+Not fancy tricks. Not tools. Just how debugging slowly changed how I think about code.
+
+## Tutorials Taught Me What to Write  
+## Debugging Taught Me Why Things Happen
+
+In tutorials, you type what the instructor types.
+
+You learn patterns like:
+
+- Put this inside `useEffect`
+- Pass this prop
+- Call this API here
+- Use this hook for state
+
+And it works.
+
+But you don’t really know *why* it works.
+
+Debugging forced me to confront that gap.
+
+When something didn’t behave as expected, copying patterns stopped helping. I had to understand what the code was actually doing, step by step, not what I *thought* it was doing.
+
+That’s when I realized something important:
+
+> Code doesn’t care about my intention.  
+> It only follows execution.
+
+Tutorials often hide execution details to keep things simple. Debugging removes that comfort. It makes you follow the real path, not the imagined one.
+
+## Tutorials Assume the Happy Path  
+## Debugging Lives in the Edge Cases
+
+Most tutorials show the happy path:
+
+- API responds fast  
+- State updates correctly  
+- User clicks once  
+- Network is stable  
+- No race conditions  
+
+Real apps don’t behave like that.
+
+Debugging introduced me to things tutorials rarely talk about:
+
+- What happens when a request finishes later than expected  
+- What happens when state updates twice  
+- What happens when a component unmounts mid-action  
+- What happens when props change unexpectedly  
+
+I learned that many bugs are not caused by “wrong code.”
+
+They’re caused by **timing**.
+
+Tutorials don’t prepare you for timing issues. Debugging forces you to respect them.
+
+## Tutorials Made Me Overconfident  
+## Debugging Taught Me Humility
+
+This one was hard to accept.
+
+After finishing a few tutorials, I felt like I “knew React.” I could build small things. I could explain hooks. I could answer interview-style questions.
+
+Then I hit my first real production bug.
+
+No error.  
+No crash.  
+No warning.
+
+Just… wrong behavior.
+
+And I had no idea why.
+
+Debugging taught me that knowing syntax is not the same as understanding behavior.
+
+It also taught me that **confidence without understanding is fragile**. One silent bug is enough to break it.
+
+Over time, debugging made me more careful with statements like:
+
+- “This should work”
+- “I’m sure this runs only once”
+- “There’s no way this causes the issue”
+
+Most of the time, the bug lived exactly where I was “sure.”
+
+## Tutorials Show Clean Code  
+## Debugging Shows You Messy Reality
+
+Tutorial code is clean.
+
+Real codebases are not.
+
+Debugging forced me to read code written months ago. Sometimes by others. Sometimes by my past self, who clearly thought he was very smart.
+
+I learned that:
+
+- Naming matters more than clever logic  
+- Small shortcuts age badly  
+- Assumptions become bugs later  
+
+When debugging, you don’t care how elegant something looked when it was written. You care about how understandable it is *now*.
+
+That’s when I stopped writing code just to “make it work” and started writing code so future-me could debug it.
+
+Tutorials never gave me that pressure. Debugging did.
+
+## Tutorials Rarely Teach Reading Code  
+## Debugging Is Mostly Reading
+
+One of the biggest surprises for me was this:
+
+Debugging is not about writing new code.  
+It’s about reading existing code.
+
+Slowly.  
+Carefully.  
+Multiple times.
+
+Tutorials focus on creation. Debugging is about interpretation.
+
+I learned how to:
+
+- Trace data flow  
+- Follow state changes  
+- Understand conditions across files  
+- Notice small details I usually skipped  
+
+Things like:
+
+- A dependency array that wasn’t what I assumed  
+- A prop that changed earlier than expected  
+- A default value masking the real issue  
+
+Debugging trained my eyes to stop skimming.
+
+It taught me patience.
+
+## Tutorials Made Errors Look Obvious  
+## Debugging Taught Me That Most Bugs Are Quiet
+
+In tutorials, errors are loud.
+
+Red screens.  
+Clear messages.  
+Easy fixes.
+
+In real life, many bugs are silent.
+
+- A button works but not always  
+- A value is correct but slightly outdated  
+- A component renders, but with stale data  
+- A feature fails only for some users  
+
+Debugging taught me to stop waiting for errors to announce themselves.
+
+I learned to trust behavior over assumptions.
+
+If something feels off, it probably is even if nothing is “broken.”
+
+## Tutorials Encourage Fast Progress  
+## Debugging Taught Me to Slow Down
+
+This was one of the hardest lessons.
+
+When something breaks, the instinct is to fix it fast.
+
+Add a console log.  
+Change a condition.  
+Try something random.  
+Hope it works.
+
+Debugging punished that behavior.
+
+The fastest fixes often created new problems later.
+
+Over time, I learned to slow down:
+
+- Reproduce the issue consistently  
+- Reduce the problem to the smallest case  
+- Change one thing at a time  
+- Observe before acting  
+
+This mindset didn’t come from tutorials. It came from fixing the same bug three times because I didn’t understand it the first two times.
+
+## Tutorials Made Me Fear Being “Stuck”  
+## Debugging Taught Me That Being Stuck Is Normal
+
+In tutorials, getting stuck feels like failure.
+
+In debugging, being stuck is part of the job.
+
+Some bugs take minutes. Some take hours. Some come back weeks later.
+
+Debugging taught me that:
+
+- Not knowing is okay  
+- Confusion is temporary  
+- Understanding arrives slowly, not instantly  
+
+This changed how I relate to learning.
+
+Instead of chasing constant progress, I learned to sit with uncertainty. To stay calm when things didn’t make sense yet.
+
+That skill helped me far beyond code.
+
+## Tutorials Don’t Teach Ownership  
+## Debugging Forces Responsibility
+
+When you follow a tutorial, the responsibility is shared. If something doesn’t work, maybe the tutorial is outdated. Maybe the instructor missed something.
+
+In debugging, there’s no one else.
+
+The bug is yours.  
+The code is yours.  
+The responsibility is yours.
+
+That pressure is uncomfortable, but it’s also empowering.
+
+Because once you fix it, you *really* fixed it.
+
+Not because someone showed you how but because you understood the system well enough to make it behave.
+
+## Tutorials Teach Features  
+## Debugging Teaches Systems
+
+This might be the most important lesson.
+
+Tutorials teach features:
+
+- This hook does this  
+- This library does that  
+- This API works like this  
+
+Debugging teaches systems:
+
+- How data flows through an app  
+- How different parts affect each other  
+- How small changes ripple outward  
+- How state, time, and user actions interact  
+
+Once you start thinking in systems, your code changes.
+
+You write less “clever” logic.  
+You add more clarity.  
+You make fewer assumptions.
+
+And when bugs appear because they always do you’re not lost.
+
+## Final Thought
+
+Tutorials helped me start.
+
+Debugging helped me grow.
+
+If tutorials are like training wheels, debugging is learning balance. You wobble. You fall. You get back up. And slowly, you ride on your own.
+
+If you ever feel frustrated while debugging, remember this:
+
+That discomfort is not a sign of failure.
+
+It’s a sign that you’re finally learning the parts that matter.
+
+And no tutorial can teach you that.

@@ -1,0 +1,309 @@
+---
+title: "One React Habit I Want to Improve Next Week"
+date: 2026-01-17
+slug: "dev-diary/one-react-habit-i-want-to-improve-next-week"
+tags: ['dev-diary','react']
+thumbnail: '/static/images/blog/dev-diary/one-react-habit-i-want-to-improve-next-week.png'
+draft: false
+summary: I realized one small React habit was slowing me down. Next week, I'm fixing it by clearly defining component responsibility before writing code.
+---
+
+There are many things I could say I want to improve in React.
+
+I could say performance.  
+I could say architecture.  
+I could say learning new APIs.  
+I could say writing fewer bugs.
+
+But none of those are habits.
+
+They are outcomes.
+
+When I think honestly about my React work, the biggest improvements never came from learning a new concept. They came from changing small daily behaviors. Quiet habits that affect how I write code, not what features I know.
+
+So next week, there is **one React habit I want to improve**.
+
+Not forever.  
+Not perfectly.  
+Just next week.
+
+That habit is this:
+
+**Before writing code, I want to slow down and clearly describe what the component actually does in plain words.**
+
+No JSX.  
+No hooks.  
+No logic.
+
+Just words.
+
+It sounds simple.  
+Almost too simple.
+
+But this habit is something I repeatedly skip and it shows up later as confusion, re-renders, tangled props, and components that feel “heavy” for no clear reason.
+
+This post is about why this habit matters, how I currently fail at it and how I want to practice it next week.
+
+## How I Usually Start Writing React Components
+
+Most of the time, my workflow looks like this:
+
+- I get a requirement  
+- I already have a picture of the UI in my head  
+- I open the file  
+- I start typing JSX  
+- I add state  
+- I add effects  
+- I pass props  
+- I adjust things until it works  
+
+At no point do I stop and ask:
+
+**“What is this component’s responsibility, exactly?”**
+
+Not vaguely.  
+Not mentally.  
+But clearly.
+
+Because in my head, it feels obvious.
+
+But obvious in the head is often unclear in code.
+
+I’ve noticed that when I skip this thinking step, I tend to:
+
+- Add state “just in case”  
+- Pass too many props  
+- Mix UI logic and data logic  
+- Put side effects where they don’t belong  
+- Keep refactoring the same component again and again  
+
+Nothing breaks.  
+The app works.
+
+But the code feels harder than it should be.
+
+## The Habit I Want to Build (Very Specifically)
+
+The habit is not:
+
+- “Think more”  
+- “Design better”  
+- “Write clean code”  
+
+Those are too abstract.
+
+The habit I want to build is this:
+
+> **Before writing any React code, write 3–5 plain English sentences describing what the component does and does NOT do.**
+
+That’s it.
+
+No diagrams.  
+No documentation.  
+No long notes.
+
+Just a short description like:
+
+- What this component is responsible for  
+- What decisions it makes  
+- What decisions it does not make  
+- What data it needs  
+- What it shows when things go wrong  
+
+If I can’t explain that clearly, I’m not ready to write the component.
+
+## Why This Habit Matters More Than It Sounds
+
+React itself is not the hard part anymore.
+
+JSX is simple.  
+Hooks are familiar.  
+Most bugs are not syntax problems.
+
+The real difficulty comes from **unclear responsibility**.
+
+When a component does too many things, everything becomes harder:
+
+- Testing feels painful  
+- Re-renders become unpredictable  
+- Props feel confusing  
+- Small changes cause unexpected issues  
+
+All of this often traces back to one root cause:
+
+**I didn’t decide what the component was responsible for before I wrote it.**
+
+By forcing myself to describe the component in words first, I’m forced to make decisions early when changes are cheap.
+
+## A Real Example From My Own Code
+
+Let me give a very common example.
+
+Imagine a `UserProfile` component.
+
+In my usual flow, I might:
+
+- Fetch user data inside it  
+- Handle loading state  
+- Handle error state  
+- Render user details  
+- Handle edit mode  
+- Handle save action  
+- Show success messages  
+
+All inside one component.
+
+It works.  
+But over time, it becomes messy.
+
+Now imagine I stop and write this before coding:
+
+> “This component is responsible for displaying user profile information.  
+> It does not fetch data.  
+> It does not handle saving.  
+> It only receives user data and display state as props.  
+> It shows loading and error states based on input, not internal logic.”
+
+Suddenly, many decisions are made for me.
+
+- Fetching moves outside  
+- Saving moves outside  
+- The component becomes predictable  
+- Props become clearer  
+- Re-renders are easier to reason about  
+
+The code becomes simpler not because I used a new pattern, but because I clarified responsibility early.
+
+## Why I Skip This Habit (If I’m Honest)
+
+I don’t skip this habit because I don’t know it’s useful.
+
+I skip it because:
+
+- It feels slow  
+- It feels unnecessary for “small components”  
+- I’m eager to see something on the screen  
+- Writing words feels less productive than writing code  
+
+There’s also a quiet confidence trap.
+
+I think:  
+“I already know what this component does.”
+
+But knowing something in your head and expressing it clearly are not the same thing.
+
+If I can’t explain a component simply, I usually don’t understand it as well as I think.
+
+---
+
+## How This Habit Helps With Other React Problems
+
+What I like about this habit is that it indirectly improves many other areas.
+
+### 1. Better State Placement
+
+When I describe responsibilities clearly, it becomes obvious:
+
+- Which state belongs here  
+- Which state should live higher  
+- Which state doesn’t belong at all  
+
+I stop adding state by instinct.
+
+### 2. Cleaner Props
+
+When a component has a clear job, props become easier to name and limit.
+
+I stop passing “just one more prop” because the description already sets boundaries.
+
+### 3. Fewer Effects
+
+Many unnecessary `useEffect` hooks come from unclear responsibilities.
+
+When the component’s job is clear, effects either clearly belong or clearly don’t.
+
+### 4. Easier Refactoring
+
+When I come back to the code weeks later, that original description acts like a mental anchor.
+
+I remember what the component was supposed to do not what it accidentally grew into.
+
+## How I Want to Practice This Next Week
+
+I’m not trying to change everything at once.
+
+Next week, my rules are simple:
+
+- I will do this for **new components only**  
+- I will write the description as comments at the top of the file  
+- I will not overthink the wording  
+- I will allow myself to adjust the description if needed  
+
+Even something like this is enough:
+
+```text
+This component displays a list of posts.
+It does not fetch data.
+It receives posts and loading state as props.
+It handles empty states.
+It does not manage pagination logic.
+```
+
+That’s it.
+
+No perfection.  
+No documentation pressure.
+
+Just clarity.
+
+## What I Expect to Feel (And Accept)
+
+I expect a few things to happen:
+
+- I’ll feel slightly slower at first  
+- I’ll feel tempted to skip it  
+- I’ll think “this is obvious” sometimes  
+
+And that’s okay.
+
+This habit is not about speed.  
+It’s about reducing future friction.
+
+I’ve learned that most React pain doesn’t come from today’s code.  
+It comes from code written weeks ago without clear intent.
+
+## Why I’m Writing This Publicly
+
+I’m writing this not because I’ve mastered this habit.
+
+I haven’t.
+
+I’m writing it because naming the habit makes it real.
+
+When I say “I want to improve React,” nothing changes.  
+When I say “I want to describe component responsibility before coding,” I know exactly what to do tomorrow.
+
+This also fits how I want to learn and write:
+
+- Slowly
+- Honestly  
+- Without pretending I have it all figured out
+
+## Final Thought
+
+If I improve only one React habit next week, I want it to be this one.
+
+Not learning something new.  
+Not optimizing prematurely.  
+Not chasing patterns.
+
+Just slowing down enough to ask:
+
+**“What is this component actually responsible for?”**
+
+And answering that in simple words before touching the keyboard.
+
+That small pause might save hours later.  
+And more importantly, it might make my React code feel lighter, calmer and easier to live with.
+
+That’s a habit worth practicing.

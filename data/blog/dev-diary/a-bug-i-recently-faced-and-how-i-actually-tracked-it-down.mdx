@@ -1,0 +1,341 @@
+---
+title: "A Bug I Recently Faced and How I Actually Tracked It Down"
+date: 2026-01-18
+slug: "dev-diary/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down"
+tags: ['dev-diary','react']
+thumbnail: '/static/images/blog/dev-diary/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down.png'
+draft: false
+summary: A real world React debugging story about a slow UI, unnecessary re-renders and how small decisions quietly created a performance problem.
+---
+
+This bug did not crash the app.
+
+Nothing went red.  
+No error messages.  
+No stack traces screaming for attention.
+
+The UI loaded.  
+Buttons worked.  
+Data appeared on the screen.
+
+And that is exactly why it took me longer than it should have to notice something was wrong.
+
+## The First Sign That Something Felt Off
+
+I was working on a normal React feature.  
+A page that showed a list of items fetched from an API.  
+There was filtering, some sorting and basic UI state like loading indicators.
+
+Nothing fancy.
+
+At first, everything felt fine.
+
+But after using the page for a while, especially when switching filters quickly, the app started feeling heavy.
+
+Not broken.  
+Just slow.
+
+Clicks had a slight delay.  
+Scrolling felt sticky.  
+My laptop fan started running more than usual.
+
+Most users would probably tolerate this.  
+But experience has taught me that when something feels slow, something is usually wrong under the hood.
+
+So I decided to look deeper.
+
+## What I Thought the Problem Was
+
+My first assumption was simple.
+
+The API must be slow.
+
+So I opened the Network tab.
+
+Requests were fast.  
+Responses were small.  
+No repeated calls.  
+No strange spikes.
+
+So it was not the API.
+
+Next thought.
+
+The list must be too big.
+
+But it was not.  
+A few hundred items at most.
+
+Then I blamed the browser.
+
+I refreshed.  
+Tried another browser.  
+Same result.
+
+At this point, the app looked correct but felt inefficient.  
+That is the zone where quiet bugs live.
+
+## Turning to React DevTools
+
+When nothing looks broken but something feels wrong, React DevTools is usually the right place to go.
+
+I enabled the Highlight updates option.
+
+And immediately, something stood out.
+
+Every time I clicked anything, the entire list re-rendered.
+
+Filter change.  
+Checkbox toggle.  
+Even buttons that had nothing to do with the list.
+
+Everything re-rendered.
+
+That was my first real clue.
+
+## But Re-renders Are Normal, Right?
+
+This is where experience can trick you.
+
+I know re-renders are normal.  
+I know React is fast.  
+I know premature optimization is bad.
+
+Part of my brain kept saying, this is fine.
+
+But another part asked a better question.
+
+Why is this component re-rendering when nothing it uses has changed?
+
+That question mattered.
+
+So instead of guessing, I started observing.
+
+## Looking at the Component Structure
+
+The structure was simple.
+
+- Page  
+  - Filters  
+  - ItemList  
+    - ItemRow  
+
+The Page component held state like:
+
+- selected filters  
+- sort order  
+- loading flag  
+
+ItemList received:
+
+- items  
+- onItemClick  
+- some UI flags  
+
+Nothing looked suspicious at first glance.
+
+But React does not care about how things look.  
+It cares about references.
+
+## Watching Renders with Logs
+
+I added a log inside ItemList.
+
+```jsx
+console.log("ItemList render")
+```
+
+Then inside ItemRow.
+
+```jsx
+console.log("ItemRow render", item.id)
+```
+
+I clicked a single checkbox.
+
+The console exploded.
+
+Every row logged again.
+
+That meant one of two things.
+
+Either the items prop was changing.  
+Or one of the other props was changing by reference.
+
+The data itself was the same.  
+I confirmed that.
+
+So it had to be references.
+
+## The First Discovery: Inline Functions
+
+In the Page component, I had something like this.
+
+```jsx
+<ItemList
+  items={filteredItems}
+  onItemClick={(item) => handleItemClick(item)}
+/>
+```
+
+This looks harmless.
+
+But that inline function is recreated on every render.
+
+So even if nothing else changed, React saw new props and re-rendered the list.
+
+That explained part of the problem.
+
+But fixing that alone did not solve everything.
+
+## The Deeper Problem: Derived Data During Render
+
+Then I noticed something else.
+
+Filtering logic lived directly inside the render.
+
+```jsx
+const filteredItems = items.filter(item => {
+  return item.category === selectedCategory
+})
+```
+
+This runs on every render.
+
+And more importantly, it creates a new array every time.
+
+Even when items and selectedCategory did not change, filteredItems was a new reference.
+
+So React treated it as different.
+
+ItemList re-rendered.  
+Every ItemRow re-rendered.  
+Again and again.
+
+## Why I Missed This at First
+
+I did not miss this because I am inexperienced.
+
+I missed it because the app worked.
+
+No errors.  
+No warnings.  
+No broken UI.
+
+Most tutorials talk about bugs that crash apps.  
+They rarely talk about bugs that make apps slowly worse.
+
+This bug did not shout.  
+It whispered.
+
+## Confirming the Hypothesis
+
+Before fixing everything, I wanted proof.
+
+So I used useMemo.
+
+```jsx
+const filteredItems = useMemo(() => {
+  return items.filter(item => item.category === selectedCategory)
+}, [items, selectedCategory])
+```
+
+Then I wrapped ItemList with React.memo.
+
+And I moved the click handler into useCallback.
+
+I did not optimize everything at once.
+
+After each change, I tested again.
+
+Click.  
+Scroll.  
+Watch DevTools.
+
+The difference was obvious.
+
+The UI felt lighter.  
+Scrolling was smooth.  
+Highlight updates stopped flashing constantly.
+
+## The Real Root Cause
+
+This bug was not one big mistake.
+
+It was many small, normal looking decisions:
+
+- Inline functions passed as props  
+- Derived arrays created during render  
+- Trusting React to handle everything automatically  
+
+None of these are wrong by themselves.
+
+Together, they created unnecessary work that slowly dragged the app down.
+
+## Why This Bug Was Hard to Catch
+
+This bug was hard because:
+
+- Nothing broke  
+- No errors appeared  
+- It only showed up as the app grew  
+- The problem felt subjective  
+
+These are real world bugs.
+
+The kind you do not see in tutorials or interviews.
+
+## How I Actually Tracked It Down
+
+No clever tricks.  
+No magic tools.
+
+Just a simple process:
+
+- Noticing the feeling  
+- Trusting that feeling  
+- Observing instead of guessing  
+- Using DevTools calmly  
+- Changing one thing at a time  
+
+That is it.
+
+## What This Bug Taught Me
+
+This bug reinforced lessons I already knew but did not respect enough:
+
+- Re-renders are normal, unnecessary ones add up  
+- Reference equality matters  
+- Slow usually means something is wrong  
+- Working code is not always good code  
+
+## How I Code Differently Now
+
+Since this bug, a few habits have changed:
+
+- I am careful with inline functions  
+- I think about where data is derived  
+- I check re-renders early  
+- I do not ignore slight slowness anymore  
+
+Not because I want to over-optimize.
+
+But because I want to understand what my code is doing.
+
+## Final Thought
+
+Most real bugs do not announce themselves.
+
+They hide behind working features.  
+They wait until the app grows.  
+They wait until users grow.
+
+Learning to track them is not about rules.
+
+It is about slowing down.  
+Watching.  
+And asking a simple question.
+
+Why did this render again?
+
+That question has taught me more than any optimization guide ever did.

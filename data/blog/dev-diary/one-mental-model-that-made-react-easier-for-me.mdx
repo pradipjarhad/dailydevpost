@@ -1,0 +1,331 @@
+---
+title: "One Mental Model That Made React Easier for Me"
+date: 2026-01-15
+slug: "dev-diary/one-mental-model-that-made-react-easier-for-me"
+tags: ['dev-diary','react']
+thumbnail: '/static/images/blog/dev-diary/one-mental-model-that-made-react-easier-for-me.png'
+draft: false
+summary: A simple React mental model that helps you understand components, state, props and rerenders. Learn how thinking in state, UI makes React easier to debug.
+---
+
+For a long time, React felt heavier than it needed to be.
+
+Not hard.  
+Not confusing.  
+Just heavy.
+
+I could build things.  
+The app worked.  
+The UI showed up.  
+Users clicked buttons.  
+Data moved around.
+
+And yet, every time something went wrong, my first reaction was panic.
+
+- “Why didn’t this update?”
+- “Why is this rendering again?”
+- “Why is this state out of sync?”
+- “Why did fixing this break something else?”
+
+I knew the APIs.  
+I knew hooks.  
+I knew JSX.  
+I knew how to Google errors.
+
+But I didn’t *feel* React.
+
+Everything changed when one simple mental model finally clicked for me:
+
+> **React is just a function that turns state into UI. Nothing more.**
+
+That sentence looks obvious.  
+Almost boring.
+
+But it quietly fixed many of the mistakes I kept repeating for years.
+
+This post is about how that mental model reshaped how I think about React, how I write components now and why things feel calmer when something breaks.
+
+## How I Used to Think About React
+
+Before this mental model, I thought of React like a smart system that *does things*.
+
+- It updates the DOM
+- It listens to events
+- It runs effects
+- It manages lifecycle
+- It keeps things in sync
+
+In my head, React was active.  
+Busy.  
+Always working.
+
+So when something went wrong, I blamed React.
+
+- “React didn’t update.”
+- “React didn’t rerender.”
+- “React behaved weirdly.”
+
+Because of this, my code followed the same mindset.
+
+I wrote components that tried to **control behavior**.
+
+- Manually forcing updates
+- Syncing state with other state
+- Using `useEffect` as glue
+- Fixing UI problems with side effects
+
+It worked.  
+Until it didn’t.
+
+And when it didn’t, debugging felt like chasing ghosts.
+
+## The Shift: UI Is a Result, Not a Process
+
+The big shift happened when I stopped seeing React as a system that *acts* and started seeing it as a system that *calculates*.
+
+Here’s the mental model:
+
+> **Given the same state and props, a component should always return the same UI.**
+
+That’s it.
+
+No magic.  
+No lifecycle drama.  
+No hidden behavior.
+
+Just input → output.
+
+Like a math function.
+
+If the UI is wrong, it’s not because React “failed”.  
+It’s because the inputs are wrong.
+
+This sounds small, but it changes how you approach everything.
+
+## Components Are Not Little Apps
+
+Earlier, I treated each component like a mini application.
+
+It had its own rules.  
+Its own timing.  
+Its own logic.  
+Its own hidden assumptions.
+
+Now, I treat components like pure descriptions.
+
+A component doesn’t *do* things.
+
+It *describes*:
+
+- “If loading is true, show this”
+- “If user exists, show that”
+- “If count is 0, disable the button”
+
+The component itself is passive.
+
+It does not decide *when* to run.  
+It does not decide *what changed*.  
+It does not decide *how* updates happen.
+
+It only answers one question:
+
+> “Given this data right now, what should the UI look like?”
+
+## State Is Not Something You Update for UI
+
+This was a big mistake I used to make.
+
+I treated state like a tool to *force UI changes*.
+
+- “I’ll update this state so the UI refreshes”
+- “I’ll set this flag so React rerenders”
+- “I’ll store this derived value so it shows correctly”
+
+But with the new mental model, state has a different role.
+
+State is not for controlling the UI.  
+State is **the input** to the UI.
+
+You don’t change state to make UI update.  
+You change state because reality changed.
+
+The UI updating is just a side effect of that.
+
+This idea helped me remove a lot of unnecessary state.
+
+If something can be calculated during render, it probably doesn’t belong in state.
+
+## Render Is Not an Event
+
+I used to think rendering was something special.
+
+Like a lifecycle moment.  
+Something React *does to* your component.
+
+Now I think of render as a simple function call.
+
+React calls your component.  
+Your component returns UI.  
+That’s it.
+
+No promises.  
+No guarantees.  
+No timing assumptions.
+
+This helped me stop writing code like this:
+
+- “This will run only once”
+- “This won’t rerender again”
+- “This runs before that”
+
+Instead, I ask:
+
+> “If this runs again, would it still be correct?”
+
+If the answer is no, the problem is not React.  
+The problem is my assumptions.
+
+## Side Effects Became Obvious (and Smaller)
+
+Once render became “just a function”, side effects became easier to spot.
+
+Anything that:
+
+- Fetches data
+- Touches the outside world
+- Modifies something that is not UI
+
+…does not belong in render.
+
+Earlier, I used `useEffect` like a fix-all.
+
+Now, I use it like a boundary.
+
+Render is for describing UI.  
+Effects are for syncing with things React doesn’t control.
+
+This mental separation made my effects smaller, fewer and more predictable.
+
+Most importantly, I stopped using effects to “fix” render problems.
+
+If the UI is wrong, I fix the data.  
+Not the effect.
+
+## Rerenders Stopped Scaring Me
+
+Before, rerenders felt like a problem.
+
+- “Why is this rerendering?”
+- “How do I stop this?”
+- “Is this bad for performance?”
+
+With the new mental model, rerenders are just recalculations.
+
+If inputs didn’t change, output stays the same.  
+If inputs changed, output updates.
+
+That’s expected.
+
+Instead of fighting rerenders, I started asking better questions:
+
+- “Why did the input change?”
+- “Should this value really be state?”
+- “Can this be derived instead?”
+
+Performance issues became easier to reason about because the mental model was clear.
+
+## Debugging Became Boring (in a Good Way)
+
+Debugging used to feel like detective work.
+
+Now it feels like accounting.
+
+- What is the current state?
+- What props did this component receive?
+- Based on that, what UI should it return?
+
+If the UI doesn’t match expectations, one of those is wrong.
+
+There is no mystery step in between.
+
+This made bugs less emotional.  
+Less frustrating.  
+Less personal.
+
+React stopped feeling unpredictable.
+
+## It Changed How I Teach Myself React
+
+When I learn something new in React now, I filter it through this model.
+
+I don’t ask:
+
+- “What does this hook do?”
+
+I ask:
+
+- “Is this changing input?”
+- “Is this changing output?”
+- “Or is this syncing with something outside React?”
+
+If it doesn’t fit cleanly, I slow down.
+
+This also helps when reading other people’s code.
+
+Messy code usually violates this mental model in subtle ways.
+
+## Why This Mental Model Stuck
+
+I’ve read many explanations of React.
+
+Some were detailed.  
+Some were technical.  
+Some were clever.
+
+But this one stuck because it’s simple and testable.
+
+You can apply it to any component and ask:
+
+> “If I freeze time and look at the data, does this UI make sense?”
+
+If yes, your component is healthy.  
+If no, the fix is usually obvious.
+
+## React Became Quiet
+
+The biggest change wasn’t technical.  
+It was emotional.
+
+React used to feel loud.  
+Always doing something.  
+Always surprising me.
+
+Now it feels quiet.
+
+It waits.  
+It asks for data.  
+It gives UI back.
+
+Nothing more.
+
+And once I stopped expecting React to *manage my app for me*, building things became calmer.
+
+## Final Thought
+
+If React feels hard, it’s often not because of missing knowledge.
+
+It’s because of a mental model mismatch.
+
+You think React is a system that *acts*.  
+But it’s really a system that *describes*.
+
+Once that clicks, many problems stop being React problems.
+
+They become data problems.  
+And data problems are much easier to reason about.
+
+This one mental shift didn’t make me faster overnight.
+
+But it made React feel lighter.
+
+And that made everything else easier.

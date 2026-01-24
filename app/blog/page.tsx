@@ -14,11 +14,9 @@ export const revalidate = 60
 export default function BlogPage() {
   // Sort posts by date
   let posts = sortPosts(allBlogs)
-  
   // Runtime filtering - use shared helper that respects production env and scheduled
   // publish hour (see `SCHEDULED_POST_PUBLISH_HOUR` in `app/config.ts`).
   posts = filterPostsByPublishDate(posts)
-  
   const filteredPosts = allCoreContent(posts)
 
   const pageNumber = 1

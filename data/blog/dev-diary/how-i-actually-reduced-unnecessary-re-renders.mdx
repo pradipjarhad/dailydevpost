@@ -1,0 +1,403 @@
+---
+title: "How I Actually Reduced Unnecessary Re-renders (What Worked, What Didn’t)"
+date: 2026-01-13
+slug: "dev-diary/how-i-actually-reduced-unnecessary-re-renders"
+tags: ['dev-diary','react']
+thumbnail: '/static/images/blog/dev-diary/how-i-actually-reduced-unnecessary-re-renders.png'
+draft: false
+summary: A practical guide to reducing unnecessary React re-renders using real project experience. Learn what worked, what didn’t and how to make re-renders intentional.
+---
+
+In my previous post, I talked about the things that caused unnecessary re-renders in my apps.
+
+That post was about awareness.
+
+This one is about action.
+
+Because once you notice unnecessary re-renders, the next question is obvious:
+
+**“What should I do instead?”**
+
+This article is not a checklist.  
+It is not a performance guide.  
+It is not a list of hooks to blindly apply.
+
+It is a collection of small, boring changes that actually reduced re-renders in my real projects.
+
+No magic.  
+No obsession.  
+Just better defaults.
+
+## First, I Stopped Treating Re-renders as a Bug
+
+Before talking about solutions, one mindset shift mattered more than any code change.
+
+I stopped treating re-renders as something to eliminate.
+
+Re-renders are how React works.  
+They are not a failure.  
+They are not waste by default.
+
+The goal is not “no re-renders.”  
+The goal is **predictable, intentional re-renders**.
+
+So instead of asking:
+
+> “How do I stop this component from re-rendering?”
+
+I started asking:
+
+> “What change caused this re-render and does it make sense?”
+
+That question alone solved more problems than memoization ever did.
+
+## 1. I Stabilized Props That Didn’t Need to Change
+
+### The problem
+
+Passing new objects, arrays and functions on every render.
+
+### What I changed
+
+I stopped creating values inline when they were meant to be stable.
+
+Instead of this:
+
+```jsx
+<MyComponent options={{ theme: "dark", size: "large" }} />
+```
+
+I moved the object out of render logic:
+
+```jsx
+const options = { theme: "dark", size: "large" };
+
+<MyComponent options={options} />
+```
+
+Or, when it depended on props or state:
+
+```jsx
+const options = useMemo(() => {
+  return { theme, size };
+}, [theme, size]);
+```
+
+The important part was not `useMemo`.
+
+The important part was deciding whether this value should change or not.
+
+If a prop represents configuration, not dynamic behavior, it should usually be stable.
+
+## 2. I Stopped Passing Callbacks Through Components That Didn’t Care
+
+### The problem
+
+Callbacks being passed down multiple levels “just in case”.
+
+### What I changed
+
+I stopped forwarding functions through components that didn’t use them.
+
+If a component did not need to know about an action, it did not receive the callback.
+
+Before:
+
+```jsx
+<Page onSave={handleSave}>
+  <Section onSave={handleSave}>
+    <Button onSave={handleSave} />
+  </Section>
+</Page>
+```
+
+After:
+
+```jsx
+<Page>
+  <Section>
+    <Button onClick={handleSave} />
+  </Section>
+</Page>
+```
+
+This reduced re-renders, but more importantly, it reduced mental load.
+
+- Fewer props  
+- Clearer ownership  
+- Less accidental coupling  
+
+Sometimes the best performance optimization is not passing something at all.
+
+## 3. I Let Components Own Their Own State
+
+### The problem
+
+State lifted too high “just in case”.
+
+### What I changed
+
+I stopped lifting state until I had a real reason.
+
+If only one component cared about a piece of state, that component owned it.
+
+Before, I would lift state like this:
+
+```jsx
+const [isOpen, setIsOpen] = useState(false);
+
+<Modal isOpen={isOpen} />
+<Button onClick={() => setIsOpen(true)} />
+```
+
+Even when the modal and button lived close together.
+
+Now, I often do this:
+
+```jsx
+function ModalWithButton() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <Button onClick={() => setIsOpen(true)} />
+      <Modal isOpen={isOpen} />
+    </>
+  );
+}
+```
+
+This did a few things:
+
+- Reduced parent re-renders  
+- Reduced prop passing  
+- Made behavior easier to reason about  
+
+Duplicated state is sometimes cheaper than shared state.
+
+## 4. I Split State by Responsibility, Not Convenience
+
+### The problem
+
+One large state object for unrelated concerns.
+
+### What I changed
+
+I stopped grouping state just because it looked organized.
+
+Instead of:
+
+```jsx
+const [state, setState] = useState({
+  user: null,
+  theme: "dark",
+  modalOpen: false,
+});
+```
+
+I split it:
+
+```jsx
+const [user, setUser] = useState(null);
+const [theme, setTheme] = useState("dark");
+const [modalOpen, setModalOpen] = useState(false);
+```
+
+Yes, it was more lines.  
+Yes, it looked less “clean”.
+
+But updates became more precise.
+
+A modal opening no longer affected components that only cared about user data.  
+Theme changes no longer caused UI logic to re-run.
+
+Clean code is not fewer lines.  
+Clean code is fewer side effects.
+
+## 5. I Used Context Only for Stable, Global Information
+
+### The problem
+
+Using context for fast-changing UI state.
+
+### What I changed
+
+I redefined what context was allowed to store.
+
+Context became reserved for:
+
+- Authentication  
+- Theme  
+- Language  
+- App-level configuration  
+
+Anything that changed often stayed local.
+
+I stopped putting things like:
+
+- Input values  
+- Hover state  
+- Active item  
+- Temporary UI flags  
+
+into context.
+
+When something changed on every keystroke, it did not belong in a global system.
+
+This one change alone removed entire classes of re-renders.
+
+## 6. I Made Expensive Work Optional, Not Automatic
+
+### The problem
+
+Heavy calculations running on every render.
+
+### What I changed
+
+I separated rendering from computation.
+
+Instead of always doing this:
+
+```jsx
+const filteredItems = items.filter(item => item.active);
+```
+
+I asked:
+
+> “When does this actually need to change?”
+
+Then I wrapped it:
+
+```jsx
+const filteredItems = useMemo(() => {
+  return items.filter(item => item.active);
+}, [items]);
+```
+
+But again, the hook was not the point.
+
+The point was intent.
+
+If something is expensive and does not need to run every time, make that decision explicit.
+
+Not everything needs memoization.  
+Only expensive things that run often do.
+
+## 7. I Broke Large Components into Render Boundaries
+
+### The problem
+
+Big parent components re-rendering for small reasons.
+
+### What I changed
+
+I stopped thinking in terms of pages and started thinking in terms of boundaries.
+
+Instead of one large component doing everything:
+
+- Layout  
+- Data fetching  
+- State  
+- UI  
+
+I split them:
+
+- One component handles layout  
+- One handles data  
+- One handles interactive state  
+- One renders heavy UI  
+
+This meant that a sidebar toggle no longer caused charts to re-render.  
+A header update no longer affected lists below.
+
+Smaller components are not just about readability.  
+They are about containment.
+
+## 8. I Used Memoization as a Tool, Not a Default
+
+### The problem
+
+Reaching for `React.memo`, `useMemo` and `useCallback` too early.
+
+### What I changed
+
+I stopped adding memoization until I could answer two questions:
+
+1. Is this component actually re-rendering unnecessarily?  
+2. Is that re-render causing a real problem?  
+
+If the answer was “no” or “not sure”, I did nothing.
+
+Memoization adds complexity.  
+Dependencies can go stale.  
+Bugs become harder to spot.
+
+Fewer hooks often perform better than clever hooks used everywhere.
+
+## 9. I Watched Renders Instead of Guessing
+
+### The problem
+
+Assuming what was happening.
+
+### What I changed
+
+I started observing.
+
+Sometimes with React DevTools.  
+Sometimes with simple logs:
+
+```jsx
+console.log("Component rendered");
+```
+
+Seeing re-renders removes emotion from the discussion.
+
+No panic.  
+No guessing.  
+Just facts.
+
+Many things I thought were problems were not.  
+Many things I ignored were.
+
+Observation beats intuition every time.
+
+## What Actually Made the Biggest Difference
+
+Not one trick.  
+Not one hook.  
+Not one refactor.
+
+The biggest improvement came from being intentional.
+
+Intentional with:
+
+- Where state lives  
+- What props mean  
+- What should change and when  
+- What deserves to be shared  
+- What deserves to stay local  
+
+Once I slowed down those decisions, unnecessary re-renders naturally reduced.
+
+## Final Thought
+
+Unnecessary re-renders are rarely caused by lack of skill.
+
+They come from habits that feel right:
+
+- Centralizing state  
+- Making APIs flexible  
+- Passing things “just in case”  
+- Optimizing early  
+
+The solution is not perfection.  
+It is awareness.
+
+When you know **why** something re-renders, fixing it is usually simple.  
+And when it is not simple, it is often not worth fixing.
+
+React does not need you to fight it.  
+It needs you to be clear.
+
+That clarity is what actually improves performance.
