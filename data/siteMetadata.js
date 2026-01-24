@@ -11,7 +11,7 @@ const siteMetadata = {
   siteLogo: '',
   socialBanner: '/static/images/socialbanner.png',
   mastodon: '',
-  email: '',
+  email: 'pradip@dailydevpost.com',
   github: 'https://github.com/pradipjarhad',
   twitter: 'https://twitter.com/pradipjarhad',
   facebook: '',

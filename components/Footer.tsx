@@ -28,6 +28,10 @@ export default function Footer() {
           <Link href="/">{siteMetadata.title}</Link>
           <div>{` • `}</div>
           <Link href="/feed.xml">RSS</Link>
+          <div>{` • `}</div>
+          <Link href="/contact">Contact</Link>
+          <div>{` • `}</div>
+          <Link href="/sitemap.xml">Sitemap</Link>
         </div>
       </div>
     </footer>
