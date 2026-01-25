@@ -41,6 +41,8 @@ export async function generateMetadata(props: {
   let imageList = [siteMetadata.socialBanner]
   if (post.images) {
     imageList = typeof post.images === 'string' ? [post.images] : post.images
+  } else if (post.thumbnail) {
+    imageList = [post.thumbnail]
   }
   const ogImages = imageList.map((img) => {
     return {

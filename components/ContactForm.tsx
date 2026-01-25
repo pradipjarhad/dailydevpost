@@ -75,7 +75,7 @@ export default function ContactForm() {
                     placeholder="Your message..."
                 ></textarea>
             </div>
-            <div>
+            <div className="flex justify-center">
                 <button
                     type="submit"
                     className="inline-flex justify-center rounded-md border border-transparent bg-primary-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:hover:bg-primary-400"

@@ -29,8 +29,6 @@ export default function Footer() {
           <div>{` • `}</div>
           <Link href="/feed.xml">RSS</Link>
           <div>{` • `}</div>
-          <Link href="/contact">Contact</Link>
-          <div>{` • `}</div>
           <Link href="/sitemap.xml">Sitemap</Link>
         </div>
       </div>
