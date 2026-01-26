@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
 }
 
-import AdSense from '@/components/AdSense'
+// import AdSense from '@/components/AdSense'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -90,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </div>
           </SectionContainer>
         </ThemeProviders>
-        <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE || ''} />
+        {/* <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE || ''} /> */}
       </body>
     </html>
   )
