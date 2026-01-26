@@ -34,6 +34,14 @@ export default function Page() {
             identify you personally.
           </p>
 
+          <h2>Advertising Partners</h2>
+          <p>
+            We may use third-party advertising companies (such as Google AdSense) to serve ads when you visit our website.
+            These companies may use cookies and similar technologies to collect information about your visits to this and
+            other websites in order to provide advertisements about goods and services of interest to you.
+            You can learn more about how Google uses data at <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google's Privacy & Terms</a>.
+          </p>
+
           <h2>Third-party links</h2>
           <p>
             The site links to third-party services (GitHub, Twitter, LinkedIn, etc.). These external sites have
