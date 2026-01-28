@@ -10,6 +10,7 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import SocialShare from '@/components/SocialShare'
+import AuthorCard from '@/components/AuthorCard'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 
@@ -95,6 +96,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>
               </div>
+              {authorDetails.map((author) => (
+                <div className="pb-6 pt-6" key={author.name}>
+                  <AuthorCard author={author} />
+                </div>
+              ))}
               {commentsEnabled && slug && (
                 <div
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"

@@ -84,7 +84,7 @@ const rehypeLinkifyBibUrls = () => {
     visit(tree, 'element', (node: Element) => {
       // Target bibliography entry divs
       const className = node.properties?.className
-      const isCslEntry = 
+      const isCslEntry =
         (typeof className === 'string' && className.includes('csl-entry')) ||
         (Array.isArray(className) && className.some(cn => typeof cn === 'string' && cn.includes('csl-entry')))
 
@@ -181,6 +181,7 @@ export const Authors = defineDocumentType(() => ({
     linkedin: { type: 'string' },
     github: { type: 'string' },
     layout: { type: 'string' },
+    description: { type: 'string' },
   },
   computedFields,
 }))
