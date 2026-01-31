@@ -124,8 +124,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               {toc && <TableOfContents toc={toc as any} />}
             </div>
 
-            <footer>
-              <div className="divide-gray-200 text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
+            <footer className="xl:col-start-1 xl:row-start-2 xl:sticky xl:top-8 self-start">
+              <div className="divide-gray-200 text-sm font-medium leading-5 xl:divide-y dark:divide-gray-700">
                 {tags && (
                   <div className="py-4 xl:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
