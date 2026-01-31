@@ -1,6 +1,6 @@
 'use client'
 
-import Giscus from '@giscus/react'
+import Giscus, { Mapping } from '@giscus/react'
 import { useState } from 'react'
 import { useTheme } from 'next-themes'
 import siteMetadata from '@/data/siteMetadata'
@@ -24,7 +24,7 @@ export default function Comments({ slug }: { slug: string }) {
           repoId={commentsConfig.repositoryId}
           category={commentsConfig.category}
           categoryId={commentsConfig.categoryId}
-          mapping={commentsConfig.mapping as any}
+          mapping={commentsConfig.mapping as Mapping}
           reactionsEnabled={commentsConfig.reactions === '1' ? '1' : '0'}
           emitMetadata={commentsConfig.metadata === '1' ? '1' : '0'}
           inputPosition={commentsConfig.inputPosition as 'top' | 'bottom'}
