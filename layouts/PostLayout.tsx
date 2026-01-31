@@ -11,6 +11,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import SocialShare from '@/components/SocialShare'
 import AuthorCard from '@/components/AuthorCard'
+import TableOfContents from '@/components/TableOfContents'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 
@@ -30,7 +31,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { filePath, path, slug, date, title, tags, toc } = content
   const basePath = path.split('/')[0]
   const commentsEnabled =
     siteMetadata.comments?.provider &&
@@ -67,7 +68,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
             </div>
           </header>
-          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
+          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-5 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
             <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:dark:border-gray-700">
               <div className="divide-gray-200 text-sm font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
                 {content.thumbnail && (
@@ -85,6 +86,13 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+              {/* Mobile Table of Contents */}
+              {toc && (
+                <div className="block xl:hidden mb-6 pt-6">
+                  <TableOfContents toc={toc as any} />
+                </div>
+              )}
+
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
               <div className="pb-6 pt-6 text-m text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg relative overflow-hidden">
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-10 pointer-events-none">☕</div>
@@ -110,6 +118,12 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </div>
               )}
             </div>
+
+            {/* Desktop Table of Contents Sidebar */}
+            <div className="hidden xl:col-start-5 xl:row-span-2 xl:block pt-10">
+              {toc && <TableOfContents toc={toc as any} />}
+            </div>
+
             <footer>
               <div className="divide-gray-200 text-sm font-medium leading-5 xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
                 {tags && (
