@@ -1,0 +1,361 @@
+---
+title: "One Habit That Made My Code Easier to Read"
+date: 2026-01-29
+slug: "dev-diary/one-habit-that-made-my-code-easier-to-read"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/one-habit-that-made-my-code-easier-to-read.png'
+draft: false
+summary: One small habit I adopted that made my code easier to read. No rules, no theory just a simple change that stuck.
+---
+
+I used to open my own code and feel tired before reading the first function.
+
+Nothing was broken.  
+Tests passed.  
+The app worked.
+
+Still, I had to slow down.  
+I reread lines.  
+I traced variables with my finger on the screen.
+
+That quiet friction was always there. The kind you notice only after writing code for a few years.
+
+At first, I blamed time.
+
+> “I wrote this months ago.”  
+> “Of course I don’t remember it.”
+
+But then it happened with code I wrote last week.  
+Sometimes with code I wrote yesterday.
+
+That’s when it became clear.
+
+The problem wasn’t memory.  
+It was readability.
+
+Not in a theoretical sense. In a very practical one.
+
+This article is about **one habit that made my code easier to read**.  
+Not overnight.  
+Not magically.  
+But in a way that stuck.
+
+## Why working code can still be hard to read
+
+Most developers reach a point where they can make things work.
+
+APIs connect.  
+State updates correctly.  
+Logic flows from top to bottom.
+
+That’s where I was.
+
+But readable code is a different skill. And nobody explains that clearly.
+
+Readable code is not about syntax.  
+It’s not about patterns.  
+It’s not about how smart the solution looks.
+
+Readable code is about how quickly another human can understand what’s happening without effort.
+
+That human is often future you.
+
+I didn’t realize this early on. I thought readability was a bonus. Something you improve later when there’s time.
+
+There is never time.
+
+## The habit I kept skipping
+
+The habit itself was simple.
+
+Before moving to the next line of code, I asked myself one question:
+
+> **“If someone opens this file cold, will they understand why this exists?”**
+
+Not how it works.  
+Why it exists.
+
+At first, I skipped this question.
+
+It felt slow.  
+It felt unnecessary.  
+It felt like something senior developers talk about in blog posts, not something you do when shipping features.
+
+I told myself:
+
+- The logic is obvious.  
+- The function name is fine.  
+- Anyone can figure it out.
+
+Most of the time, that wasn’t true.
+
+## The moment this habit exposed a problem
+
+The habit didn’t come from a book. It came from frustration.
+
+I was debugging a small issue. Nothing dramatic.  
+A condition wasn’t behaving as expected.
+
+The file wasn’t large. Around 40 lines.
+
+Still, I kept scrolling up and down.  
+I lost context again and again.
+
+Then I noticed something uncomfortable.
+
+I didn’t remember **why** this logic existed.
+
+I remembered writing it.  
+I remembered the deadline.  
+I remembered the pressure.
+
+But I didn’t remember the reason.
+
+That meant something important.
+
+The code only made sense in my head at the moment I wrote it.
+
+Once that mental context was gone, the code turned into a puzzle.
+
+I stopped and rewrote part of it.  
+I didn’t change the logic.  
+I clarified the intent.
+
+The bug became obvious.
+
+## What actually changed when I adopted the habit
+
+This habit didn’t make my code shorter.  
+It didn’t make it clever.
+
+It did something more useful.
+
+It forced me to slow my thinking just enough to expose gaps.
+
+When I asked, *“Will someone understand why this exists?”*, I often realized I couldn’t explain it cleanly myself.
+
+That usually meant one of three things:
+
+- The logic was doing too much  
+- The naming was unclear or misleading  
+- The structure didn’t match the idea  
+
+Readable code starts in your head.  
+This habit surfaces confusion early, while it’s cheap to fix.
+
+## A real before and after example
+
+This is simplified, but real.
+
+### Before
+
+```jsx
+if (user && user.isActive && user.role !== 'guest') {
+  if (hasAccess(user, resource)) {
+    performAction(resource)
+  }
+}
+```
+
+This code works.  
+There’s nothing technically wrong with it.
+
+But reading it feels heavier than it should.
+
+Questions pop up immediately:
+
+- Why check `isActive` here?  
+- Why exclude guests?  
+- What kind of access is this?
+
+### After
+
+```jsx
+const canPerformAction =
+  user &&
+  user.isActive &&           // inactive users should not trigger actions
+  user.role !== 'guest' &&   // guests have read-only access
+  hasAccess(user, resource)  // permission check for this resource
+
+if (canPerformAction) {
+  performAction(resource)
+}
+```
+
+Nothing fancy changed.
+
+But now the intent is visible:
+
+- This code is about permission  
+- Each condition has a reason  
+- The decision has a name  
+
+The eye moves slower.  
+The mind moves faster.
+
+That’s readable code.
+
+## Why this habit works when you’re in a hurry
+
+A common objection is time.
+
+> “I don’t have time for this.”  
+> “I just need to ship.”
+
+I used to believe that too.
+
+What changed my mind was noticing where time actually goes:
+
+- Debugging unclear logic  
+- Reviewing my own pull requests  
+- Explaining code during handoffs  
+- Rebuilding context after interruptions  
+
+This habit moves effort earlier.
+
+You spend a few seconds while writing.  
+You save minutes or hours while reading.
+
+And code is read far more than it’s written.
+
+## How this habit changed my code reviews
+
+Before this habit, code reviews felt tense.
+
+Not because of feedback.  
+Because of misunderstanding.
+
+Comments like:
+
+- “Why is this here?”  
+- “Can we remove this?”  
+- “What’s the edge case?”  
+
+After applying this habit consistently, the tone changed.
+
+Reviews became:
+
+- “Clear intent.”  
+- “Easy to follow.”  
+- “Nice separation.”  
+
+Not because reviewers became kinder.
+
+Because the code explained itself.
+
+Readable code reduces back and forth.  
+That’s a real productivity gain.
+
+## How I apply this habit day to day
+
+I don’t sit and reflect deeply.
+
+The habit shows up in small moments:
+
+- Before naming a function  
+- Before adding a condition  
+- Before committing a change  
+
+I pause for a few seconds.
+
+I imagine someone opening this file without context.  
+No meeting notes.  
+No Slack messages.
+
+Just the code.
+
+If the “why” isn’t obvious, I fix it.
+
+That might mean:
+
+- Renaming a variable  
+- Extracting a condition  
+- Adding a short comment  
+
+Not paragraphs.  
+Often, one line is enough.
+
+## What didn’t help me
+
+I tried other approaches.
+
+Strict style rules.  
+More linting.  
+Reading books and trying to apply everything.
+
+None of that fixed the core problem.
+
+Those tools help consistency.  
+They don’t create clarity.
+
+Clarity comes from intent being visible.
+
+This habit directly targets that.
+
+## Why this habit scales with experience
+
+Junior developers focus on making code work.  
+Experienced developers focus on making code understandable.
+
+This habit helps bridge that gap naturally.
+
+You don’t need more knowledge to apply it.  
+You need more honesty.
+
+If you can’t explain why a piece of code exists, that’s a signal.  
+Not a failure.
+
+## The quiet benefit nobody talks about
+
+Something unexpected happened after a few months.
+
+I started writing less code.
+
+Not because I was lazy.  
+Because unnecessary logic stood out earlier.
+
+When intent is clear, waste becomes obvious.
+
+Readable code reduces clutter without effort.
+
+## Readable code is not about showing skill
+
+It’s about respect.
+
+Respect for:
+
+- Your future self  
+- Your teammates  
+- Your own attention  
+
+This habit taught me that clarity is not a trait.  
+It’s a choice you make repeatedly.
+
+## A simple way to start today
+
+You don’t need to refactor everything.
+
+Pick one file.  
+One function.
+
+Before adding new logic, ask:
+
+> **“Will someone understand why this exists?”**
+
+If the answer is “maybe,” pause.
+
+That pause is the habit.
+
+## A quiet takeaway
+
+Most unreadable code isn’t written by careless developers.  
+It’s written by busy ones.
+
+This habit doesn’t fight busyness.  
+It works with it.
+
+It leaves small signals for the next reader.
+
+Often, that reader is you.
+
+That alone makes it worth keeping.
