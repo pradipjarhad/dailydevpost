@@ -22,7 +22,7 @@ export default function Home({ posts }) {
             return (
               <li key={slug} className="py-8 sm:py-12">
                 <article>
-                  <div className="space-y-2 md:grid md:grid-cols-4 md:items-baseline md:space-y-0">
+                  <div className="space-y-2 md:grid md:grid-cols-4 md:items-baseline md:space-y-0 md:gap-x-6">
                     <div className="flex flex-col justify-center space-y-5 md:col-span-3">
                       {' '}
                       {/* Added flex and justify-center here */}
@@ -66,19 +66,19 @@ export default function Home({ posts }) {
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                         <Link href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
                           {thumbnail && (
-                              <div className="w-full max-w-[220px] md:max-w-[250px] mx-auto md:mx-0 rounded-md overflow-hidden shadow-sm">
-                                <Image
-                                  src={thumbnail}
-                                  alt={title}
-                                  className="w-full h-auto object-cover"
-                                  width={250}
-                                  height={350}
-                                  placeholder="blur"
-                                  blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
-                                  quality={95}
-                                />
-                              </div>
-                            )}
+                            <div className="w-full max-w-[220px] md:max-w-[250px] mx-auto md:mx-0 rounded-md overflow-hidden shadow-sm">
+                              <Image
+                                src={thumbnail}
+                                alt={title}
+                                className="w-full h-auto object-cover"
+                                width={250}
+                                height={350}
+                                placeholder="blur"
+                                blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
+                                quality={95}
+                              />
+                            </div>
+                          )}
                         </Link>
                       </dd>
                     </dl>

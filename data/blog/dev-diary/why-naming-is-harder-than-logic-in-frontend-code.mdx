@@ -1,0 +1,319 @@
+---
+title: "Why Naming Frontend Code Feels Harder Than Writing the Logic"
+date: 2026-01-31
+slug: "dev-diary/why-naming-is-harder-than-logic-in-frontend-code"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/why-naming-is-harder-than-logic-in-frontend-code.png'
+draft: false
+summary: Your frontend code works, but reading it feels tiring. This post explains why naming causes that friction and how experienced developers think about it.
+---
+
+Nothing is broken.
+
+The app loads.  
+The button works.  
+The API responds.  
+Tests pass.
+
+You still open the file.  
+Just to check something.
+
+Within seconds, you slow down.
+
+You reread a line.  
+Then another.  
+You scroll up to find where a value came from.  
+You follow a variable across the file like it might disappear.
+
+The logic is simple.  
+Still, reading the code feels tiring.
+
+That quiet friction is the problem this article is about.
+
+Not bugs.  
+Not performance.  
+Not architecture.
+
+**Naming in frontend code.**
+
+## If the logic is correct, why does this still feel hard to read?
+
+Logic answers one question:
+
+**What happens?**
+
+Naming answers a different one:
+
+**What is this thing supposed to represent?**
+
+When naming is weak, your brain fills the gaps.  
+You are no longer reading.  
+You are interpreting.
+
+Consider this line:
+
+```jsx
+if (data && flag) {
+  run()
+}
+```
+
+There is no complex logic here.
+
+Yet questions appear immediately.
+
+What is `data`?  
+Why does it matter here?  
+What does `flag` stand for?  
+What does `run` actually do?
+
+The code works.  
+Understanding does not come for free.
+
+This is why frontend code readability breaks down even when logic is correct.  
+Bad names force your brain to simulate behavior instead of recognizing intent.
+
+That simulation is exhausting.
+
+## Why do I struggle to name things I clearly understand?
+
+Because you don’t understand them in the way naming requires.
+
+You understand them **locally**.  
+Naming requires **global clarity**.
+
+When writing logic, step-by-step understanding is enough.
+
+- Get a value  
+- Check a condition  
+- Call a function  
+
+That produces working code.
+
+Naming asks something harder:
+
+*What role does this thing play in the system as a whole?*
+
+Early on, that answer is unclear.
+
+You may know:
+- What the variable holds right now  
+- What the function does today  
+
+You often don’t yet know:
+- How long it will exist  
+- How many components will depend on it  
+- How its meaning will shift as features grow  
+
+So naming feels heavy.
+
+Not because you are bad at it.  
+Because you are being honest about uncertainty.
+
+## Why is frontend naming harder than backend naming?
+
+Backend code mostly names **data**.
+
+Frontend code names **intent**, **state** and **user perception**.
+
+That difference changes everything.
+
+On the backend, `user` usually means one thing.
+
+On the frontend, `user` might be:
+- A logged-in account  
+- A partial profile  
+- Cached data  
+- A loading placeholder  
+- An optimistic update  
+
+Same name.  
+Different meanings.  
+Different moments.
+
+Frontend code lives at the intersection of:
+- Changing designs  
+- Evolving requirements  
+- Human interaction  
+- Visual state  
+
+You are not naming values.  
+You are naming situations.
+
+That is why naming in frontend code feels unstable.  
+The ground keeps shifting.
+
+## Why do boolean names cause so much confusion?
+
+Because booleans hide complexity.
+
+True or false looks simple.  
+Meaning rarely is.
+
+```jsx
+if (!isReady) {
+  return
+}
+```
+
+To understand this, your brain does extra work.
+
+What does “ready” mean here?  
+Ready for what?  
+Is this loading? Invalid? Disabled? Missing data?
+
+The boolean forces interpretation.
+
+Frontend code is full of temporary states:
+- Loading  
+- Empty  
+- Partial  
+- Submitting  
+- Saving  
+- Error  
+- Success  
+
+Flattening these states into booleans removes context.
+
+The logic remains correct.  
+Readability suffers.
+
+This is why variable naming in JavaScript feels harder in UI code than in pure logic.
+
+## Why does refactoring logic feel easier than renaming?
+
+Logic refactors are mechanical.
+
+You can:
+- Extract a function  
+- Inline a value  
+- Add a guard  
+- Change control flow  
+
+Renaming is not mechanical.
+
+Renaming forces questions:
+- What is this really responsible for now?  
+- Has its meaning changed?  
+- Am I hiding design drift behind an old name?  
+
+Many naming problems are design problems waiting to be acknowledged.
+
+Renaming brings them to the surface.
+
+So we postpone it.  
+And live with the friction.
+
+## Why does my frontend code work but still feel heavy?
+
+Because your brain is doing runtime work.
+
+When names are unclear, you can’t trust the surface.  
+You read deeper than necessary.
+
+You jump between files.  
+You recheck conditions.  
+You verify assumptions.
+
+Nothing here shows up in metrics.  
+It shows up as fatigue.
+
+Clear naming reduces reading cost.  
+Poor naming increases it silently.
+
+## How do bad names slow down debugging without causing bugs?
+
+Most debugging time is spent **finding**, not fixing.
+
+Bad names slow the search.
+
+You assume meaning.  
+You debug in the wrong direction.  
+Later, you learn the name lied.
+
+Bad naming doesn’t break the app.  
+It breaks momentum.
+
+## When should I rename instead of rewriting logic?
+
+Rename when reading feels harder than writing.
+
+Signals:
+- You rename things in your head  
+- You add comments to explain names  
+- You hesitate before explaining a function  
+- The name reflects the past, not the present  
+
+Renaming is not cleanup.
+
+It is clarification.
+
+If a rename makes the code feel lighter, it did real work.
+
+## Why does naming feel more like writing than programming?
+
+Because it is writing.
+
+Logic speaks to machines.  
+Names speak to humans.
+
+Good naming feels like editing:
+- Removing extra words  
+- Choosing precise meaning  
+- Avoiding clever shortcuts  
+- Favoring clarity  
+
+You are not solving a problem.  
+You are explaining one.
+
+That takes effort.
+
+## How do experienced developers actually choose names?
+
+They don’t wait for perfect clarity.
+
+They choose names that match **current understanding**.  
+Then they revisit them.
+
+Experienced developers rename freely.  
+They don’t treat early names as permanent.
+
+Understanding improves.  
+Names should follow.
+
+## Why does naming get easier with experience?
+
+Because experience changes how you think.
+
+You stop naming after:
+- Data shape  
+- Implementation detail  
+- Temporary structure  
+
+You start naming after:
+- Intent  
+- Responsibility  
+- Mental model  
+
+That shift comes from reading your own code months later.
+
+## A quiet takeaway
+
+The code was never hard.
+
+Understanding it was.
+
+When naming frontend code feels harder than writing logic, it means you care about clarity, not just correctness.
+
+That friction is not a flaw.  
+It is a signal.
+
+If a small rename makes your code easier to read tomorrow,  
+you did meaningful work today.
+
+Nothing flashy.  
+Nothing broken.
+
+Just less effort for the next person who opens the file.
+
+Often, that person is you.
