@@ -12,12 +12,12 @@ const Header = () => {
     <header className="flex items-center justify-between py-10">
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             <Image
               src={logo}
               alt={`${siteMetadata.headerTitle} logo`}
-              width={40}
-              height={40}
+              width={100}
+              height={100}
               className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
