@@ -11,7 +11,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import SocialShare from '@/components/SocialShare'
 import AuthorCard from '@/components/AuthorCard'
-import TableOfContents from '@/components/TableOfContents'
+import TableOfContents, { TocItem } from '@/components/TableOfContents'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 
@@ -89,7 +89,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               {/* Mobile Table of Contents */}
               {toc && (
                 <div className="block xl:hidden mb-6 pt-6">
-                  <TableOfContents toc={toc as any} />
+                  <TableOfContents toc={toc as TocItem[]} />
                 </div>
               )}
 
@@ -121,7 +121,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
             {/* Desktop Table of Contents Sidebar */}
             <div className="hidden xl:col-start-5 xl:row-span-2 xl:block pt-10">
-              {toc && <TableOfContents toc={toc as any} />}
+              {toc && <TableOfContents toc={toc as TocItem[]} />}
             </div>
 
             <footer className="xl:col-start-1 xl:row-start-2 xl:sticky xl:top-8 self-start">

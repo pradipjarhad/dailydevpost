@@ -13,7 +13,7 @@ const siteMetadata = {
   mastodon: '',
   email: 'pradip@dailydevpost.com',
   github: 'https://github.com/pradipjarhad',
-  twitter: 'https://twitter.com/pradipjarhad',
+  twitter: 'https://twitter.com/dailydevpost',
   facebook: '',
   youtube: '',
   linkedin: 'https://www.linkedin.com/in/pradipjarhad',

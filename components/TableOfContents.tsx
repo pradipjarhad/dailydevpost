@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 
-interface TocItem {
+export interface TocItem {
     value: string
     url: string
     depth: number
