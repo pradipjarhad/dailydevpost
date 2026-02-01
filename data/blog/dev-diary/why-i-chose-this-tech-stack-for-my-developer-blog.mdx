@@ -1,0 +1,262 @@
+---
+title: "Why I Chose This Tech Stack for My Developer Blog"
+date: 2026-02-01
+slug: "dev-diary/why-i-chose-this-tech-stack-for-my-developer-blog"
+tags: ['dev-diary']
+thumbnail: '/static/images/blog/dev-diary/why-i-chose-this-tech-stack-for-my-developer-blog.png'
+draft: false
+summary: I explain why I chose Next.js, Tailwind, Contentlayer and Netlify for DailyDevPost, what problems they solved, what they didn’t and who this setup actually makes sense for.
+---
+
+I didn’t start by choosing a tech stack for my developer blog.
+
+I started by noticing something uncomfortable.
+
+I was avoiding my own blog.
+
+Not because I had nothing to say.  
+Not because the ideas were unclear.  
+But because opening the project felt heavier than writing the post.
+
+That friction matters more than people admit.
+
+When writing feels like work before the work begins, you stop doing it. Quietly. Without drama.
+
+This post is not about the “best” stack.  
+It’s about the one that finally stopped getting in my way.
+
+## I Had to Be Honest About What Kind of Blog This Was
+
+Before tools, I had to answer a boring question.
+
+What am I actually building?
+
+Not a product site.  
+Not a newsletter funnel.  
+Not a personal brand machine.
+
+Just a developer blog.
+
+- Long posts  
+- Lots of code  
+- Internal links everywhere  
+- Posts that assume the reader thinks, not scrolls  
+
+That ruled out a lot of options immediately.
+
+Anything that treated writing as “content production” felt wrong.  
+Anything that forced me into an admin panel broke my focus.
+
+I wanted the blog to feel like a codebase.  
+Because that’s where I’m comfortable.
+
+## Why I Didn’t Use WordPress, Ghost or a Headless CMS
+
+I’ve used them. Properly. Not casually.
+
+They work. That’s not the issue.
+
+The issue is context switching.
+
+You write in an editor.  
+Then you manage content in a browser.  
+Then you debug styling in a different place.  
+Then you wonder where a field is coming from.
+
+It never feels like one system.
+
+- Versioning content becomes awkward  
+- Refactoring posts feels risky  
+- Renaming a slug feels scary  
+
+As a developer, I already have tools that solve these problems well.
+
+Git.  
+Diff.  
+Search.  
+Refactor.
+
+I didn’t want a blogging tool.  
+I wanted a repository I could trust.
+
+## Why I Chose Next.js Instead of a Static Site Generator
+
+Yes, Next.js is “more” than a blog needs.
+
+That argument misses the point.
+
+I didn’t choose it for features.  
+I chose it because it removed decisions.
+
+With many static site generators, you spend time learning the tool.  
+With Next.js, you spend time writing code.
+
+Routing feels obvious.  
+Layouts feel predictable.  
+Metadata lives where it should.
+
+I wasn’t fighting the framework.  
+That alone was worth the trade-off.
+
+## Why the App Router Mattered More Than I Expected
+
+This surprised me.
+
+I didn’t care much about the App Router at first.  
+I thought it was just a new pattern.
+
+It changed how the project felt.
+
+Layouts stopped being clever.  
+They became boring in a good way.
+
+Content pages felt like files again.  
+Not abstractions. Not config.
+
+SEO logic didn’t live in some shared utility.  
+It lived next to the page.
+
+The blog stopped feeling like a system I had to remember.  
+It became something I could return to after weeks away.
+
+That matters when writing is intermittent.
+
+## Why I Used Tailwind for a Writing-First Site
+
+I’ve written CSS for years.
+
+I know how to do typography.  
+I also know how easy it is to overthink it.
+
+Spacing.  
+Line height.  
+Margins.  
+Tiny tweaks that never end.
+
+Tailwind let me lock decisions early.
+
+Once the prose styles felt right, they stayed right.
+
+- No cascade surprises  
+- No “why does this paragraph look different?” moments  
+
+I don’t think about styling when I write now.
+
+That’s the real benefit.
+
+Not speed.  
+Not consistency.
+
+Mental quiet.
+
+## Why I Chose MDX Even Though It Complicates Things
+
+Plain markdown is simple.
+
+It’s also limiting once posts get serious.
+
+Code blocks are not just decoration.  
+They are part of the argument.
+
+Sometimes I need callouts.  
+Sometimes side notes.  
+Sometimes reusable examples.
+
+MDX lets content behave like code.
+
+That sounds abstract until you’ve tried to explain something complex without it.
+
+Once I crossed a certain depth of writing, markdown started pushing back.  
+MDX stopped that friction.
+
+Yes, it adds complexity.  
+But it removes more than it adds.
+
+## Why I Didn’t Just Use Raw MDX Files
+
+Raw MDX works. Until it doesn’t.
+
+The first time you mistype frontmatter and nothing builds, you feel it.  
+The second time, you get annoyed.  
+The third time, you want guardrails.
+
+Contentlayer gave me something simple but important.
+
+Structure.
+
+- Types for content  
+- Predictable fields  
+- Errors that point to the problem  
+
+Refactoring posts stopped being scary.
+
+That changed how confident I felt writing long pieces.  
+Confidence affects output more than people admit.
+
+## Why I Hosted on Netlify Instead of Vercel
+
+Vercel is great.  
+This isn’t a protest.
+
+I wanted hosting that faded into the background.
+
+Netlify felt boring in the right way.
+
+- Builds were predictable  
+- Deploys were clear  
+- Nothing felt magical  
+
+For a content site, that’s a feature.
+
+I don’t want to think about hosting while writing.  
+I want it to disappear.
+
+## The Problems This Stack Still Has
+
+This setup is not perfect.
+
+- Build times grow as content grows  
+- MDX errors can be annoying  
+- App Router abstractions can be confusing at first  
+
+You need to be comfortable reading your own tools.  
+You need to accept that simplicity has a cost.
+
+If you want instant publishing with zero setup, this isn’t for you.
+
+## Who Should Not Copy This Setup
+
+This matters more than recommendations.
+
+Don’t use this if:
+
+- You want a visual editor  
+- You publish rarely  
+- You enjoy experimenting with design weekly  
+- You don’t like reading build logs  
+
+This stack rewards consistency.  
+Not novelty.
+
+## What Actually Mattered in the End
+
+The signal wasn’t performance.  
+Or SEO scores.  
+Or Lighthouse numbers.
+
+The signal was silence.
+
+Weeks passed without me thinking about the stack.  
+Posts accumulated without friction.  
+I stopped questioning tools.
+
+I wrote more because the system stopped asking for attention.
+
+That’s the real test.
+
+Not how impressive the setup looks.  
+But whether it lets you come back easily.
+
+This one did.
+
+That’s why I kept it.
