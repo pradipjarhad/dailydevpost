@@ -18,10 +18,10 @@ const Header = () => {
               alt={`${siteMetadata.headerTitle} logo`}
               width={100}
               height={100}
-              className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
+              className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="text-base sm:text-3xl leading-tight font-semibold whitespace-nowrap">
+              <div className="text-xl sm:text-3xl leading-tight font-semibold whitespace-nowrap">
                 {siteMetadata.headerTitle}
               </div>
             ) : (

@@ -98,7 +98,7 @@ const TableOfContents = ({ toc }: TableOfContentsProps) => {
                 </button>
 
                 {/* Mobile Collapsible Content */}
-                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isMobileOpen ? 'max-h-96 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                <div className={`transition-all duration-300 ease-in-out ${isMobileOpen ? 'max-h-[70vh] opacity-100 mt-2 overflow-y-auto overscroll-y-auto custom-scrollbar' : 'max-h-0 opacity-0 overflow-hidden'}`}>
                     <nav className="p-4 bg-gray-50 border border-t-0 border-gray-200 rounded-b-lg dark:bg-gray-800 dark:border-gray-700">
                         <ul className="list-none space-y-2">
                             {filteredToc.map((item) => {
