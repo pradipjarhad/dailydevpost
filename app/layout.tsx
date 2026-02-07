@@ -1,8 +1,9 @@
 import 'css/tailwind.css'
 import 'css/custom.css'
-import 'pliny/search/algolia.css'
+import 'css/custom.css'
 
 import { Inter } from 'next/font/google'
+import React from 'react'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -26,6 +27,10 @@ export const metadata: Metadata = {
     template: `%s | ${siteMetadata.title}`,
   },
   description: siteMetadata.description,
+  keywords: siteMetadata.keywords,
+  authors: [{ name: siteMetadata.author }],
+  creator: siteMetadata.author,
+  publisher: siteMetadata.author,
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,

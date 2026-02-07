@@ -30,7 +30,7 @@ export default function Home({ posts }) {
                         <div>
                           <h2 className="mb-2 text-2xl font-bold leading-8 tracking-tight">
                             <Link
-                              href={`/blog/${slug}`}
+                              href={`/blog/${post.category}/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
                             >
                               {title}
@@ -51,7 +51,7 @@ export default function Home({ posts }) {
                       </div>
                       <div className="text-base font-medium leading-6">
                         <Link
-                          href={`/blog/${slug}`}
+                          href={`/blog/${post.category}/${slug}`}
                           className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                           aria-label={`Read more: "${title}"`}
                         >
@@ -64,7 +64,7 @@ export default function Home({ posts }) {
                       {/* Added self-center here */}
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <Link href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
+                        <Link href={`/blog/${post.category}/${slug}`} aria-label={`Read "${title}"`}>
                           {thumbnail && (
                             <div className="w-full max-w-[220px] md:max-w-[250px] mx-auto md:mx-0 rounded-md overflow-hidden shadow-sm">
                               <Image
@@ -92,11 +92,11 @@ export default function Home({ posts }) {
       {posts.length > MAX_DISPLAY && (
         <div className="flex justify-end text-base font-medium leading-6">
           <Link
-            href="/blog"
+            href="/categories"
             className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-            aria-label="All posts"
+            aria-label="Browse Categories"
           >
-            All Posts &rarr;
+            Browse Categories &rarr;
           </Link>
         </div>
       )}

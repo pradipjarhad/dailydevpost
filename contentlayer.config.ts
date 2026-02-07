@@ -36,7 +36,11 @@ const computedFields: ComputedFields = {
   },
   path: {
     type: 'string',
-    resolve: (doc) => doc._raw.flattenedPath,
+    resolve: (doc) => {
+      const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
+      const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
+      return `blog/${category}/${slug}`
+    },
   },
   filePath: {
     type: 'string',
@@ -63,6 +67,21 @@ function createTagCount(allBlogs) {
     }
   })
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
+}
+
+function createCategoryCount(allBlogs) {
+  const categoryCount: Record<string, number> = {}
+  allBlogs.forEach((file) => {
+    if (file.category && (!isProduction || file.draft !== true)) {
+      const formattedCategory = new GithubSlugger().slug(file.category)
+      if (formattedCategory in categoryCount) {
+        categoryCount[formattedCategory] += 1
+      } else {
+        categoryCount[formattedCategory] = 1
+      }
+    }
+  })
+  writeFileSync('./app/category-data.json', JSON.stringify(categoryCount))
 }
 
 function createSearchIndex(allBlogs) {
@@ -118,7 +137,7 @@ const rehypeLinkifyBibUrls = () => {
             }
           } else {
             // Keep other non-text nodes (like existing links, italics, etc.)
-            // Ensure the child is correctly typed when pushed
+            // Ensure the result of h() is treated as Element
             newChildren.push(child as Element | Text)
           }
         })
@@ -132,13 +151,14 @@ const rehypeLinkifyBibUrls = () => {
 
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
-  filePathPattern: 'blog/**/*.mdx',
+  filePathPattern: 'posts/**/*.mdx',
   contentType: 'mdx',
   fields: {
     title: { type: 'string', required: true },
     date: { type: 'date', required: true },
-    slug: { type: 'string' },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
+    categories: { type: 'list', of: { type: 'string' }, default: [] },
+    slug: { type: 'string', required: false },
     lastmod: { type: 'date' },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
@@ -151,18 +171,30 @@ export const Blog = defineDocumentType(() => ({
   },
   computedFields: {
     ...computedFields,
+    slug: {
+      type: 'string',
+      resolve: (doc) => (doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')),
+    },
+    category: {
+      type: 'string',
+      resolve: (doc) => doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop(),
+    },
     structuredData: {
       type: 'json',
-      resolve: (doc) => ({
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: doc.title,
-        datePublished: doc.date,
-        dateModified: doc.lastmod || doc.date,
-        description: doc.summary,
-        image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
-        url: `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`,
-      }),
+      resolve: (doc) => {
+        const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
+        const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
+        return {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: doc.title,
+          datePublished: doc.date,
+          dateModified: doc.lastmod || doc.date,
+          description: doc.summary,
+          image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
+          url: `${siteMetadata.siteUrl}/blog/${category}/${slug}`,
+        }
+      },
     },
   },
 }))
@@ -187,7 +219,7 @@ export const Authors = defineDocumentType(() => ({
 }))
 
 export default makeSource({
-  contentDirPath: 'data',
+  contentDirPath: 'content',
   documentTypes: [Blog, Authors],
   mdx: {
     cwd: process.cwd(),
@@ -212,6 +244,7 @@ export default makeSource({
     const { allDocuments } = await importData()
     const allBlogs = allDocuments.filter(doc => doc.type === 'Blog')
     createTagCount(allBlogs)
+    createCategoryCount(allBlogs)
     createSearchIndex(allBlogs)
   },
 })
