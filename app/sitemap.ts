@@ -14,14 +14,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   posts = filterPostsByPublishDate(posts)
 
   const blogRoutes = posts.map((post) => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    url: (post as any).url,
+    url: post.url,
     lastModified: post.lastmod || post.date,
   }))
 
   const routes = [
     '',
-    'tags',
+    'blog',
+    'categories',
     'about',
     'contact',
     'privacy-policy',

@@ -196,6 +196,14 @@ export const Blog = defineDocumentType(() => ({
         }
       },
     },
+    url: {
+      type: 'string',
+      resolve: (doc) => {
+        const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
+        const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
+        return `${siteMetadata.siteUrl}/blog/${category}/${slug}`
+      },
+    },
   },
 }))
 
