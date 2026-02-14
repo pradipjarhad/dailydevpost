@@ -1,6 +1,8 @@
-import { AlgoliaButton } from 'pliny/search/AlgoliaButton'
-import { KBarButton } from 'pliny/search/KBarButton'
 import siteMetadata from '@/data/siteMetadata'
+import dynamic from 'next/dynamic'
+
+const AlgoliaButton = dynamic(() => import('pliny/search/AlgoliaButton').then((mod) => mod.AlgoliaButton))
+const KBarButton = dynamic(() => import('pliny/search/KBarButton').then((mod) => mod.KBarButton))
 
 const SearchButton = () => {
   if (
@@ -8,7 +10,9 @@ const SearchButton = () => {
     (siteMetadata.search.provider === 'algolia' || siteMetadata.search.provider === 'kbar')
   ) {
     const SearchButtonWrapper =
-      siteMetadata.search.provider === 'algolia' ? AlgoliaButton : KBarButton
+      siteMetadata.search.provider === 'algolia'
+        ? AlgoliaButton
+        : KBarButton
 
     return (
       <SearchButtonWrapper aria-label="Search">
