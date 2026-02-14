@@ -4,7 +4,7 @@ import 'css/custom.css'
 
 import { Inter } from 'next/font/google'
 import React from 'react'
-import { Analytics, AnalyticsConfig } from 'pliny/analytics'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
 import SectionContainer from '@/components/SectionContainer'
@@ -83,21 +83,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
-          <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
             <div className="flex h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
                 <main className="mb-auto">{children}</main>
-
               </SearchProvider>
               <Footer />
             </div>
           </SectionContainer>
         </ThemeProviders>
+        <GoogleAnalytics gaId={siteMetadata.analytics?.googleAnalytics?.googleAnalyticsId || ''} />
         {/* <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE || ''} /> */}
       </body>
     </html>
   )
 }
-
