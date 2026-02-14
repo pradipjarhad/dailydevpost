@@ -55,6 +55,7 @@ export async function generateMetadata(props: {
     return {
         title: post.title,
         description: post.summary,
+        keywords: post.tags,
         openGraph: {
             title: post.title,
             description: post.summary,
@@ -72,6 +73,9 @@ export async function generateMetadata(props: {
             title: post.title,
             description: post.summary,
             images: imageList,
+        },
+        alternates: {
+            canonical: `${siteMetadata.siteUrl}/blog/${category}/${slug}`,
         },
     }
 }

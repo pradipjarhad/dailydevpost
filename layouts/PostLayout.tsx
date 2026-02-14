@@ -13,7 +13,7 @@ import SocialShare from '@/components/SocialShare'
 import AuthorCard from '@/components/AuthorCard'
 import TableOfContents, { TocItem } from '@/components/TableOfContents'
 
-const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
+const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/content/${path}`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'long',
