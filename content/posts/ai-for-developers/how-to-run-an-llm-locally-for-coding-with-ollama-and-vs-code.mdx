@@ -1,0 +1,420 @@
+---
+title: "Run LLM Locally with Ollama and VS Code (Step-by-Step Guide)"
+date: 2026-02-07
+slug: "ai-for-developers/how-to-run-an-llm-locally-for-coding-with-ollama-and-vs-code"
+tags: ['ai-for-developers',"LLM", "Ollama", "VS Code", "Developer Tools", "Performance"]
+thumbnail: 'https://ik.imagekit.io/bqu15hkfo/ai-for-developers/how-to-run-an-llm-locally-for-coding-with-ollama-and-vs-code.png'
+draft: false
+summary: How to run LLM locally using Ollama and connect it with VS Code. Private AI coding assistant setup without cloud dependency.
+---
+
+# How to Run an LLM Locally for Coding with Ollama and VS Code
+
+Most developers are still sending their entire codebase to the cloud.
+
+You don’t have to.
+
+You can run LLM locally on your own machine using Ollama and connect it directly to VS Code in under 15 minutes. No API keys. No usage limits. No code leaving your laptop.
+
+Install Ollama. Pull a coding model like Code Llama. Point VS Code to localhost. That’s the setup.
+
+If you care about privacy, predictable performance, and zero recurring AI cost, this is the cleanest way to run large language model locally today.
+
+Let me show you how I actually use it.
+
+# The Real Problem
+
+## Why Developers Want to Run LLMs Locally
+
+I used cloud AI tools daily.
+
+They’re convenient.
+
+But over time, the tradeoffs start to show:
+
+- Sensitive code leaves your machine.
+- Usage costs creep up.
+- Latency depends on network conditions.
+- You depend on someone else’s infrastructure.
+
+For client projects, internal tools, or regulated environments, that matters.
+
+Running a local AI coding assistant gives you:
+
+- A private AI development environment
+- An offline AI coding model
+- Zero token billing
+- Full model version control
+
+It’s not about being anti-cloud.
+
+It’s about having options.
+
+## The Hidden Cost of Cloud AI Coding Tools
+
+Cloud tools look cheap at first.
+
+Then usage scales.
+
+Then team seats multiply.
+
+Then rate limits show up during peak hours.
+
+And you don’t control the model version when it silently updates.
+
+When you run LLM locally, latency becomes hardware-bound. Not network-bound.
+
+That predictability alone improves developer flow.
+
+# The Solution
+
+## What Is Ollama and Why It’s the Easiest Way to Run LLM Locally
+
+Ollama is a lightweight runtime that makes local LLM setup simple.
+
+It handles:
+
+- Model downloads
+- Storage
+- Optimization
+- Exposing a local HTTP API
+
+You don’t wire up inference pipelines manually.
+
+You run commands like this:
+
+```bash
+ollama pull codellama:13b
+ollama run codellama:13b
+```
+
+That’s it.
+
+Any proper Ollama setup guide should start here. It removes 90 percent of the historical friction around running models locally.
+
+By default, Ollama runs on:
+
+```text
+http://localhost:11434
+```
+
+That endpoint is what we’ll plug into VS Code.
+
+## Choosing the Right Model for Coding
+
+You have options:
+
+- Code Llama with Ollama
+- DeepSeek-Coder variants
+- Other Mistral-based coding models
+
+Here’s the practical breakdown.
+
+### Model Size vs Hardware
+
+| Model Size | RAM Required | Real-World Use Case |
+|------------|--------------|---------------------|
+| 7B | 8GB | Lightweight coding tasks |
+| 13B | 16GB | Balanced reasoning + speed |
+| 34B+ | 32GB+ | Heavy reasoning, slower |
+
+If you want to run LLM locally without GPU, stick to 7B or 13B.
+
+On CPU:
+
+- 7B feels responsive
+- 13B is usable
+- 34B becomes frustrating
+
+On GPU, everything improves. But RAM matters more than people think.
+
+I run 13B on a 16GB machine without GPU. It works fine for refactors, boilerplate, and test generation.
+
+# Implementation
+
+No theory. Just setup.
+
+## Step 1 – Install Ollama on Windows, macOS, or Linux
+
+### macOS
+
+```bash
+brew install ollama
+```
+
+Verify:
+
+```bash
+ollama --version
+```
+
+### Windows
+
+Download the installer.
+
+Then in PowerShell:
+
+```powershell
+ollama --version
+```
+
+### Linux
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Then:
+
+```bash
+ollama --version
+```
+
+If you see a version number, you’re ready.
+
+## Step 2 – Download and Run Code Llama with Ollama
+
+Pull the model:
+
+```bash
+ollama pull codellama:13b
+```
+
+Run it:
+
+```bash
+ollama run codellama:13b
+```
+
+Test it with something practical:
+
+```text
+Write a React hook for debouncing input.
+```
+
+At this point, you officially run LLM locally.
+
+No cloud involved.
+
+## Step 3 – VS Code LLM Integration
+
+Terminal interaction is fine.
+
+But inline suggestions are better.
+
+For proper VS Code LLM integration:
+
+Install an extension that supports OpenAI-compatible endpoints.
+
+Set API Base URL to:
+
+```text
+http://localhost:11434/v1
+```
+
+Set Model to:
+
+```text
+codellama:13b
+```
+
+Leave API key empty if allowed, or use any placeholder string.
+
+Now open a file.
+
+Trigger inline suggestions.
+
+You now have a fully functional local AI coding assistant inside VS Code.
+
+## Optional: Direct API Usage
+
+If you want programmatic control:
+
+```jsx
+const response = await fetch('http://localhost:11434/api/generate', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    model: 'codellama:13b',
+    prompt: 'Write a TypeScript utility for deep cloning objects.',
+    stream: false
+  })
+})
+
+const data = await response.json()
+console.log(data.response)
+```
+
+This is how you integrate it into internal tooling.
+
+You just replaced cloud inference with local inference.
+
+# Local LLM vs Cloud AI Coding Tools
+
+Here’s the honest comparison.
+
+| Feature | Ollama Local LLM | GitHub Copilot | ChatGPT API |
+|----------|------------------|----------------|-------------|
+| Code Privacy | Fully local | Sent to cloud | Sent to cloud |
+| Offline Support | Yes | No | No |
+| Recurring Cost | Free | Monthly subscription | Usage-based |
+| Latency | Hardware dependent | Cloud dependent | Network dependent |
+| Model Control | Full version control | None | Limited |
+| Setup Complexity | Moderate | Very low | Low |
+
+Cloud is easier.
+
+Local is controlled.
+
+Choose based on constraints.
+
+# Real-World Performance
+
+## CPU vs GPU Benchmarks
+
+On my 16GB RAM machine without GPU:
+
+- 7B model: 12 to 18 tokens per second
+- 13B model: 6 to 10 tokens per second
+
+Cold start takes a few seconds.
+
+After loading, performance stabilizes.
+
+On GPU, inference speeds double or triple.
+
+# Note from the Trenches
+
+Most developers blame CPU when local models feel slow.
+
+It’s often memory swapping.
+
+When RAM runs out, your system swaps to disk. That destroys inference speed.
+
+Two fixes:
+
+- Close Chrome before running a 13B model.
+- Use quantized models.
+
+Example:
+
+```bash
+ollama pull codellama:13b-q4_0
+```
+
+Quantized models reduce memory usage dramatically.
+
+Most performance complaints disappear after this tweak.
+
+# Common Pitfalls
+
+## What Breaks First When You Run LLM Locally
+
+- Insufficient RAM
+- Choosing oversized models
+- Expecting full repo indexing
+- Ignoring context limits
+- Running heavy background apps
+
+Local models work within prompt context.
+
+They do not automatically understand your entire repository unless you build extra tooling.
+
+Be realistic about expectations.
+
+# Minimum Hardware Guidelines
+
+- 8GB RAM → 7B only
+- 16GB RAM → 13B comfortable
+- 32GB+ → Larger models viable
+
+GPU improves latency.
+
+RAM determines stability.
+
+# When You Should Not Run LLM Locally
+
+Skip local if:
+
+- Your machine struggles with memory
+- You rely on advanced reasoning across large codebases
+- You want zero setup friction
+
+Cloud AI still wins in raw intelligence and simplicity.
+
+I use both.
+
+Local for privacy and cost control.
+
+Cloud for heavy reasoning.
+
+No dogma.
+
+# Key Takeaways
+
+- You can run LLM locally in under 15 minutes with Ollama.
+- 8GB RAM works for 7B models. 16GB is ideal for 13B.
+- GPU improves speed but is not mandatory.
+- Quantized models dramatically improve performance.
+- Local models prioritize privacy and cost control.
+- Cloud AI still leads in large-scale reasoning tasks.
+
+# Frequently Asked Questions
+
+## Can I run Code Llama locally without a GPU?
+
+Yes. Use 7B or 13B models. Ensure sufficient RAM. Expect slower inference compared to GPU setups.
+
+## What is the best local LLM for programming?
+
+For most developers:
+
+- 7B for lightweight workflows
+- 13B for balanced performance
+- DeepSeek-Coder for stronger reasoning
+
+The best model depends on your hardware.
+
+## Is running an LLM locally faster than Copilot?
+
+Sometimes.
+
+On strong hardware, yes.
+
+On CPU-only systems, Copilot may feel faster.
+
+Local is more predictable.
+
+## How much RAM do I need to run LLM locally?
+
+Minimum 8GB.
+
+Recommended 16GB.
+
+More RAM allows larger models and smoother inference.
+
+## Is my code private when using Ollama?
+
+Yes.
+
+When you run LLM locally through Ollama, all inference stays on your machine unless you explicitly connect it elsewhere.
+
+# Final Thoughts
+
+Being able to run LLM locally changes how you think about AI tooling.
+
+You stop depending entirely on external APIs.
+
+You start treating AI like part of your development stack.
+
+For me, Ollama plus VS Code is now standard setup on every machine.
+
+If you’ve been hesitating, just try it.
+
+It takes 15 minutes.
+
+After that, you control the system.
+
+And that’s a better place to build from.
