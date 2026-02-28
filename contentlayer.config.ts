@@ -222,6 +222,7 @@ export const Authors = defineDocumentType(() => ({
     github: { type: 'string' },
     layout: { type: 'string' },
     description: { type: 'string' },
+    motto: { type: 'string' },
   },
   computedFields,
 }))

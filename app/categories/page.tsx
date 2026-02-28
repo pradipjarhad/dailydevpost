@@ -20,20 +20,22 @@ export default async function Page() {
                 </div>
                 <div className="flex max-w-lg flex-wrap">
                     {categoryKeys.length === 0 && 'No categories found.'}
-                    {sortedCategories.map((t) => {
-                        return (
-                            <div key={t} className="mb-2 mr-5 mt-2">
-                                <Category text={t} />
-                                <Link
-                                    href={`/blog/${slug(t)}`}
-                                    className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
-                                    aria-label={`View posts in category ${t}`}
-                                >
-                                    {` (${categoryCounts[t]})`}
-                                </Link>
-                            </div>
-                        )
-                    })}
+                    {sortedCategories
+                        .filter((t) => categoryCounts[t] >= 3)
+                        .map((t) => {
+                            return (
+                                <div key={t} className="mb-2 mr-5 mt-2">
+                                    <Category text={t} />
+                                    <Link
+                                        href={`/categories/${slug(t)}`}
+                                        className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
+                                        aria-label={`View posts in category ${t}`}
+                                    >
+                                        {` (${categoryCounts[t]})`}
+                                    </Link>
+                                </div>
+                            )
+                        })}
                 </div>
             </div>
         </>

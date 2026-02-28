@@ -20,10 +20,10 @@ export default function ContactForm() {
             })
 
             if (response.ok) {
-                alert('Message sent successfully!')
+                alert('Success! Your message has been sent. I will get back to you soon.')
                 form.reset()
             } else {
-                alert('Something went wrong. Please try again.')
+                alert('Oops! Something went wrong while sending your message. Please try again or email me directly.')
             }
         } catch (error) {
             alert('Something went wrong. Please try again.')

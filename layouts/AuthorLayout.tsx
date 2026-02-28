@@ -27,7 +27,7 @@ export default function AuthorLayout({ children, content }: Props) {
                 alt="Pradip Jarhad | Daily Dev Post"
                 width={192}
                 height={192}
-                className="rounded-but-slightly h-48 w-48"
+                className="rounded-full h-48 w-48 ring-4 ring-blue-500/20 dark:ring-blue-400/20 shadow-xl shadow-blue-500/10 transition-all duration-500 hover:scale-105 hover:ring-blue-500 dark:hover:ring-blue-400 hover:shadow-blue-500/25"
               />
             )}
             <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">{name}</h3>
