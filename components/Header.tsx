@@ -21,7 +21,7 @@ const Header = () => {
               className="w-10 h-10 min-[375px]:w-12 min-[375px]:h-12 sm:w-14 sm:h-14 object-contain"
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="text-xl min-[375px]:text-2xl sm:text-3xl leading-tight font-bold whitespace-nowrap">
+              <div className="text-lg min-[375px]:text-xl sm:text-2xl xl:text-3xl leading-tight font-bold whitespace-nowrap">
                 {siteMetadata.headerTitle}
               </div>
             ) : (
@@ -31,14 +31,14 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="flex items-center space-x-2 leading-5 sm:space-x-6">
+      <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 xl:space-x-6">
         {headerNavLinks
           .filter((link) => link.href !== '/')
           .map((link) => (
             <Link
               key={link.title}
               href={link.href}
-              className="hidden font-medium text-gray-900 dark:text-gray-100 sm:block"
+              className="hidden font-medium text-gray-900 dark:text-gray-100 xl:block"
             >
               {link.title}
             </Link>

@@ -1,12 +1,13 @@
 import 'css/tailwind.css'
 import 'css/custom.css'
-import 'css/custom.css'
 
 import { Inter } from 'next/font/google'
 import React from 'react'
 import Analytics from '@/components/Analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
@@ -83,11 +84,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
+          <ReadingProgressBar />
           <SectionContainer>
             <div className="flex h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
-                <main className="mb-auto">{children}</main>
+                <main className="mb-auto">
+                  <Breadcrumbs />
+                  {children}
+                </main>
               </SearchProvider>
               <Footer />
             </div>

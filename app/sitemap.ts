@@ -38,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '',
     'blog',
     'categories',
-    'tags',
+    // 'tags',
     'about',
     'contact',
     'privacy-policy',

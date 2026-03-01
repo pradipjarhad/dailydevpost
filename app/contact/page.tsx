@@ -32,7 +32,7 @@ export default function Contact() {
                                         {siteMetadata.email}
                                     </a>
                                     <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                                        I typically respond within 24-48 hours.
+                                        I typically respond within 24 hours.
                                     </p>
                                 </div>
                             )}
