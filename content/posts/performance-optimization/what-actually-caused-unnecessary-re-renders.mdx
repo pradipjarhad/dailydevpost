@@ -1,8 +1,9 @@
 ---
 title: "What Actually Caused Unnecessary Re-renders (In My Experience)"
 date: 2026-01-11
-slug: "build-in-public/what-actually-caused-unnecessary-re-renders"
+slug: "performance-optimization/what-actually-caused-unnecessary-re-renders"
 tags: ['build-in-public','react']
+categories: ['Performance Optimization']
 thumbnail: '/static/images/blog/build-in-public/what-actually-caused-unnecessary-re-renders.png'
 draft: false
 summary: A real world breakdown of common React mistakes that cause unnecessary re-renders. Learn why they happen, how they sneak in, and what actually fixed them.
@@ -20,7 +21,7 @@ The page did not crash.
 
 So I assumed everything was fine.
 
-Just inefficient. (Kind of like [this bug I tracked down recently](/blog/build-in-public/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down)).
+Just inefficient. (Kind of like [this bug I tracked down recently](/blog/debugging-and-fixes/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down)).
 
 This article is not about performance theory.  
 It is about the very normal mistakes that caused unnecessary re-renders in my own projects.
@@ -174,7 +175,7 @@ The issue was grouping unrelated concerns together.
 
 A small UI toggle caused updates across parts of the app that had nothing to do with it.
 
-Splitting state into smaller, focused pieces reduced re-renders more than any memoization trick I tried later. (I wrote more about [removing state here](/blog/build-in-public/the-time-i-removed-state-instead-of-adding-more)).
+Splitting state into smaller, focused pieces reduced re-renders more than any memoization trick I tried later. (I wrote more about [removing state here](/blog/performance-optimization/the-time-i-removed-state-instead-of-adding-more)).
 
 ## 5. Using Context for Frequently Changing Values
 
@@ -322,4 +323,4 @@ Once you can answer that calmly, the fix is usually obvious.
 
 And often simple.
 
-If you are wondering how to fix these issues, I wrote about [how I actually reduced unnecessary re-renders](/blog/build-in-public/how-i-actually-reduced-unnecessary-re-renders) in a follow-up post.
+If you are wondering how to fix these issues, I wrote about [how I actually reduced unnecessary re-renders](/blog/performance-optimization/how-i-actually-reduced-unnecessary-re-renders) in a follow-up post.

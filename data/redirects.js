@@ -109,6 +109,96 @@ const redirects = [
         destination: '/blog/build-in-public/why-i-decided-to-learn-in-public-now',
         permanent: true,
     },
+    {
+        source: '/blog/build-in-public/a-bug-caused-by-a-wrong-assumption-i-made',
+        destination: '/blog/debugging-and-fixes/a-bug-caused-by-a-wrong-assumption-i-made',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down',
+        destination: '/blog/debugging-and-fixes/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/how-i-learned-to-read-error-messages-better',
+        destination: '/blog/debugging-and-fixes/how-i-learned-to-read-error-messages-better',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/the-one-debugging-habit-that-saves-me-hours-every-week',
+        destination: '/blog/debugging-and-fixes/the-one-debugging-habit-that-saves-me-hours-every-week',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/what-debugging-taught-me-about-my-thinking-process',
+        destination: '/blog/debugging-and-fixes/what-debugging-taught-me-about-my-thinking-process',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/what-debugging-taught-me-that-tutorials-didnt',
+        destination: '/blog/debugging-and-fixes/what-debugging-taught-me-that-tutorials-didnt',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/how-i-actually-reduced-unnecessary-re-renders',
+        destination: '/blog/performance-optimization/how-i-actually-reduced-unnecessary-re-renders',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/the-time-i-removed-state-instead-of-adding-more',
+        destination: '/blog/performance-optimization/the-time-i-removed-state-instead-of-adding-more',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/what-actually-caused-unnecessary-re-renders',
+        destination: '/blog/performance-optimization/what-actually-caused-unnecessary-re-renders',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/how-i-really-learn-react-concepts',
+        destination: '/blog/frontend-engineering/how-i-really-learn-react-concepts',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/one-mental-model-that-made-react-easier-for-me',
+        destination: '/blog/frontend-engineering/one-mental-model-that-made-react-easier-for-me',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/one-mistake-i-made-with-useEffect-and-how-i-think-about-it-now',
+        destination: '/blog/frontend-engineering/one-mistake-i-made-with-useEffect-and-how-i-think-about-it-now',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me',
+        destination: '/blog/career-and-growth/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/one-react-habit-i-want-to-improve-next-week',
+        destination: '/blog/career-and-growth/one-react-habit-i-want-to-improve-next-week',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/what-i-care-about-more-than-frameworks',
+        destination: '/blog/career-and-growth/what-i-care-about-more-than-frameworks',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/where-i-am-right-now-as-a-frontend-developer',
+        destination: '/blog/career-and-growth/where-i-am-right-now-as-a-frontend-developer',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/one-habit-that-made-my-code-easier-to-read',
+        destination: '/blog/tooling-and-dx/one-habit-that-made-my-code-easier-to-read',
+        permanent: true,
+    },
+    {
+        source: '/blog/build-in-public/why-naming-is-harder-than-logic-in-frontend-code',
+        destination: '/blog/tooling-and-dx/why-naming-is-harder-than-logic-in-frontend-code',
+        permanent: true,
+    },
 ]
 
 module.exports = redirects
