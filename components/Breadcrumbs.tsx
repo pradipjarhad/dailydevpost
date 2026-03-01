@@ -3,6 +3,22 @@
 import Link from './Link'
 import { usePathname } from 'next/navigation'
 
+const formatTitle = (segment: string) => {
+    // List of acronyms that should be fully capitalized
+    const acronyms = ['DX', 'AI', 'SEO', 'CSS', 'JS', 'HTML', 'API', 'UI', 'UX', 'IT']
+
+    return segment
+        .split('-')
+        .map((word) => {
+            const upperWord = word.toUpperCase()
+            if (acronyms.includes(upperWord)) {
+                return upperWord
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        })
+        .join(' ')
+}
+
 const Breadcrumbs = () => {
     const pathname = usePathname()
 
@@ -12,39 +28,54 @@ const Breadcrumbs = () => {
     const pathSegments = pathname.split('/').filter((segment) => segment !== '')
 
     return (
-        <nav aria-label="Breadcrumb" className="mb-6 flex overflow-x-auto pb-2 scrollbar-none sm:scrollbar-default">
-            <ol className="flex items-center space-x-2 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                <li>
-                    <Link href="/" className="hover:text-primary-600 dark:hover:text-primary-400">
-                        Home
+        <nav aria-label="Breadcrumb" className="mb-4 mt-2 flex overflow-x-auto pb-2 scrollbar-none sm:scrollbar-default">
+            <ol className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500">
+                <li className="flex items-center">
+                    <Link href="/" className="flex items-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">
+                        <svg
+                            className="mr-1 h-3.5 w-3.5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                            />
+                        </svg>
+                        <span className="font-medium text-gray-500 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</span>
                     </Link>
                 </li>
                 {pathSegments.map((segment, index) => {
                     const href = `/${pathSegments.slice(0, index + 1).join('/')}`
                     const isLast = index === pathSegments.length - 1
-                    const title = segment
-                        .split('-')
-                        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                        .join(' ')
+                    const title = formatTitle(segment)
 
                     return (
-                        <li key={href} className="flex items-center space-x-2">
+                        <li key={href} className="flex items-center">
                             <svg
-                                className="h-4 w-4 flex-shrink-0 text-gray-400"
+                                className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-600 mx-0.5"
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
                                 aria-hidden="true"
                             >
-                                <path d="M5.555 17.776l8-16 .894.448-8 16-.894-.448z" />
+                                <path
+                                    fillRule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clipRule="evenodd"
+                                />
                             </svg>
                             {isLast ? (
-                                <span className="font-medium text-gray-900 dark:text-gray-100" aria-current="page">
+                                <span className="font-semibold text-gray-900 dark:text-gray-100" aria-current="page">
                                     {title}
                                 </span>
                             ) : (
                                 <Link
                                     href={href}
-                                    className="hover:text-primary-600 dark:hover:text-primary-400"
+                                    className="font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
                                 >
                                     {title}
                                 </Link>
