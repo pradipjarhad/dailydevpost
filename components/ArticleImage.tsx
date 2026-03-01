@@ -24,7 +24,12 @@ const ArticleImage = (props: ArticleImageProps) => {
   return (
     <figure className={'article-fig'}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={props.src} alt={alt} className={className + ' article-fig'} />
+      <img
+        src={props.src}
+        alt={alt}
+        className={className + ' article-fig'}
+        style={{ height: 'auto' }}
+      />
       <figcaption className={'article-fig'}>Image: {alt}</figcaption>
     </figure>
   )

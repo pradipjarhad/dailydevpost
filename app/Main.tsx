@@ -70,9 +70,10 @@ export default function Home({ posts }) {
                               <Image
                                 src={thumbnail}
                                 alt={title}
-                                className="w-full h-auto object-cover"
+                                className="object-cover"
                                 width={250}
                                 height={350}
+                                style={{ width: '100%', height: 'auto' }}
                                 placeholder="blur"
                                 blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
                                 quality={95}

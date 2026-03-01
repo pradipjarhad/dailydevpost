@@ -72,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang={siteMetadata.language}
       className={`${inter.variable} scroll-smooth`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />

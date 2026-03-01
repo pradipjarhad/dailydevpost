@@ -141,6 +141,7 @@ export default function ListLayoutWithTags({
                             width={150}
                             height={150}
                             className="thumbnail-image"
+                            style={{ height: 'auto' }}
                             quality={50}
                           />
                         </div>

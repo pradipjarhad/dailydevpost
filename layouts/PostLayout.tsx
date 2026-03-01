@@ -79,6 +79,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       className="block rounded-lg mx-auto my-0"
                       width={250}
                       height={250}
+                      style={{ height: 'auto' }}
                       quality={90}
                     />
                   </div>

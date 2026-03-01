@@ -18,7 +18,8 @@ const AuthorCard = ({ author }: Props) => {
                         alt={name}
                         width={100}
                         height={100}
-                        className="h-24 w-24 rounded-full object-cover ring-4 ring-blue-500/20 dark:ring-blue-400/20 shadow-lg shadow-blue-500/10 transition-all duration-300 hover:scale-105 hover:ring-blue-500 dark:hover:ring-blue-400 hover:shadow-blue-500/20"
+                        className="rounded-full object-cover ring-4 ring-blue-500/20 dark:ring-blue-400/20 shadow-lg shadow-blue-500/10 transition-all duration-300 hover:scale-105 hover:ring-blue-500 dark:hover:ring-blue-400 hover:shadow-blue-500/20"
+                        style={{ width: '6rem', height: 'auto' }}
                     />
                 </div>
             )}
