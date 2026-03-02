@@ -28,8 +28,8 @@ const Breadcrumbs = () => {
     const pathSegments = pathname.split('/').filter((segment) => segment !== '')
 
     return (
-        <nav aria-label="Breadcrumb" className="mb-4 mt-2 flex overflow-x-auto pb-2 scrollbar-none sm:scrollbar-default">
-            <ol className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500">
+        <nav aria-label="Breadcrumb" className="mb-2 mt-0 flex max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <ol className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0">
                 <li className="flex items-center">
                     <Link href="/" className="flex items-center hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200">
                         <svg

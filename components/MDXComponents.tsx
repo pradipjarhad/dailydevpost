@@ -21,4 +21,9 @@ export const components: MDXComponents = {
   Important,
   Warning,
   Caution,
+  table: ({ children }) => (
+    <div className="w-full overflow-x-auto">
+      <table>{children}</table>
+    </div>
+  ),
 }

@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${inter.variable} scroll-smooth`}
+      className={`${inter.variable} scroll-smooth overflow-x-clip`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProviders>
           <ReadingProgressBar />
           <SectionContainer>
-            <div className="flex h-screen flex-col justify-between font-sans">
+            <div className="flex min-h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
                 <main className="mb-auto">

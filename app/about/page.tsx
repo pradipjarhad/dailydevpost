@@ -3,6 +3,7 @@ import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import AuthorLayout from '@/layouts/AuthorLayout'
 import { coreContent } from 'pliny/utils/contentlayer'
 import { genPageMetadata } from 'app/seo'
+import { notFound } from 'next/navigation'
 
 export const metadata = genPageMetadata({
   title: 'About DailyDevPost | Performance Engineering & Technical Mastery',
@@ -12,6 +13,9 @@ export const metadata = genPageMetadata({
 
 export default function Page() {
   const author = allAuthors.find((p) => p.slug === 'default') as Authors
+  if (!author) {
+    notFound()
+  }
   const mainContent = coreContent(author)
 
   return (

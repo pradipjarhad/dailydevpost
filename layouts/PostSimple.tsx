@@ -5,7 +5,6 @@ import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
-import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
@@ -24,7 +23,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
     content.frontmatter?.comments !== false
 
   return (
-    <SectionContainer>
+    <>
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article>
         <div>
@@ -81,6 +80,6 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           </div>
         </div>
       </article>
-    </SectionContainer>
+    </>
   )
 }

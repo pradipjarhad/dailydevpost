@@ -4,7 +4,6 @@ import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
-import SectionContainer from '@/components/SectionContainer'
 import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
@@ -39,11 +38,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
     content.frontmatter?.comments !== false
 
   return (
-    <SectionContainer>
+    <>
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-          <header className="pt-6 xl:pb-6">
+          <header className="pt-4 xl:pb-6">
             <div className="space-y-1 text-center">
               <dl className="space-y-10">
                 <div>
@@ -177,6 +176,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           </div>
         </div>
       </article>
-    </SectionContainer>
+    </>
   )
 }

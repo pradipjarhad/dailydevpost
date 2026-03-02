@@ -91,3 +91,25 @@ figcaption.article-fig {
         scrollbar-width: auto;
     }
 }
+
+html,
+body {
+    overflow-x: clip;
+}
+
+.prose pre {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.prose code {
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+@media (min-width: 640px) {
+    .prose code {
+        white-space: inline;
+        word-break: normal;
+    }
+}

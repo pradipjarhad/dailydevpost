@@ -36,7 +36,7 @@ export default function SocialShare({ title, url }: Props) {
         Share
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
 
         {/* Existing supported icons */}
         <SocialIcon kind="twitter" href={twitter} size={6} />

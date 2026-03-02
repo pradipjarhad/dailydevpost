@@ -9,7 +9,7 @@ import logo from "../public/static/images/logo.png"
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between py-10">
+    <header className="flex items-center justify-between pt-10 pb-4">
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center space-x-2">
@@ -18,10 +18,10 @@ const Header = () => {
               alt={`${siteMetadata.headerTitle} logo`}
               width={100}
               height={100}
-              className="w-10 h-10 min-[375px]:w-12 min-[375px]:h-12 sm:w-14 sm:h-14 object-contain"
+              className="w-8 h-8 min-[375px]:w-12 min-[375px]:h-12 sm:w-14 sm:h-14 object-contain"
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="text-lg min-[375px]:text-xl sm:text-2xl xl:text-3xl leading-tight font-bold whitespace-nowrap">
+              <div className="text-base min-[375px]:text-xl sm:text-2xl xl:text-3xl leading-tight font-bold whitespace-nowrap">
                 {siteMetadata.headerTitle}
               </div>
             ) : (
