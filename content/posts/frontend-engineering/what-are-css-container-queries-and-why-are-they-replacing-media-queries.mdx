@@ -20,6 +20,12 @@ faqs:
   - question: "Can I use both media queries and container queries together?"
     answer: >-
       Absolutely. A common strategy is to use media queries for page-level layouts (like sidebars and grids) and container queries for individual component responsiveness (like cards).
+  - question: "How do I fix layout issues using CSS container queries?"
+    answer: >-
+      Define a query container with `container-type: inline-size`. Move viewport-based breakpoints into `@container` rules scoped to that container. Adjust thresholds to reflect container widths.
+  - question: "Are CSS container queries better than media queries?"
+    answer: >-
+      They are better for component driven architecture. They are not a replacement for global layout logic. In most real projects, you will use both.
 ---
 
 If you’re still building responsive components with only media queries, you’re solving the wrong problem.
@@ -344,20 +350,6 @@ I treat media queries as macro layout tools.
 I treat CSS container queries as micro layout tools.
 
 Different scopes. Different responsibilities.
-
-## FAQ
-
-### What is the difference between container queries and media queries?
-
-Media queries respond to the viewport size. Container queries respond to the size of a parent container. Media queries are page oriented. Container queries are component oriented.
-
-### How do I fix layout issues using CSS container queries?
-
-Define a query container with `container-type: inline-size`. Move viewport-based breakpoints into `@container` rules scoped to that container. Adjust thresholds to reflect container widths.
-
-### Are CSS container queries better than media queries?
-
-They are better for component driven architecture. They are not a replacement for global layout logic. In most real projects, you will use both.
 
 ## The Bigger Shift
 

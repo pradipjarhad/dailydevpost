@@ -20,6 +20,9 @@ faqs:
   - question: "Can I use the Temporal API in browsers today (2026)?"
     answer: >-
       Yes, it is supported in modern runtimes. For older environments, you should use the official '@js-temporal/polyfill' to ensure consistent behavior across all browsers.
+  - question: "Is Temporal API production-ready in 2026?"
+    answer: >-
+      Yes for modern runtimes. Verify support. Use the official polyfill where necessary.
 ---
 
 The **JavaScript Temporal API** is the standards-based replacement for both the legacy `Date` object and libraries like Moment.js. It provides immutable, timezone-aware, predictable date and time handling. If you are looking for a **JavaScript Temporal API migration guide**, the short version is this. Replace parsing with `Temporal.PlainDate` or `Temporal.Instant`, replace timezone logic with `Temporal.ZonedDateTime`, and replace date math with `.add()` and `.subtract()` on immutable Temporal objects.
@@ -353,24 +356,6 @@ import "@js-temporal/polyfill";
 ```
 
 Use the official polyfill if required.
-
-# FAQ: JavaScript Temporal API Migration
-
-## How do I replace Moment.js with Temporal API?
-
-Audit usage. Replace parsing with `Temporal.PlainDate` or `Instant`. Replace timezone logic with `ZonedDateTime`. Replace date math with `.add()` and `.subtract()`. Use `Intl` for formatting. Migrate incrementally.
-
-## What is the difference between JavaScript Date and Temporal API?
-
-`Date` is mutable and implicit. Temporal is immutable and explicit with dedicated types. Temporal reduces DST and timezone bugs by design.
-
-## How do I handle timezones correctly using Temporal.ZonedDateTime?
-
-Create with `timeZone`. Convert using `.withTimeZone()`. Use `Instant` for universal reference points.
-
-## Is Temporal API production-ready in 2026?
-
-Yes for modern runtimes. Verify support. Use the official polyfill where necessary.
 
 # Final Thoughts: Should You Adopt Temporal in 2026?
 

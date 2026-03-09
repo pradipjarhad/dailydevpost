@@ -7,16 +7,16 @@ export default function Footer() {
     <footer>
       <div className="mt-16 flex flex-col items-center pb-8">
         <div className="mb-3 flex flex-wrap justify-center gap-4">
-          <SocialIcon kind="github" href={siteMetadata.github} size={6} />
-          <SocialIcon kind="facebook" href={siteMetadata.facebook} size={6} />
-          <SocialIcon kind="youtube" href={siteMetadata.youtube} size={6} />
-          <SocialIcon kind="linkedin" href={siteMetadata.linkedin} size={6} />
-          <SocialIcon kind="twitter" href={siteMetadata.twitter} size={6} />
-          <SocialIcon kind="instagram" href={siteMetadata.instagram} size={6} />
-          <SocialIcon kind="goodReads" href={siteMetadata.goodReads} size={6} />
-          <SocialIcon kind="stackOverflow" href={siteMetadata.stackOverflow} size={6} />
-          <SocialIcon kind="stackExchange" href={siteMetadata.stackExchange} size={6} />
-          <SocialIcon kind="kofi" href={siteMetadata.kofi} size={6} />
+          {siteMetadata.github && <SocialIcon kind="github" href={siteMetadata.github} size={6} />}
+          {siteMetadata.facebook && <SocialIcon kind="facebook" href={siteMetadata.facebook} size={6} />}
+          {siteMetadata.youtube && <SocialIcon kind="youtube" href={siteMetadata.youtube} size={6} />}
+          {siteMetadata.linkedin && <SocialIcon kind="linkedin" href={siteMetadata.linkedin} size={6} />}
+          {siteMetadata.twitter && <SocialIcon kind="twitter" href={siteMetadata.twitter} size={6} />}
+          {siteMetadata.instagram && <SocialIcon kind="instagram" href={siteMetadata.instagram} size={6} />}
+          {siteMetadata.goodReads && <SocialIcon kind="goodReads" href={siteMetadata.goodReads} size={6} />}
+          {siteMetadata.stackOverflow && <SocialIcon kind="stackOverflow" href={siteMetadata.stackOverflow} size={6} />}
+          {siteMetadata.stackExchange && <SocialIcon kind="stackExchange" href={siteMetadata.stackExchange} size={6} />}
+          {siteMetadata.kofi && <SocialIcon kind="kofi" href={siteMetadata.kofi} size={6} />}
         </div>
         <div className="mb-3 flex flex-wrap justify-center gap-4">
           <Link href="/privacy-policy">Privacy Policy</Link>

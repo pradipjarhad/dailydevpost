@@ -13,6 +13,8 @@ import AuthorCard from '@/components/AuthorCard'
 import TableOfContents, { TocItem } from '@/components/TableOfContents'
 import FAQ from '@/components/FAQ'
 
+import { allBlogs } from 'contentlayer/generated'
+
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/content/${path}`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
@@ -23,7 +25,11 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
 }
 
 interface LayoutProps {
-  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean }; faqs?: { question: string; answer: string }[] }
+  content: CoreContent<Blog> & {
+    frontmatter?: { comments?: boolean };
+    faqs?: { question: string; answer: string }[];
+    category?: string;
+  }
   authorDetails: CoreContent<Authors>[]
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
@@ -31,12 +37,24 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, toc, faqs } = content
+  const { filePath, path, slug, date, title, tags, toc, faqs, category } = content
   const basePath = path.split('/')[0]
   const commentsEnabled =
     siteMetadata.comments?.provider &&
     (siteMetadata.comments as unknown as { enableFor?: string[] })?.enableFor?.includes('blog') &&
     content.frontmatter?.comments !== false
+
+  const relatedPosts = allBlogs
+    .filter((p) => p.slug !== slug)
+    .map((p) => {
+      const tagMatchCount = p.tags?.filter((tag) => tags?.includes(tag)).length || 0
+      const categoryMatch = p.category === category ? 1 : 0
+      const score = tagMatchCount * 2 + categoryMatch
+      return { ...p, score }
+    })
+    .filter((p) => p.score > 0)
+    .sort((a, b) => b.score - a.score || new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 2)
 
   return (
     <>
@@ -96,6 +114,32 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
               {faqs && <FAQ faqs={faqs} />}
+
+              {relatedPosts.length > 0 && (
+                <div className="py-10 border-t border-gray-200 dark:border-gray-700">
+                  <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">Related Articles</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    {relatedPosts.map((post) => (
+                      <div key={post.slug} className="group relative">
+                        {post.thumbnail && (
+                          <div className="relative aspect-video w-full overflow-hidden rounded-lg mb-3">
+                            <Image
+                              src={post.thumbnail}
+                              alt={post.title}
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                            />
+                          </div>
+                        )}
+                        <h4 className="text-lg font-semibold text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
+                          <Link href={`/blog/${post.category}/${post.slug}`}>{post.title}</Link>
+                        </h4>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div className="pb-6 pt-6 text-m text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg relative overflow-hidden">
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-10 pointer-events-none">☕</div>
                 <p className="flex items-center relative z-10">

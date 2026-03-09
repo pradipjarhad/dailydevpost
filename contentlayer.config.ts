@@ -228,6 +228,44 @@ export const Blog = defineDocumentType(() => ({
         return `${siteMetadata.siteUrl}/blog/${category}/${slug}`
       },
     },
+    breadcrumbLd: {
+      type: 'json',
+      resolve: (doc) => {
+        const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
+        const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
+
+        return {
+          '@context': 'https://schema.org',
+          '@type': 'BreadcrumbList',
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': 'Home',
+              'item': siteMetadata.siteUrl
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': 'Blog',
+              'item': `${siteMetadata.siteUrl}/blog`
+            },
+            {
+              '@type': 'ListItem',
+              'position': 3,
+              'name': category,
+              'item': `${siteMetadata.siteUrl}/blog/${category}`
+            },
+            {
+              '@type': 'ListItem',
+              'position': 4,
+              'name': doc.title,
+              'item': `${siteMetadata.siteUrl}/blog/${category}/${slug}`
+            }
+          ]
+        }
+      }
+    }
   },
 }))
 

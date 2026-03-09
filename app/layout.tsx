@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   alternates: {
-    canonical: './',
+    canonical: siteMetadata.siteUrl,
     types: {
       'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
     },
@@ -85,12 +85,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
+          <a
+            href="#skip-nav"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-primary-500 focus:shadow-md dark:focus:bg-gray-900"
+          >
+            Skip to content
+          </a>
           <ReadingProgressBar />
           <SectionContainer>
             <div className="flex min-h-screen flex-col justify-between font-sans">
               <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
-                <main className="mb-auto">
+                <main id="skip-nav" className="mb-auto">
                   <Breadcrumbs />
                   {children}
                 </main>

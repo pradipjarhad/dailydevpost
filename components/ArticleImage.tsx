@@ -1,4 +1,4 @@
-import React from 'react'
+import Image from 'next/image'
 
 interface ArticleImageProps {
   src: string
@@ -7,12 +7,7 @@ interface ArticleImageProps {
 }
 
 const ArticleImage = (props: ArticleImageProps) => {
-  let className = props.className
-
-  if (!props.className) {
-    className = 'article-image'
-  }
-
+  const className = props.className || 'article-image'
   let alt = props.alt
 
   if (!props.alt) {
@@ -22,15 +17,19 @@ const ArticleImage = (props: ArticleImageProps) => {
   }
 
   return (
-    <figure className={'article-fig'}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={props.src}
-        alt={alt}
-        className={className + ' article-fig'}
-        style={{ height: 'auto' }}
-      />
-      <figcaption className={'article-fig'}>Image: {alt}</figcaption>
+    <figure className="article-fig not-prose my-8">
+      <div className="relative aspect-video w-full overflow-hidden rounded-lg">
+        <Image
+          src={props.src}
+          alt={alt as string}
+          className={`${className} object-cover`}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 100vw"
+        />
+      </div>
+      <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 italic">
+        Image: {alt}
+      </figcaption>
     </figure>
   )
 }

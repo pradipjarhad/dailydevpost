@@ -23,6 +23,9 @@ faqs:
   - question: "How do I connect Ollama to VS Code?"
     answer: >-
       Install an extension that supports OpenAI-compatible endpoints, then set the API base URL to http://localhost:11434/v1 and select your local model name.
+  - question: "Is running an LLM locally faster than Copilot?"
+    answer: >-
+      Sometimes. On strong hardware, yes. On CPU-only systems, Copilot may feel faster. Local is more predictable.
 ---
 
 # How to Run an LLM Locally for Coding with Ollama and VS Code
@@ -377,46 +380,6 @@ No dogma.
 - Quantized models dramatically improve performance.
 - Local models prioritize privacy and cost control.
 - Cloud AI still leads in large-scale reasoning tasks.
-
-# Frequently Asked Questions
-
-## Can I run Code Llama locally without a GPU?
-
-Yes. Use 7B or 13B models. Ensure sufficient RAM. Expect slower inference compared to GPU setups.
-
-## What is the best local LLM for programming?
-
-For most developers:
-
-- 7B for lightweight workflows
-- 13B for balanced performance
-- DeepSeek-Coder for stronger reasoning
-
-The best model depends on your hardware.
-
-## Is running an LLM locally faster than Copilot?
-
-Sometimes.
-
-On strong hardware, yes.
-
-On CPU-only systems, Copilot may feel faster.
-
-Local is more predictable.
-
-## How much RAM do I need to run LLM locally?
-
-Minimum 8GB.
-
-Recommended 16GB.
-
-More RAM allows larger models and smoother inference.
-
-## Is my code private when using Ollama?
-
-Yes.
-
-When you run LLM locally through Ollama, all inference stays on your machine unless you explicitly connect it elsewhere.
 
 # Final Thoughts
 

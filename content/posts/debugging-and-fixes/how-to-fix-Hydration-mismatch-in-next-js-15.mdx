@@ -21,6 +21,12 @@ faqs:
   - question: "Can I use browser-only libraries in Next.js?"
     answer: >-
       Yes, by using 'next/dynamic' with 'ssr: false'. This prevents the component from rendering on the server, completely avoiding hydration comparison for that piece of the UI.
+  - question: "Does hydration mismatch affect SEO?"
+    answer: >-
+      No. Search engines see server-rendered HTML. However, hydration issues can break interactivity and impact user experience metrics.
+  - question: "Is hydration mismatch a React issue or a Next.js issue?"
+    answer: >-
+      Primarily React. Hydration is part of React’s rendering contract. Next.js 15 surfaces it more clearly due to stricter defaults and App Router architecture.
 ---
 
 Hydration mismatch in Next.js 15 happens when the HTML rendered on the server does not match what React renders on the client during hydration. The fix is to make server output deterministic and move browser-only logic into `useEffect`, client components, or `dynamic()` with `ssr: false`. Most hydration mismatch next js errors are caused by non-deterministic values like time, randomness, browser APIs, or conditional rendering that behaves differently between server and client.
@@ -420,24 +426,6 @@ Most hydration bugs are not component-level logic errors. They are environment-l
 * Test hydration fixes in production mode.
 * Avoid suppressHydrationWarning unless mismatch is intentional.
 * Treat hydration errors as architectural signals, not noise.
-
-# Frequently Asked Questions
-
-## Why does Next.js show “Text content does not match server-rendered HTML”?
-
-Because the HTML generated on the server differs from what React renders on the client during hydration. Usually caused by time-based values, randomness, locale formatting, or browser APIs executed during SSR.
-
-## How do I fix hydration mismatch in Next.js 15 App Router?
-
-Make server output deterministic. Move browser-only logic into client components or `useEffect`. Use `dynamic()` with `ssr: false` for client-only libraries. Avoid hiding errors unless differences are intentional.
-
-## Does hydration mismatch affect SEO?
-
-No. Search engines see server-rendered HTML. However, hydration issues can break interactivity and impact user experience metrics.
-
-## Is hydration mismatch a React issue or a Next.js issue?
-
-Primarily React. Hydration is part of React’s rendering contract. Next.js 15 surfaces it more clearly due to stricter defaults and App Router architecture.
 
 # Final Thoughts
 

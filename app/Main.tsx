@@ -17,7 +17,7 @@ export default function Home({ posts }) {
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && 'No posts found.'}
-          {posts.slice(0, MAX_DISPLAY).map((post) => {
+          {posts.slice(0, MAX_DISPLAY).map((post, index) => {
             const { slug, date, title, summary, tags, thumbnail } = post
             return (
               <li key={slug} className="py-8 sm:py-12">
@@ -77,6 +77,7 @@ export default function Home({ posts }) {
                                 placeholder="blur"
                                 blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
                                 quality={95}
+                                priority={index === 0}
                               />
                             </div>
                           )}
