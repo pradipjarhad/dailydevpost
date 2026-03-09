@@ -9,8 +9,31 @@ export const metadata = genPageMetadata({ title: 'Terms and Conditions' })
 export default function Page() {
   const effectiveDate = 'December 31, 2025'
 
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteMetadata.siteUrl,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Terms and Conditions',
+        item: `${siteMetadata.siteUrl}/terms-and-conditions`,
+      },
+    ],
+  }
+
   return (
     <SectionContainer>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <article className="py-6">
         <PageTitle>Terms and Conditions</PageTitle>
         <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">

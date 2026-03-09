@@ -107,7 +107,7 @@ export default async function Page(props: {
     const prev = sortedCoreContents[postIndex + 1]
     const next = sortedCoreContents[postIndex - 1]
     const mainContent = coreContent(post)
-    const jsonLd = post.structuredData
+    const jsonLd = JSON.parse(JSON.stringify(post.structuredData))
     jsonLd['author'] = authorList.map((author) => {
         const authorResults = allAuthors.find((p) => p.slug === author)
         return {
@@ -123,6 +123,10 @@ export default async function Page(props: {
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(post.breadcrumbLd) }}
             />
             <Layout content={mainContent} authorDetails={allAuthors} next={next} prev={prev}>
                 <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />

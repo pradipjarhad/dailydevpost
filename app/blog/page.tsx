@@ -20,12 +20,37 @@ export default async function BlogPage() {
         totalPages: Math.ceil(posts.length / postsPerPage),
     }
 
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: siteMetadata.siteUrl,
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog',
+                item: `${siteMetadata.siteUrl}/blog`,
+            },
+        ],
+    }
+
     return (
-        <ListLayout
-            posts={posts}
-            initialDisplayPosts={initialDisplayPosts}
-            pagination={pagination}
-            title="All Posts"
-        />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <ListLayout
+                posts={posts}
+                initialDisplayPosts={initialDisplayPosts}
+                pagination={pagination}
+                title="All Posts"
+            />
+        </>
     )
 }
