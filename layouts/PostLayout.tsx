@@ -23,7 +23,7 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
 }
 
 interface LayoutProps {
-  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
+  content: CoreContent<Blog> & { frontmatter?: { comments?: boolean }; faqs?: { question: string; answer: string }[] }
   authorDetails: CoreContent<Authors>[]
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
@@ -31,8 +31,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, toc } = content
-  const faqs = (content as any).faqs
+  const { filePath, path, slug, date, title, tags, toc, faqs } = content
   const basePath = path.split('/')[0]
   const commentsEnabled =
     siteMetadata.comments?.provider &&

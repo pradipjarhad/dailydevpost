@@ -4,15 +4,15 @@ import Link from '@/components/Link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 
-export default function NotFound() {
-  const excuses = [
-    "It worked on my local machine.",
-    "A merge conflict deleted this route.",
-    "This page is currently being containerized.",
-    "The DNS is still propagating (allegedly).",
-    "It's not a bug, it's a feature that hasn't shipped yet.",
-  ]
+const excuses = [
+  "It worked on my local machine.",
+  "A merge conflict deleted this route.",
+  "This page is currently being containerized.",
+  "The DNS is still propagating (allegedly).",
+  "It's not a bug, it's a feature that hasn't shipped yet.",
+]
 
+export default function NotFound() {
   const [randomExcuse, setRandomExcuse] = useState<string>("")
 
   useEffect(() => {
