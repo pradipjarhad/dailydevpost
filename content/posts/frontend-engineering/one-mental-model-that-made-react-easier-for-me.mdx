@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Frontend Engineering']
 thumbnail: '/static/images/blog/build-in-public/one-mental-model-that-made-react-easier-for-me.png'
 draft: false
-summary: A simple React mental model that helps you understand components, state, props and rerenders. Learn how thinking in state, UI makes React easier to debug.
+summary: >-
+  A simple React mental model that helps you understand components, state, props and rerenders. Learn how thinking in state, UI makes React easier to debug.
+faqs:
+  - question: "What is the core React mental model described here?"
+    answer: >-
+      React is just a function that turns state and props into UI. This 'Input -> Output' model simplifies everything from rendering to debugging.
+  - question: "Why is thinking of components as 'passive' helpful?"
+    answer: >-
+      When components are passive descriptions of UI, you stop trying to 'control' them with complex effects. You focus on managing the data (state), and let React handle the updates.
+  - question: "How does this mental model change how you view re-renders?"
+    answer: >-
+      Re-renders stop being scary 'glitches' and become simple recalculations. If the UI is wrong, it's a data problem, not a rendering error.
+  - question: "Should I use useEffect to force UI updates?"
+    answer: >-
+      No. According to this model, UI updates should be a natural consequence of state changes. Use 'useEffect' only to sync with external systems outside of React's control.
 ---
 
 For a long time, React felt heavier than it needed to be.

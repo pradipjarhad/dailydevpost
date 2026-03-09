@@ -5,7 +5,21 @@ slug: "javascript-deep-dives/what-is-the-javascript-temporal-api-and-how-do-you-
 tags: ['javascript','temporal-api','moment-js']
 thumbnail: '/static/images/blog/javascript-deep-dives/what-is-the-javascript-temporal-api-and-how-do-you-replace-moment-js.png'
 draft: false
-summary: Replace Moment.js the right way. A practical JavaScript Temporal API migration guide with timezone handling, date math, performance tips, and real-world pitfalls.
+summary: >-
+  Replace Moment.js the right way. A practical JavaScript Temporal API migration guide with timezone handling, date math, performance tips, and real-world pitfalls.
+faqs:
+  - question: "Why should I use the Temporal API instead of Moment.js?"
+    answer: >-
+      The Temporal API is native to JavaScript, immutable, and handles timezones and DST transitions correctly by design. It also significantly reduces bundle size compared to Moment.js.
+  - question: "What is the best way to handle timezones in modern JavaScript?"
+    answer: >-
+      Use 'Temporal.ZonedDateTime'. It makes the timezone an explicit part of the object, preventing the 'implicit local time' bugs that are common with the legacy 'Date' object.
+  - question: "How do I perform date arithmetic with the Temporal API?"
+    answer: >-
+      Temporal objects are immutable. You use methods like '.add({ days: 7 })' or '.subtract({ months: 1 })' which return a new object instead of modifying the existing one.
+  - question: "Can I use the Temporal API in browsers today (2026)?"
+    answer: >-
+      Yes, it is supported in modern runtimes. For older environments, you should use the official '@js-temporal/polyfill' to ensure consistent behavior across all browsers.
 ---
 
 The **JavaScript Temporal API** is the standards-based replacement for both the legacy `Date` object and libraries like Moment.js. It provides immutable, timezone-aware, predictable date and time handling. If you are looking for a **JavaScript Temporal API migration guide**, the short version is this. Replace parsing with `Temporal.PlainDate` or `Temporal.Instant`, replace timezone logic with `Temporal.ZonedDateTime`, and replace date math with `.add()` and `.subtract()` on immutable Temporal objects.

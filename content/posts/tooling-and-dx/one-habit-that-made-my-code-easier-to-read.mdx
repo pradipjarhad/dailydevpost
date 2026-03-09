@@ -6,7 +6,21 @@ tags: ['build-in-public']
 categories: ['Tooling & DX']
 thumbnail: '/static/images/blog/build-in-public/one-habit-that-made-my-code-easier-to-read.png'
 draft: false
-summary: One small habit I adopted that made my code easier to read. No rules, no theory just a simple change that stuck.
+summary: >-
+  One small habit I adopted that made my code easier to read. No rules, no theory just a simple change that stuck.
+faqs:
+  - question: "What is the one habit that makes code easier to read?"
+    answer: >-
+      Before moving to the next line, ask: 'If someone opens this file cold, will they understand WHY this exists?' If the answer is no, clarify the intent immediately.
+  - question: "Why is 'working code' not always readable code?"
+    answer: >-
+      Code can follow logic perfectly but still be hard for humans to understand. Readable code is about how quickly another developer (or your future self) can grasp the intent without effort.
+  - question: "Does making code readable take significantly more time?"
+    answer: >-
+      No. It takes a few extra seconds while writing but saves minutes or hours later during debugging, code reviews, and handoffs. It's a high-ROI habit for productivity.
+  - question: "How does clarifying intent help in debugging?"
+    answer: >-
+      When you name your intentions (e.g., using descriptive constants), bugs become obvious because the gap between 'what you meant' and 'what you wrote' is visible on the screen.
 ---
 
 I used to open my own code and feel tired before reading the first function.

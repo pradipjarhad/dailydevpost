@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Debugging & Fixes']
 thumbnail: '/static/images/blog/build-in-public/how-i-learned-to-read-error-messages-better.png'
 draft: false
-summary: How I stopped panicking at error messages and learned to read them calmly. A simple, honest look at how errors became explanations instead of stress.
+summary: >-
+  How I stopped panicking at error messages and learned to read them calmly. A simple, honest look at how errors became explanations instead of stress.
+faqs:
+  - question: "Why are error messages so long and confusing?"
+    answer: >-
+      They contain a stack trace to show the exact execution path. Focus on the very first line for the 'reason' and look for file names you recognize to find the 'cause'.
+  - question: "What should I do if I don't understand an error message?"
+    answer: >-
+      Slow down and read it word-for-word. Translate it into plain English (e.g., 'map of undefined' means 'I'm trying to loop over something that doesn't exist').
+  - question: "Is it a good idea to copy-paste errors into AI tools?"
+    answer: >-
+      Yes, but only after you've tried to understand it yourself. AI is more effective when you can provide context about which part of the message you find confusing.
+  - question: "How can I get better at reading technical errors?"
+    answer: >-
+      Try breaking your code on purpose during development. Observe what error message appears for each mistake to build a mental map of signals and causes.
 ---
 
 For a long time, error messages made me uncomfortable.

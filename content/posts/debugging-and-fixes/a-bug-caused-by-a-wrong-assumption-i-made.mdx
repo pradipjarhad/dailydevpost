@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Debugging & Fixes']
 thumbnail: '/static/images/blog/build-in-public/a-bug-caused-by-a-wrong-assumption-i-made.png'
 draft: false
-summary: A React bug caused by a wrong assumption about state and effects. Learn how derived state and skipped dependencies led to outdated UI behavior.
+summary: >-
+  A React bug caused by a wrong assumption about state and effects. Learn how derived state and skipped dependencies led to outdated UI behavior.
+faqs:
+  - question: "What is the most common cause of elusive React bugs?"
+    answer: >-
+      Wrong assumptions about how state and props behave over time. Forgetting that props can change after an initial render is a classic source of sync issues.
+  - question: "Why is derived state often considered a 'red flag' in React?"
+    answer: >-
+      Using 'useState(props.value)' only initializes once. If the prop changes later, the local state won't update, leading to a UI that is out of sync with your data.
+  - question: "How can I avoid 'invisible' bugs in my frontend code?"
+    answer: >-
+      Treat every assumption as a potential bug. Question 'obvious' behaviors and ensure that your effects have honest, complete dependency arrays.
+  - question: "What should I do when I can't reproduce a reported bug?"
+    answer: >-
+      Slow down and add detailed logging. Look for background updates or side effects that might be changing data outside of the user's explicit interaction flow.
 ---
 
 This bug did not come from a complex algorithm.  

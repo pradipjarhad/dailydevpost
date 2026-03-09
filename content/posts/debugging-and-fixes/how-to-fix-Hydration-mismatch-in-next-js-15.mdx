@@ -6,7 +6,21 @@ tags: ['nextjs','javascript','typescript','debugging','fixes']
 categories: ['Debugging & Fixes']
 thumbnail: 'https://ik.imagekit.io/bqu15hkfo/debugging-and-fixes/how-to-fix-hydration-mismatch-in-next-js-15.png'
 draft: false
-summary: Seeing “Text content does not match server-rendered HTML” in Next.js 15? Learn the real causes of hydration mismatch, how to fix it properly and why most developers patch it the wrong way.
+summary: >-
+  Seeing “Text content does not match server-rendered HTML” in Next.js 15? Learn the real causes of hydration mismatch, how to fix it properly and why most developers patch it the wrong way.
+faqs:
+  - question: "What causes 'Hydration Mismatch' in Next.js 15?"
+    answer: >-
+      It happens when the HTML rendered on the server differs from what the client tries to render. Common causes include 'Math.random()', dates, or accessing 'window' during SSR.
+  - question: "How do I fix 'Text content does not match' errors?"
+    answer: >-
+      Move any browser-specific logic (like dates or localStorage) into a 'useEffect' hook. This ensures the initial server render matches the client, with updates happening after mount.
+  - question: "Why is 'suppressHydrationWarning' considered a bad fix?"
+    answer: >-
+      It only hides the warning; it doesn't fix the underlying mismatch. This can lead to subtle bugs where the UI behaves inconsistently due to architectural drift.
+  - question: "Can I use browser-only libraries in Next.js?"
+    answer: >-
+      Yes, by using 'next/dynamic' with 'ssr: false'. This prevents the component from rendering on the server, completely avoiding hydration comparison for that piece of the UI.
 ---
 
 Hydration mismatch in Next.js 15 happens when the HTML rendered on the server does not match what React renders on the client during hydration. The fix is to make server output deterministic and move browser-only logic into `useEffect`, client components, or `dynamic()` with `ssr: false`. Most hydration mismatch next js errors are caused by non-deterministic values like time, randomness, browser APIs, or conditional rendering that behaves differently between server and client.

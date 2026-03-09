@@ -5,7 +5,24 @@ slug: "ai-for-developers/how-to-run-an-llm-locally-for-coding-with-ollama-and-vs
 tags: ['ai-for-developers',"LLM", "Ollama", "VS Code", "Developer Tools", "Performance"]
 thumbnail: 'https://ik.imagekit.io/bqu15hkfo/ai-for-developers/how-to-run-an-llm-locally-for-coding-with-ollama-and-vs-code.png'
 draft: false
-summary: How to run LLM locally using Ollama and connect it with VS Code. Private AI coding assistant setup without cloud dependency.
+summary: >-
+  How to run LLM locally using Ollama and connect it with VS Code. Private AI coding assistant setup without cloud dependency.
+faqs:
+  - question: "Can I run Code Llama locally without a GPU?"
+    answer: >-
+      Yes. Use 7B or 13B models and ensure you have sufficient RAM (minimum 8GB, recommended 16GB). While inference is slower without a GPU, it remains highly usable for coding tasks.
+  - question: "What is the best local LLM for programming?"
+    answer: >-
+      For most setups, the 7B or 13B models are ideal. DeepSeek-Coder is currently one of the strongest for reasoning, while Code Llama offers broad compatibility.
+  - question: "Is my code private when using Ollama locally?"
+    answer: >-
+      Absolutely. When you run an LLM through Ollama, all inference happens on your local hardware. No code is transmitted to external servers or the cloud.
+  - question: "How much RAM is required for a 13B model?"
+    answer: >-
+      A 13B model typically requires 16GB of RAM for stable performance. If your system has less, consider using a quantized version like 13b-q4_0 to reduce memory overhead.
+  - question: "How do I connect Ollama to VS Code?"
+    answer: >-
+      Install an extension that supports OpenAI-compatible endpoints, then set the API base URL to http://localhost:11434/v1 and select your local model name.
 ---
 
 # How to Run an LLM Locally for Coding with Ollama and VS Code

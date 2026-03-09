@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Debugging & Fixes']
 thumbnail: '/static/images/blog/build-in-public/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down.png'
 draft: false
-summary: A real world React debugging story about a slow UI, unnecessary re-renders and how small decisions quietly created a performance problem.
+summary: >-
+  A real world React debugging story about a slow UI, unnecessary re-renders and how small decisions quietly created a performance problem.
+faqs:
+  - question: "Why does my React app feel slow even though the API is fast?"
+    answer: >-
+      It's often due to unnecessary re-renders caused by reference changes in props. Frequent, deep re-render cycles can make a UI feel 'heavy' or 'sticky' even without crashing.
+  - question: "How can I tell if a component is re-rendering unnecessarily?"
+    answer: >-
+      Use React DevTools and enable the 'Highlight updates' option. If components flash when unrelated state changes, they are re-rendering without a valid reason.
+  - question: "Do inline functions in props always cause performance issues?"
+    answer: >-
+      Not always, but they are recreated on every render. In large lists, this forces every child component to re-render, which can lead to noticeable lag on lower-end devices.
+  - question: "What is the best way to handle derived data in React?"
+    answer: >-
+      Use 'useMemo' to wrap filtering or sorting logic. This ensures that the derived array only changes when its dependencies change, preventing child re-renders.
 ---
 
 This bug did not crash the app.

@@ -2,10 +2,24 @@
 title: "What Are CSS Container Queries and Why Are They Replacing Media Queries?"
 date: 2026-02-05
 slug: "frontend-engineering/what-are-css-container-queries-and-why-are-they-replacing-media-queries"
-tags: ['frontend-engineering','css','container-queries','media-queries']
-thumbnail: 'https://ik.imagekit.io/bqu15hkfo/frontend-engineering/what-are-css-container-queries-and-why-are-they-replacing-media-queries.png'
+tags: ["frontend-engineering", "css", "container-queries", "media-queries"]
+thumbnail: "https://ik.imagekit.io/bqu15hkfo/frontend-engineering/what-are-css-container-queries-and-why-are-they-replacing-media-queries.png"
 draft: false
-summary: CSS container queries let components respond to their parent container instead of the viewport. Learn how container queries compare to media queries, when to use them and how they improve reusable, component-driven responsive design.
+summary: >-
+  CSS container queries let components respond to their parent container instead of the viewport. Learn how container queries compare to media queries, when to use them and how they improve reusable, component-driven responsive design.
+faqs:
+  - question: "What is the difference between container queries and media queries?"
+    answer: >-
+      Media queries respond to the viewport (screen) size, whereas container queries respond to the size of a parent element. This makes container queries ideal for modular, reusable components.
+  - question: "When should I use container queries instead of media queries?"
+    answer: >-
+      Use container queries for component-level responsiveness (e.g., a card component) and media queries for page-level layout adjustments (e.g., changing the number of columns in a grid).
+  - question: "Are CSS container queries widely supported?"
+    answer: >-
+      Yes, container queries are supported in all modern browsers. For older browsers, they gracefully fall back to default styles unless a polyfill is used.
+  - question: "Can I use both media queries and container queries together?"
+    answer: >-
+      Absolutely. A common strategy is to use media queries for page-level layouts (like sidebars and grids) and container queries for individual component responsiveness (like cards).
 ---
 
 If you’re still building responsive components with only media queries, you’re solving the wrong problem.

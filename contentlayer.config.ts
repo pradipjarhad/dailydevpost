@@ -1,4 +1,4 @@
-import { defineDocumentType, ComputedFields, makeSource } from 'contentlayer2/source-files'
+import { defineDocumentType, ComputedFields, makeSource, defineNestedType } from 'contentlayer2/source-files'
 import { writeFileSync } from 'fs'
 import readingTime from 'reading-time'
 import GithubSlugger from 'github-slugger'
@@ -149,6 +149,14 @@ const rehypeLinkifyBibUrls = () => {
   }
 }
 
+const FAQ = defineNestedType(() => ({
+  name: 'FAQ',
+  fields: {
+    question: { type: 'string', required: true },
+    answer: { type: 'string', required: true },
+  },
+}))
+
 export const Blog = defineDocumentType(() => ({
   name: 'Blog',
   filePathPattern: 'posts/**/*.mdx',
@@ -168,6 +176,7 @@ export const Blog = defineDocumentType(() => ({
     layout: { type: 'string' },
     bibliography: { type: 'string' },
     canonicalUrl: { type: 'string' },
+    faqs: { type: 'list', of: FAQ },
   },
   computedFields: {
     ...computedFields,
@@ -184,7 +193,8 @@ export const Blog = defineDocumentType(() => ({
       resolve: (doc) => {
         const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
         const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
-        return {
+
+        const data: any = {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
           headline: doc.title,
@@ -194,6 +204,20 @@ export const Blog = defineDocumentType(() => ({
           image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
           url: `${siteMetadata.siteUrl}/blog/${category}/${slug}`,
         }
+
+        const faqs = (doc as any).faqs
+        if (Array.isArray(faqs) && faqs.length > 0) {
+          data.mainEntity = faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          }))
+        }
+
+        return data
       },
     },
     url: {

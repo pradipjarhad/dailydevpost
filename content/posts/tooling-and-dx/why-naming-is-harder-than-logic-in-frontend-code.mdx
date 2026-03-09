@@ -6,7 +6,21 @@ tags: ['build-in-public']
 categories: ['Tooling & DX']
 thumbnail: '/static/images/blog/build-in-public/why-naming-is-harder-than-logic-in-frontend-code.png'
 draft: false
-summary: Your frontend code works, but reading it feels tiring. This post explains why naming causes that friction and how experienced developers think about it.
+summary: >-
+  Your frontend code works, but reading it feels tiring. This post explains why naming causes that friction and how experienced developers think about it.
+faqs:
+  - question: "Why is naming harder in frontend code than backend code?"
+    answer: >-
+      Frontend names represent user intent, visual state, and perception, not just data. A single 'user' object might be a profile, a cache, or a loading state depending on the context.
+  - question: "How does poor naming impact developer productivity?"
+    answer: >-
+      It forces your brain to 'simulate' the code to understand it. This mental work causes fatigue and slows down debugging, leading to 'momentum breakage' even if the app works fine.
+  - question: "What is a better way to name boolean values in JavaScript?"
+    answer: >-
+      Instead of generic names like 'isReady', use names that describe the specific state or intent, like 'isProfileLoaded' or 'isSubmitInProgress' to reduce mental interpretation.
+  - question: "When should I prioritize renaming over refactoring logic?"
+    answer: >-
+      Rename when reading feels harder than writing. If you find yourself adding comments to explain a name, it's a clear signal that the name itself should be clarified.
 ---
 
 Nothing is broken.

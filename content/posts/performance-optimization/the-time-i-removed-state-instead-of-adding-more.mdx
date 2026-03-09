@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Performance Optimization']
 thumbnail: '/static/images/blog/build-in-public/the-time-i-removed-state-instead-of-adding-more.png'
 draft: false
-summary: Struggling with messy React state? This post shares a real example of removing state, avoiding derived state bugs, and building clearer, calmer components.
+summary: >-
+  Struggling with messy React state? This post shares a real example of removing state, avoiding derived state bugs, and building clearer, calmer components.
+faqs:
+  - question: "Why is having too much state a problem in React?"
+    answer: >-
+      Multiple states representing the same idea create a 'sync problem.' If they get out of alignment, you get subtle, hard-to-trace bugs. Removing redundant state fixes this at the root.
+  - question: "What is 'Derived State' and why should I use it?"
+    answer: >-
+      Derived state is information you calculate during render from existing props or state. It's better than storing extra state because it can never get 'out of sync.'
+  - question: "How do I know if a piece of state is unnecessary?"
+    answer: >-
+      Ask: 'Can I calculate this value from data I already have?' If the answer is yes, then that value should be a variable (or 'useMemo'), not its own 'useState' hook.
+  - question: "Does removing state make my components slower?"
+    answer: >-
+      Technically, recalculating a value on every render takes CPU time, but in 99% of UI cases, this is negligible. The gain in code clarity and bug prevention is much more valuable.
 ---
 
 For a long time, my default response to a UI problem was simple.

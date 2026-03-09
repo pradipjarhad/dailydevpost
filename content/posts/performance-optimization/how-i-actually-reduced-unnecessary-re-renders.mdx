@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Performance Optimization']
 thumbnail: '/static/images/blog/build-in-public/how-i-actually-reduced-unnecessary-re-renders.png'
 draft: false
-summary: A practical guide to reducing unnecessary React re-renders using real project experience. Learn what worked, what didn’t and how to make re-renders intentional.
+summary: >-
+  A practical guide to reducing unnecessary React re-renders using real project experience. Learn what worked, what didn’t and how to make re-renders intentional.
+faqs:
+  - question: "What is the most effective way to reduce React re-renders?"
+    answer: >-
+      Stop treating re-renders as bugs and start being intentional about state placement. Move state as close to its usage as possible to prevent wide, unnecessary update cycles.
+  - question: "Should I always use React.memo to optimize performance?"
+    answer: >-
+      No. Memoization adds complexity. Only use it when a component is demonstrably 'heavy' and re-rendering for no reason. Often, better state management removes the need for memoization.
+  - question: "How do inline objects in props impact performance?"
+    answer: >-
+      Every render creates a new object reference, which causes React to assume props have changed. Move static objects outside the component or use 'useMemo' for stable references.
+  - question: "When should I use Context vs local state for performance?"
+    answer: >-
+      Use Context only for stable, global data like themes or auth. For frequently changing UI state (like inputs), local state is much faster because it doesn't trigger global re-renders.
 ---
 
 In my previous post, I talked about the [things that caused unnecessary re-renders](/blog/performance-optimization/what-actually-caused-unnecessary-re-renders) in my apps.

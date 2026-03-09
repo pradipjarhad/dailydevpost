@@ -11,6 +11,7 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import SocialShare from '@/components/SocialShare'
 import AuthorCard from '@/components/AuthorCard'
 import TableOfContents, { TocItem } from '@/components/TableOfContents'
+import FAQ from '@/components/FAQ'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/content/${path}`
 
@@ -31,6 +32,7 @@ interface LayoutProps {
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, toc } = content
+  const faqs = (content as any).faqs
   const basePath = path.split('/')[0]
   const commentsEnabled =
     siteMetadata.comments?.provider &&
@@ -94,6 +96,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               )}
 
               <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
+              {faqs && <FAQ faqs={faqs} />}
               <div className="pb-6 pt-6 text-m text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg relative overflow-hidden">
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-10 pointer-events-none">☕</div>
                 <p className="flex items-center relative z-10">

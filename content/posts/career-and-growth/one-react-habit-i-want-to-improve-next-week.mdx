@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Career & Growth']
 thumbnail: '/static/images/blog/build-in-public/one-react-habit-i-want-to-improve-next-week.png'
 draft: false
-summary: I realized one small React habit was slowing me down. Next week, I'm fixing it by clearly defining component responsibility before writing code.
+summary: >-
+  I realized one small React habit was slowing me down. Next week, I'm fixing it by clearly defining component responsibility before writing code.
+faqs:
+  - question: "How can I stop my React components from becoming too 'heavy'?"
+    answer: >-
+      Clearly define a component's responsibility in plain words before writing any JSX or hooks. This forces you to make architectural decisions early when changes are cheap.
+  - question: "What should a component's responsibility description include?"
+    answer: >-
+      It should describe what the component MUST do, what it MUST NOT do, what data it needs as props, and how it handles loading or error states.
+  - question: "Why does defining responsibility help with React performance?"
+    answer: >-
+      It prevents 'just in case' state and unnecessary effects, leading to more predictable re-renders and a cleaner, more maintainable data flow.
+  - question: "Is it worth slowing down to plan small components?"
+    answer: >-
+      Yes. Most React pain comes from small components that grow into monsters over time. Planning prevents this accumulation of friction.
 ---
 
 There are many things I could say I want to improve in React.

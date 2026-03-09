@@ -6,7 +6,21 @@ tags: ['build-in-public','react']
 categories: ['Performance Optimization']
 thumbnail: '/static/images/blog/build-in-public/what-actually-caused-unnecessary-re-renders.png'
 draft: false
-summary: A real world breakdown of common React mistakes that cause unnecessary re-renders. Learn why they happen, how they sneak in, and what actually fixed them.
+summary: >-
+  A real world breakdown of common React mistakes that cause unnecessary re-renders. Learn why they happen, how they sneak in, and what actually fixed them.
+faqs:
+  - question: "Why does my React component re-render when nothing changed?"
+    answer: >-
+      Usually, it's because a prop reference changed, even if the value looks the same. Inline objects, arrays, or functions are recreated on every parent render, triggering the child to update.
+  - question: "Does every re-render matter for app performance?"
+    answer: >-
+      No. React is very fast at small re-renders. You only need to optimize when a large component tree is updating frequently or when you notice visible lag in the user interface.
+  - question: "How does Context API affect re-render performance?"
+    answer: >-
+      When a Context value changes, EVERY component consuming that context re-renders. If your context holds frequently changing data, it can cause significant performance bottlenecks.
+  - question: "How can I debug which prop is causing a re-render?"
+    answer: >-
+      Use the React DevTools Profiler. It can show you exactly which component rendered, how long it took, and which specific prop change triggered the render.
 ---
 
 I did not notice unnecessary re-renders at first.

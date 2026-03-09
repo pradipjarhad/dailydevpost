@@ -6,7 +6,21 @@ tags: ['next-js', 'tailwind', 'guide']
 categories: ['Frontend Engineering', 'Tooling & DX']
 thumbnail: '/static/images/blog/build-in-public/why-i-chose-this-tech-stack-for-my-developer-blog.png'
 draft: false
-summary: I explain why I chose Next.js, Tailwind, Contentlayer and Netlify for DailyDevPost, what problems they solved, what they didn’t and who this setup actually makes sense for.
+summary: >-
+  I explain why I chose Next.js, Tailwind, Contentlayer and Netlify for DailyDevPost, what problems they solved, what they didn’t and who this setup actually makes sense for.
+faqs:
+  - question: "Why use Next.js for a simple developer blog?"
+    answer: >-
+      Next.js was chosen because it removes decision fatigue. Its predictable routing and layouts allow you to focus on writing code and content rather than messing with configuration.
+  - question: "What are the benefits of using MDX over plain Markdown?"
+    answer: >-
+      MDX lets your content behave like code. You can embed interactive examples, complex callouts, and reusable components directly within your blog posts.
+  - question: "Why host a blog on Netlify instead of Vercel?"
+    answer: >-
+      For a content-heavy static site, Netlify offers highly predictable builds and a UI that stays out of the way, allowing the hosting layer to effectively 'disappear' into the background.
+  - question: "Is Contentlayer still a good choice for managing content?"
+    answer: >-
+      Yes, it provides strong typing and guardrails for frontmatter, which makes refactoring posts much safer and helps catch errors before they reach production.
 ---
 
 I didn’t start by choosing a tech stack for my developer blog.
