@@ -24,7 +24,7 @@ const siteMetadata = {
         'AI-Assisted Development',
         'DailyDevPost',
     ],
-    postsPerPage: 5,
+    postsPerPage: 6,
     siteRepo: 'https://github.com/pradipjarhad/dailydevpost',
     siteLogo: '/static/images/logo.png',
     image: '/static/images/logo.png',

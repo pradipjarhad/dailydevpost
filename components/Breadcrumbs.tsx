@@ -50,12 +50,22 @@ const Breadcrumbs = () => {
                     </Link>
                 </li>
                 {pathSegments.map((segment, index) => {
-                    const href = `/${pathSegments.slice(0, index + 1).join('/')}`
+                    let href = `/${pathSegments.slice(0, index + 1).join('/')}`
+
+                    // Rewrite /blog/category to /blog
+                    if (href === '/blog/category') {
+                        href = '/blog'
+                    }
+                    // For blog posts, rewrite their category breadcrumb to point to the actual category page.
+                    else if (pathSegments[0] === 'blog' && index === 1 && segment !== 'page' && segment !== 'category') {
+                        href = `/blog/category/${segment}`
+                    }
+
                     const isLast = index === pathSegments.length - 1
                     const title = formatTitle(segment)
 
                     return (
-                        <li key={href} className="flex items-center">
+                        <li key={`${href}-${index}`} className="flex items-center">
                             <svg
                                 className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-600 mx-0.5"
                                 fill="currentColor"

@@ -1,6 +1,6 @@
 import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
-import ListLayout from '@/layouts/ListLayoutWithTags'
+import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import { genPageMetadata } from 'app/seo'
 import { postsPerPage } from '@/data/siteMetadata'
 
@@ -45,7 +45,7 @@ export default async function BlogPage() {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
-            <ListLayout
+            <ListLayoutWithCategories
                 posts={posts}
                 initialDisplayPosts={initialDisplayPosts}
                 pagination={pagination}

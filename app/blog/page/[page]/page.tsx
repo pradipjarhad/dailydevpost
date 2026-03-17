@@ -1,10 +1,10 @@
 import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
-import ListLayout from '@/layouts/ListLayoutWithTags'
+import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
 
-const POSTS_PER_PAGE = 5
+const POSTS_PER_PAGE = 6
 
 export const generateStaticParams = async () => {
     const totalPages = Math.ceil(allBlogs.length / POSTS_PER_PAGE)
@@ -40,7 +40,7 @@ export default async function Page(props: { params: Promise<{ page: string }> })
     }
 
     return (
-        <ListLayout
+        <ListLayoutWithCategories
             posts={posts}
             initialDisplayPosts={initialDisplayPosts}
             pagination={pagination}
