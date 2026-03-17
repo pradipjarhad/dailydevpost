@@ -9,7 +9,7 @@ import logo from "../public/static/images/logo.png"
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between pt-10 pb-4">
+    <header className="flex items-center justify-between pt-10 pb-4 relative z-50">
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center space-x-2">

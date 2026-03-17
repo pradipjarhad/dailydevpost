@@ -4,104 +4,226 @@ import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 
-const MAX_DISPLAY = 6
+const MAX_DISPLAY = 5
+
+const TOPICS = [
+  { id: 'frontend-engineering', title: 'Frontend Engineering' },
+  { id: 'debugging-and-fixes', title: 'Debugging & Fixes' },
+  { id: 'performance-optimization', title: 'Performance Optimization' },
+]
 
 export default function Home({ posts }) {
+  if (!posts || posts.length === 0) {
+    return <div className="mt-8 text-center text-gray-500 dark:text-gray-400">No posts found.</div>
+  }
+
+  const heroPost = posts[0]
+  const recentPosts = posts.slice(1, MAX_DISPLAY)
+  const displayedSlugs = new Set(posts.slice(0, MAX_DISPLAY).map((p) => p.slug))
+
   return (
-    <>
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
-        <div className="space-y-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
-            Latest posts
+    <div className="space-y-16 mt-8 md:mt-12 mb-16">
+      {/* Hero Section */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="flex flex-col space-y-6 relative z-10">
+          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-gray-100">
+            Engineering Better <span className="text-primary-500">Frontend</span> Experiences
           </h1>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed">
+            {siteMetadata.description}
+          </p>
+          <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
+            <Link
+              href="/blog"
+              className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl bg-primary-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-all duration-200"
+            >
+              Latest Posts
+            </Link>
+            <Link
+              href="/categories"
+              className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-8 py-3.5 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-all duration-200"
+            >
+              Browse Topics
+            </Link>
+          </div>
         </div>
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!posts.length && 'No posts found.'}
-          {posts.slice(0, MAX_DISPLAY).map((post, index) => {
-            const { slug, date, title, summary, tags, thumbnail } = post
-            return (
-              <li key={slug} className="py-8 sm:py-12">
-                <article>
-                  <div className="space-y-2 md:grid md:grid-cols-4 md:items-baseline md:space-y-0 md:gap-x-6">
-                    <div className="flex flex-col justify-center space-y-5 md:col-span-3">
-                      {' '}
-                      {/* Added flex and justify-center here */}
-                      <div className="space-y-6">
-                        <div>
-                          <h2 className="mb-2 text-2xl font-bold leading-8 tracking-tight">
-                            <Link
-                              href={`/blog/${post.category}/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
-                            >
-                              {title}
-                            </Link>
-                          </h2>
-                          <div className="mb-2 text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                            <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                          </div>
-                          <div className="flex flex-wrap">
-                            {tags.sort().map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
-                          </div>
-                        </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                          {summary}
-                        </div>
-                      </div>
-                      <div className="text-base font-medium leading-6">
-                        <Link
-                          href={`/blog/${post.category}/${slug}`}
-                          className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                          aria-label={`Read more: "${title}"`}
-                        >
-                          Read more &rarr;
-                        </Link>
-                      </div>
+
+        {heroPost && (
+          <article className="relative group w-full rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-gray-900/5 dark:ring-white/10 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.1)]">
+            {heroPost.thumbnail ? (
+              <div className="relative aspect-[4/3] sm:aspect-video lg:aspect-square xl:aspect-video w-full bg-gray-900">
+                <Image
+                  src={heroPost.thumbnail}
+                  alt={heroPost.title}
+                  className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                  width={800}
+                  height={450}
+                  style={{ width: '100%', height: '100%' }}
+                  priority
+                  placeholder="blur"
+                  blurDataURL={`image?url=${heroPost.thumbnail}&w=800&q=1`}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/50 to-transparent transition-opacity duration-300"></div>
+              </div>
+            ) : (
+              <div className="relative aspect-video w-full bg-gray-100 dark:bg-gray-800"></div>
+            )}
+
+            <div className={`absolute bottom-0 left-0 p-6 sm:p-8 w-full flex flex-col justify-end ${!heroPost.thumbnail ? 'h-full' : ''}`}>
+              <div className="flex flex-wrap gap-2 mb-4 relative z-20">
+                {heroPost.tags.slice(0, 3).map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/tags/${tag}`}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500 hover:bg-primary-600 text-white shadow-sm transition-colors"
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+
+              <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${heroPost.thumbnail ? 'text-white' : 'text-gray-900 dark:text-gray-100'} mb-3 leading-snug group-hover:text-primary-400 transition-colors duration-200`}>
+                <Link href={`/blog/${heroPost.category}/${heroPost.slug}`}>
+                  <span className="absolute inset-0 z-10" aria-hidden="true"></span>
+                  {heroPost.title}
+                </Link>
+              </h2>
+
+              <div className={`${heroPost.thumbnail ? 'text-gray-300' : 'text-gray-500 dark:text-gray-400'} text-sm sm:text-base font-medium flex items-center gap-2 relative z-20`}>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <time dateTime={heroPost.date}>{formatDate(heroPost.date, siteMetadata.locale)}</time>
+                <span className="mx-1">&bull;</span>
+                <Link
+                  href={`/blog/category/${heroPost.category}`}
+                  className="text-primary-500 hover:text-primary-400 capitalize transition-colors"
+                >
+                  {heroPost.category.replace(/-/g, ' ')}
+                </Link>
+              </div>
+            </div>
+          </article>
+        )}
+      </section>
+
+      {/* Recent Articles Grid */}
+      {
+        recentPosts.length > 0 && (
+          <section className="pt-12 md:pt-16 border-t border-gray-200 dark:border-gray-800">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-8 sm:mb-10 gap-4">
+              <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
+                Recent Articles
+              </h2>
+              <Link href="/blog" className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-semibold text-base flex items-center transition-colors">
+                View all posts <span className="ml-1.5" aria-hidden="true">&rarr;</span>
+              </Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {recentPosts.map((post) => (
+                <article key={post.slug} className="relative flex flex-col bg-white dark:bg-gray-800/40 rounded-[1.5rem] shadow-sm ring-1 ring-gray-200 dark:ring-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:ring-primary-500/20 dark:hover:ring-primary-500/20 hover:-translate-y-1 group">
+                  {post.thumbnail && (
+                    <Link href={`/blog/${post.category}/${post.slug}`} className="block aspect-[16/9] overflow-hidden relative">
+                      <Image
+                        src={post.thumbnail}
+                        alt={post.title}
+                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                        width={600}
+                        height={338}
+                        style={{ width: '100%', height: '100%' }}
+                        placeholder="blur"
+                        blurDataURL={`image?url=${post.thumbnail}&w=600&q=1`}
+                      />
+                      <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-t-[1.5rem]"></div>
+                    </Link>
+                  )}
+                  <div className="flex-1 flex flex-col p-6 sm:p-8">
+                    <div className="flex items-center gap-x-3 mb-4 text-sm font-medium">
+                      <time dateTime={post.date} className="text-gray-500 dark:text-gray-400">
+                        {formatDate(post.date, siteMetadata.locale)}
+                      </time>
+                      <span className="text-gray-300 dark:text-gray-600">|</span>
+                      <Link href={`/blog/category/${post.category}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors uppercase tracking-wider text-xs font-bold">
+                        {post.category.replace(/-/g, ' ')}
+                      </Link>
                     </div>
-                    <dl className="md:col-start-1 md:row-start-1 md:self-center">
-                      {' '}
-                      {/* Added self-center here */}
-                      <dt className="sr-only">Published on</dt>
-                      <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                        <Link href={`/blog/${post.category}/${slug}`} aria-label={`Read "${title}"`}>
-                          {thumbnail && (
-                            <div className="w-full max-w-[220px] md:max-w-[250px] mx-auto md:mx-0 rounded-md overflow-hidden shadow-sm">
-                              <Image
-                                src={thumbnail}
-                                alt={title}
-                                className="object-cover"
-                                width={250}
-                                height={350}
-                                style={{ width: '100%', height: 'auto' }}
-                                placeholder="blur"
-                                blurDataURL={`image?url=${thumbnail}&w=250&q=1`}
-                                quality={95}
-                                priority={index === 0}
-                              />
-                            </div>
-                          )}
-                        </Link>
-                      </dd>
-                    </dl>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 leading-snug group-hover:text-primary-500 transition-colors duration-200">
+                      <Link href={`/blog/${post.category}/${post.slug}`}>
+                        <span className="absolute inset-0"></span>
+                        {post.title}
+                      </Link>
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 line-clamp-2 text-base leading-relaxed mb-6 flex-1">
+                      {post.summary}
+                    </p>
+                    <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
+                      <Link href={`/blog/${post.category}/${post.slug}`} className="inline-flex items-center text-sm font-semibold text-primary-500 group-hover:text-primary-600 dark:hover:text-primary-400">
+                        Read article <span className="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
+                      </Link>
+                    </div>
                   </div>
                 </article>
-              </li>
-            )
-          })}
-        </ul>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {/* Topic Clusters for Topical Authority */}
+      <div className="space-y-16 pt-12 md:pt-16">
+        {TOPICS.map(topic => {
+          const topicPosts = posts
+            .filter(p => p.category === topic.id && !displayedSlugs.has(p.slug))
+            .slice(0, 3)
+
+          if (topicPosts.length === 0) return null
+
+          return (
+            <section key={topic.id} className="pt-10 border-t border-gray-200 dark:border-gray-800">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100 flex items-center">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/10 dark:bg-primary-500/20 mr-3">
+                    <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </span>
+                  {topic.title}
+                </h2>
+                <Link href={`/blog/category/${topic.id}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-semibold text-sm flex items-center transition-colors">
+                  More in {topic.title} <span className="ml-1.5" aria-hidden="true">&rarr;</span>
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                {topicPosts.map(post => (
+                  <article key={post.slug} className="group relative flex flex-col items-start justify-between bg-gray-50 dark:bg-gray-800/30 p-6 rounded-2xl ring-1 ring-gray-200/50 dark:ring-gray-700/30 hover:bg-white dark:hover:bg-gray-800/80 hover:ring-primary-500/30 dark:hover:ring-primary-500/30 transition-all duration-300 hover:shadow-lg">
+                    <div className="flex items-center gap-x-3 text-xs mb-4 w-full">
+                      <time dateTime={post.date} className="text-gray-500 dark:text-gray-400 font-medium">
+                        {formatDate(post.date, siteMetadata.locale)}
+                      </time>
+                      <span className="ml-auto relative z-10 rounded-full bg-white dark:bg-gray-700/50 px-3 py-1 font-semibold text-gray-600 dark:text-gray-300 ring-1 ring-inset ring-gray-200 dark:ring-gray-700 group-hover:bg-primary-50 dark:group-hover:bg-primary-900/20 group-hover:text-primary-600 dark:group-hover:text-primary-400 group-hover:ring-primary-500/20 transition-colors">
+                        {post.category.replace(/-/g, ' ')}
+                      </span>
+                    </div>
+                    <div className="group relative w-full flex-1">
+                      <h3 className="text-lg font-bold leading-tight text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-2 mb-3">
+                        <Link href={`/blog/${post.category}/${post.slug}`}>
+                          <span className="absolute inset-0"></span>
+                          {post.title}
+                        </Link>
+                      </h3>
+                      <p className="line-clamp-3 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
+                        {post.summary}
+                      </p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </section>
+          )
+        })}
       </div>
-      {posts.length > MAX_DISPLAY && (
-        <div className="flex justify-end text-base font-medium leading-6">
-          <Link
-            href="/categories"
-            className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-            aria-label="Browse Categories"
-          >
-            Browse Categories &rarr;
-          </Link>
-        </div>
-      )}
-    </>
+
+    </div >
   )
 }
