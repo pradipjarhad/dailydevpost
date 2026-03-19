@@ -5,6 +5,21 @@
 
 const redirects = [
     {
+        source: '/categories',
+        destination: '/blog',
+        permanent: true,
+    },
+    {
+        source: '/blog/:category(ai-for-developers|build-in-public|career-and-growth|debugging-and-fixes|frontend-engineering|javascript-deep-dives|performance-optimization|tooling-and-dx)/:slug',
+        destination: '/blog/:slug',
+        permanent: true,
+    },
+    {
+        source: '/blog/:category(ai-for-developers|build-in-public|career-and-growth|debugging-and-fixes|frontend-engineering|javascript-deep-dives|performance-optimization|tooling-and-dx)',
+        destination: '/blog/category/:category',
+        permanent: true,
+    },
+    {
         source: '/blog/dev-diary/why-i-chose-this-tech-stack-for-my-developer-blog',
         destination: '/blog/build-in-public/why-i-chose-this-tech-stack-for-my-developer-blog',
         permanent: true,

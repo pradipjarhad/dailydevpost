@@ -22,12 +22,11 @@ const layouts = {
 }
 
 export async function generateMetadata(props: {
-    params: Promise<{ category: string; slug: string }>
+    params: Promise<{ slug: string }>
 }): Promise<Metadata | undefined> {
     const params = await props.params
-    const category = params.category
     const slug = params.slug
-    const post = allBlogs.find((p) => p.slug === slug && p.category === category)
+    const post = allBlogs.find((p) => p.slug === slug)
     const authorList = post?.authors || ['default']
     const authorDetails = authorList.map((author) => {
         const authorResults = allAuthors.find((p) => p.slug === author)
@@ -75,27 +74,25 @@ export async function generateMetadata(props: {
             images: imageList,
         },
         alternates: {
-            canonical: `${siteMetadata.siteUrl}/blog/${category}/${slug}`,
+            canonical: `${siteMetadata.siteUrl}/blog/${slug}`,
         },
     }
 }
 
 export const generateStaticParams = async () => {
     return allBlogs.map((p) => ({
-        category: p.category,
         slug: p.slug,
     }))
 }
 
 export default async function Page(props: {
-    params: Promise<{ category: string; slug: string }>
+    params: Promise<{ slug: string }>
 }) {
     const params = await props.params
-    const category = params.category
     const slug = params.slug
 
-    // Find post by slug AND category to ensure correct URL
-    const post = allBlogs.find((p) => p.slug === slug && p.category === category)
+    // Find post by slug
+    const post = allBlogs.find((p) => p.slug === slug)
 
     if (!post) {
         notFound()

@@ -2,22 +2,7 @@
 
 import Link from './Link'
 import { usePathname } from 'next/navigation'
-
-const formatTitle = (segment: string) => {
-    // List of acronyms that should be fully capitalized
-    const acronyms = ['DX', 'AI', 'SEO', 'CSS', 'JS', 'HTML', 'API', 'UI', 'UX', 'IT']
-
-    return segment
-        .split('-')
-        .map((word) => {
-            const upperWord = word.toUpperCase()
-            if (acronyms.includes(upperWord)) {
-                return upperWord
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-        })
-        .join(' ')
-}
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 const Breadcrumbs = () => {
     const pathname = usePathname()
@@ -25,7 +10,16 @@ const Breadcrumbs = () => {
     // Don't show breadcrumbs on the homepage
     if (pathname === '/') return null
 
-    const pathSegments = pathname.split('/').filter((segment) => segment !== '')
+    const baseSegments = pathname.split('/').filter((segment) => segment !== '')
+    const pathSegments: string[] = []
+    for (let i = 0; i < baseSegments.length; i++) {
+        // Skip 'page' and the following page number
+        if (baseSegments[i] === 'page' && i + 1 < baseSegments.length && !Number.isNaN(Number(baseSegments[i + 1]))) {
+            i++ // skip the next segment (the page number) as well
+            continue
+        }
+        pathSegments.push(baseSegments[i])
+    }
 
     return (
         <nav aria-label="Breadcrumb" className="mb-2 mt-0 flex max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
@@ -62,7 +56,7 @@ const Breadcrumbs = () => {
                     }
 
                     const isLast = index === pathSegments.length - 1
-                    const title = formatTitle(segment)
+                    const title = formatCategoryTitle(segment)
 
                     return (
                         <li key={`${href}-${index}`} className="flex items-center">

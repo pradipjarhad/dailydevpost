@@ -5,13 +5,14 @@ import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import siteMetadata, { postsPerPage } from '@/data/siteMetadata'
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
     const params = await props.params
     const category = params.category
 
     return genPageMetadata({
-        title: category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+        title: formatCategoryTitle(category),
         description: `${siteMetadata.title} - ${category} posts`,
         alternates: {
             canonical: './',
@@ -34,7 +35,7 @@ export default async function CategoryPage(props: { params: Promise<{ category: 
     const params = await props.params
     const category = params.category
 
-    const title = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    const title = formatCategoryTitle(category)
 
     // Filter posts by category
     const filteredPosts = allCoreContent(

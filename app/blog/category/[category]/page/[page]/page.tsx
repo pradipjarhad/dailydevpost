@@ -4,6 +4,7 @@ import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import { genPageMetadata } from 'app/seo'
 import siteMetadata, { postsPerPage } from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 export const generateStaticParams = async () => {
     const paths = [] as { category: string; page: string }[]
@@ -27,7 +28,7 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
     const params = await props.params
     const category = params.category
     const page = parseInt(params.page)
-    const title = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    const title = formatCategoryTitle(category)
 
     return genPageMetadata({
         title: `${title} - Page ${page}`,
@@ -43,7 +44,7 @@ export default async function Page(props: { params: Promise<{ category: string; 
     const category = params.category
     const pageNumber = parseInt(params.page)
 
-    const title = category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+    const title = formatCategoryTitle(category)
 
     const filteredPosts = allCoreContent(
         sortPosts(allBlogs).filter((post) => post.category === category)

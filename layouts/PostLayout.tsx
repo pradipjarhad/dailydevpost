@@ -116,20 +116,20 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               {faqs && <FAQ faqs={faqs} />}
 
               {relatedPosts.length > 0 && (
-                <div className="py-10 border-t border-gray-200 dark:border-gray-700">
+                <div className="py-8 md:py-10">
                   <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">Related Articles</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {relatedPosts.map((post) => (
                       <div key={post.slug} className="group relative">
                         {post.thumbnail && (
-                          <div className="relative aspect-video w-full overflow-hidden rounded-lg mb-3">
+                          <Link href={`/blog/${post.category}/${post.slug}`} className="block relative aspect-video w-full overflow-hidden rounded-lg mb-3">
                             <Image
                               src={post.thumbnail}
                               alt={post.title}
                               fill
                               className="object-cover transition-transform duration-300 group-hover:scale-105"
                             />
-                          </div>
+                          </Link>
                         )}
                         <h4 className="text-lg font-semibold text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
                           <Link href={`/blog/${post.category}/${post.slug}`}>{post.title}</Link>
@@ -140,12 +140,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </div>
               )}
 
-              <div className="pb-6 pt-6 text-m text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg relative overflow-hidden">
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-10 pointer-events-none">☕</div>
-                <p className="flex items-center relative z-10">
-                  <span role="img" aria-label="Coffee" className="mr-2">☕</span>
-                  Did you like the article? <Link href="https://ko-fi.com/dailydevpost" className="ml-1 text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">Support me on Ko-Fi!</Link>
-                </p>
+              <div className="py-8">
+                <div className="text-base text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/60 p-6 md:p-8 rounded-2xl relative overflow-hidden ring-1 ring-gray-100 dark:ring-gray-700/50">
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-5 pointer-events-none">☕</div>
+                  <p className="flex items-center relative z-10 font-medium">
+                    <span role="img" aria-label="Coffee" className="mr-3 text-2xl">☕</span>
+                    Did you like the article? <Link href="https://ko-fi.com/dailydevpost" className="ml-1.5 text-primary-500 font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Support me on Ko-Fi!</Link>
+                  </p>
+                </div>
               </div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>

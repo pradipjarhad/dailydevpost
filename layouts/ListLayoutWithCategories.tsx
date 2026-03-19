@@ -12,6 +12,7 @@ import Link from '@/components/Link'
 import categoryData from 'app/category-data.json' with { type: 'json' };
 import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 interface PaginationProps {
     totalPages: number
@@ -177,7 +178,7 @@ export default function ListLayoutWithCategories({
                     {sortedCategories.map((cat) => {
                         // Determine if this category is active
                         const isActive = pathname.includes(`/blog/category/${slug(cat)}`)
-                        const categoryTitle = cat.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+                        const categoryTitle = formatCategoryTitle(cat)
                         return (
                             <Link
                                 key={cat}
@@ -200,7 +201,7 @@ export default function ListLayoutWithCategories({
                         const { path, date, title, summary, thumbnail, readingTime } = post
 
                         // Get category title for display
-                        const postCategory = post.category ? post.category.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ') : 'Uncategorized'
+                        const postCategory = post.category ? formatCategoryTitle(post.category) : 'Uncategorized'
 
                         // Get author details
                         const authorList = post.authors || ['default']
@@ -212,7 +213,7 @@ export default function ListLayoutWithCategories({
                         const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
                         return (
-                            <div key={path} className="flex flex-col flex-1 overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-xl dark:bg-gray-800 dark:shadow-gray-800/40 border border-gray-100 dark:border-gray-700 h-full">
+                            <div key={path} className="group flex flex-col flex-1 overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 dark:bg-gray-800 dark:shadow-gray-800/40 border border-gray-100 dark:border-gray-700 h-full">
                                 {/* Thumbnail Image */}
                                 {thumbnail && (
                                     <Link href={`/${path}`} className="relative block h-56 w-full overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
@@ -236,7 +237,7 @@ export default function ListLayoutWithCategories({
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-[14px] w-[14px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                             </svg>
-                                            {readingTime?.text?.replace('read', 'mins').replace('min', 'min') || '1 min'}
+                                            {readingTime?.text?.replace('min read', 'mins') || '1 min'}
                                         </span>
                                     </div>
 
@@ -255,8 +256,19 @@ export default function ListLayoutWithCategories({
                                     {/* Spacer to push footer to bottom */}
                                     <div className="mt-auto"></div>
 
-                                    {/* Divider */}
-                                    <div className="mb-5 h-px w-full bg-gray-100 dark:bg-gray-700" />
+                                    {/* Animated Divider */}
+                                    <div className="relative mb-5 flex items-center w-full">
+                                        {/* Base line */}
+                                        <div className="absolute inset-x-0 h-px bg-gray-100 dark:bg-gray-700" />
+                                        {/* Animated line overlay */}
+                                        <div className="absolute inset-x-0 h-px bg-primary-500 origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100" />
+                                        {/* Animated arrow */}
+                                        <span className="absolute right-0 opacity-0 -translate-x-4 transition-all duration-500 ease-out text-primary-500 group-hover:opacity-100 group-hover:translate-x-0 bg-white dark:bg-gray-800 pl-2">
+                                            <svg width="6" height="10" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 1L6 6L1 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                        </span>
+                                    </div>
 
                                     {/* Author and Date Footer */}
                                     <div className="flex items-center justify-between">
@@ -276,7 +288,7 @@ export default function ListLayoutWithCategories({
                                                 <span className="text-[12px] text-gray-500 dark:text-gray-400 line-clamp-1 leading-none">{author?.occupation || author?.company}</span>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col items-end text-[12px] text-gray-400 dark:text-gray-500 mt-1">
+                                        <div className="flex flex-col items-center text-[12px] text-gray-400 dark:text-gray-500 mt-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-[14px] w-[14px] mb-1 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                             </svg>

@@ -37,9 +37,8 @@ const computedFields: ComputedFields = {
   path: {
     type: 'string',
     resolve: (doc) => {
-      const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
       const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
-      return `blog/${category}/${slug}`
+      return `blog/${slug}`
     },
   },
   filePath: {
@@ -191,7 +190,6 @@ export const Blog = defineDocumentType(() => ({
     structuredData: {
       type: 'json',
       resolve: (doc) => {
-        const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
         const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
 
         const data: any = {
@@ -202,7 +200,7 @@ export const Blog = defineDocumentType(() => ({
           dateModified: doc.lastmod || doc.date,
           description: doc.summary,
           image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
-          url: `${siteMetadata.siteUrl}/blog/${category}/${slug}`,
+          url: `${siteMetadata.siteUrl}/blog/${slug}`,
         }
 
         const faqs = (doc as any).faqs
@@ -223,9 +221,8 @@ export const Blog = defineDocumentType(() => ({
     url: {
       type: 'string',
       resolve: (doc) => {
-        const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
         const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
-        return `${siteMetadata.siteUrl}/blog/${category}/${slug}`
+        return `${siteMetadata.siteUrl}/blog/${slug}`
       },
     },
     breadcrumbLd: {
@@ -260,7 +257,7 @@ export const Blog = defineDocumentType(() => ({
               '@type': 'ListItem',
               'position': 4,
               'name': doc.title,
-              'item': `${siteMetadata.siteUrl}/blog/${category}/${slug}`
+              'item': `${siteMetadata.siteUrl}/blog/${slug}`
             }
           ]
         }

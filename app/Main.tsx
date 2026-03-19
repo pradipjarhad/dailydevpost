@@ -22,12 +22,12 @@ export default function Home({ posts }) {
   const displayedSlugs = new Set(posts.slice(0, MAX_DISPLAY).map((p) => p.slug))
 
   return (
-    <div className="space-y-16 mt-8 md:mt-12 mb-16">
+    <div className="mt-4 md:mt-6 mb-8 flex flex-col gap-6 md:gap-10">
       {/* Hero Section */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <div className="flex flex-col space-y-6 relative z-10">
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-gray-100">
-            Engineering Better <span className="text-primary-500">Frontend</span> Experiences
+            Mastering Modern <span className="text-primary-500">Frontend</span> Engineering
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed">
             {siteMetadata.description}
@@ -110,8 +110,8 @@ export default function Home({ posts }) {
       {/* Recent Articles Grid */}
       {
         recentPosts.length > 0 && (
-          <section className="pt-12 md:pt-16 border-t border-gray-200 dark:border-gray-800">
-            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-8 sm:mb-10 gap-4">
+          <section className="pt-4 md:pt-6 border-t border-gray-100 dark:border-gray-800/50">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between mb-6 sm:mb-8 gap-3">
               <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100">
                 Recent Articles
               </h2>
@@ -170,7 +170,7 @@ export default function Home({ posts }) {
       }
 
       {/* Topic Clusters for Topical Authority */}
-      <div className="space-y-16 pt-12 md:pt-16">
+      <div className="flex flex-col gap-6 md:gap-8">
         {TOPICS.map(topic => {
           const topicPosts = posts
             .filter(p => p.category === topic.id && !displayedSlugs.has(p.slug))
@@ -179,8 +179,8 @@ export default function Home({ posts }) {
           if (topicPosts.length === 0) return null
 
           return (
-            <section key={topic.id} className="pt-10 border-t border-gray-200 dark:border-gray-800">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+            <section key={topic.id} className="pt-4 md:pt-6 border-t border-gray-100 dark:border-gray-800/50">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-3">
                 <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100 flex items-center">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-primary-500/10 dark:bg-primary-500/20 mr-3">
                     <svg className="w-6 h-6 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
