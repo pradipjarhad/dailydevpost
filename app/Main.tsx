@@ -51,11 +51,11 @@ export default function Home({ posts }) {
         {heroPost && (
           <article className="relative group w-full rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-gray-900/5 dark:ring-white/10 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.1)]">
             {heroPost.thumbnail ? (
-              <div className="relative aspect-[4/3] sm:aspect-video lg:aspect-square xl:aspect-video w-full bg-gray-900">
+              <div className="relative aspect-[4/3] sm:aspect-video lg:aspect-square xl:aspect-video w-full overflow-hidden bg-gray-900">
                 <Image
                   src={heroPost.thumbnail}
                   alt={heroPost.title}
-                  className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full transform group-hover:scale-105 transition-transform duration-700"
                   width={800}
                   height={450}
                   style={{ width: '100%', height: '100%' }}
@@ -63,7 +63,7 @@ export default function Home({ posts }) {
                   placeholder="blur"
                   blurDataURL={`image?url=${heroPost.thumbnail}&w=800&q=1`}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/95 via-gray-900/50 to-transparent transition-opacity duration-300"></div>
+                <div className="absolute inset-0 z-20 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-80 pointer-events-none transition-opacity duration-300"></div>
               </div>
             ) : (
               <div className="relative aspect-video w-full bg-gray-100 dark:bg-gray-800"></div>
@@ -83,7 +83,7 @@ export default function Home({ posts }) {
               </div>
 
               <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${heroPost.thumbnail ? 'text-white' : 'text-gray-900 dark:text-gray-100'} mb-3 leading-snug group-hover:text-primary-400 transition-colors duration-200`}>
-                <Link href={`/blog/${heroPost.category}/${heroPost.slug}`}>
+                <Link href={`/blog/${heroPost.slug}`}>
                   <span className="absolute inset-0 z-10" aria-hidden="true"></span>
                   {heroPost.title}
                 </Link>
@@ -123,18 +123,18 @@ export default function Home({ posts }) {
               {recentPosts.map((post) => (
                 <article key={post.slug} className="relative flex flex-col bg-white dark:bg-gray-800/40 rounded-[1.5rem] shadow-sm ring-1 ring-gray-200 dark:ring-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:ring-primary-500/20 dark:hover:ring-primary-500/20 hover:-translate-y-1 group">
                   {post.thumbnail && (
-                    <Link href={`/blog/${post.category}/${post.slug}`} className="block aspect-[16/9] overflow-hidden relative">
+                    <Link href={`/blog/${post.slug}`} className="block aspect-[16/9] overflow-hidden relative bg-gray-900">
                       <Image
                         src={post.thumbnail}
                         alt={post.title}
-                        className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full transform group-hover:scale-105 transition-transform duration-700"
                         width={600}
                         height={338}
                         style={{ width: '100%', height: '100%' }}
                         placeholder="blur"
                         blurDataURL={`image?url=${post.thumbnail}&w=600&q=1`}
                       />
-                      <div className="absolute inset-0 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-t-[1.5rem]"></div>
+                      <div className="absolute inset-0 z-20 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-t-[1.5rem] pointer-events-none"></div>
                     </Link>
                   )}
                   <div className="flex-1 flex flex-col p-6 sm:p-8">
@@ -148,7 +148,7 @@ export default function Home({ posts }) {
                       </Link>
                     </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3 leading-snug group-hover:text-primary-500 transition-colors duration-200">
-                      <Link href={`/blog/${post.category}/${post.slug}`}>
+                      <Link href={`/blog/${post.slug}`}>
                         <span className="absolute inset-0"></span>
                         {post.title}
                       </Link>
@@ -157,7 +157,7 @@ export default function Home({ posts }) {
                       {post.summary}
                     </p>
                     <div className="mt-auto pt-4 border-t border-gray-100 dark:border-gray-700/50">
-                      <Link href={`/blog/${post.category}/${post.slug}`} className="inline-flex items-center text-sm font-semibold text-primary-500 group-hover:text-primary-600 dark:hover:text-primary-400">
+                      <Link href={`/blog/${post.slug}`} className="inline-flex items-center text-sm font-semibold text-primary-500 group-hover:text-primary-600 dark:hover:text-primary-400">
                         Read article <span className="ml-1.5 transition-transform group-hover:translate-x-1">&rarr;</span>
                       </Link>
                     </div>
@@ -207,7 +207,7 @@ export default function Home({ posts }) {
                     </div>
                     <div className="group relative w-full flex-1">
                       <h3 className="text-lg font-bold leading-tight text-gray-900 dark:text-gray-100 group-hover:text-primary-500 transition-colors line-clamp-2 mb-3">
-                        <Link href={`/blog/${post.category}/${post.slug}`}>
+                        <Link href={`/blog/${post.slug}`}>
                           <span className="absolute inset-0"></span>
                           {post.title}
                         </Link>

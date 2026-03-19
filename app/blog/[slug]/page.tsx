@@ -107,9 +107,29 @@ export default async function Page(props: {
     const jsonLd = JSON.parse(JSON.stringify(post.structuredData))
     jsonLd['author'] = authorList.map((author) => {
         const authorResults = allAuthors.find((p) => p.slug === author)
+        if (!authorResults) {
+            return {
+                '@type': 'Person',
+                name: author,
+            }
+        }
+        
+        const sameAs: string[] = []
+        if (authorResults.twitter) sameAs.push(authorResults.twitter)
+        if (authorResults.linkedin) sameAs.push(authorResults.linkedin)
+        if (authorResults.github) sameAs.push(authorResults.github)
+        
         return {
             '@type': 'Person',
-            name: authorResults ? authorResults.name : author,
+            name: authorResults.name,
+            jobTitle: authorResults.occupation,
+            description: authorResults.motto || authorResults.description,
+            url: authorResults.twitter || authorResults.linkedin || authorResults.github || siteMetadata.siteUrl,
+            sameAs: sameAs.length > 0 ? sameAs : undefined,
+            worksFor: {
+                '@type': 'Organization',
+                name: authorResults.company || siteMetadata.title,
+            }
         }
     })
 

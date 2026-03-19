@@ -37,30 +37,41 @@ export default async function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="flex flex-col items-start justify-start divide-y divide-gray-200 dark:divide-gray-700 md:mt-24 md:flex-row md:items-center md:justify-center md:space-x-6 md:divide-y-0">
-        <div className="space-x-2 pb-8 pt-6 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:border-r-2 md:px-6 md:text-6xl md:leading-14">
-            Tags
+      <div className="flex flex-col items-center justify-center py-12 md:py-20">
+        <div className="text-center space-y-4 mb-16">
+          <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">
+            Topic <span className="text-primary-500">Repository</span>
           </h1>
+          <p className="max-w-xl mx-auto text-lg text-gray-500 dark:text-gray-400">
+            Explore the specialized technical clusters documented in the laboratory.
+          </p>
+          <div className="h-1.5 w-20 bg-primary-500 rounded-full mx-auto"></div>
         </div>
-        <div className="flex max-w-lg flex-wrap">
-          {tagKeys.length === 0 && 'No tags found.'}
-          {sortedTags
-            .filter((t) => tagCounts[t] >= 3)
-            .map((t) => {
-              return (
-                <div key={t} className="mb-2 mr-5 mt-2">
-                  <Tag text={t} />
-                  <Link
-                    href={`/tags/${slug(t)}`}
-                    className="-ml-2 text-sm font-semibold uppercase text-gray-600 dark:text-gray-300"
-                    aria-label={`View posts tagged ${t}`}
-                  >
-                    {` (${tagCounts[t]})`}
-                  </Link>
-                </div>
-              )
-            })}
+        
+        <div className="flex max-w-4xl flex-wrap justify-center gap-4">
+          {tagKeys.length === 0 && (
+             <div className="text-gray-500 dark:text-gray-400 italic">No tags identified in current build.</div>
+          )}
+          {sortedTags.map((t) => {
+            const count = tagCounts[t]
+            // Scale based on frequency for a "cloud" feel
+            const sizeClass = count > 10 ? 'text-lg px-6 py-2.5' : count > 5 ? 'text-base px-5 py-2' : 'text-sm px-4 py-1.5'
+            
+            return (
+              <div key={t} className="group relative">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500 to-blue-600 rounded-full blur opacity-0 group-hover:opacity-20 transition duration-300"></div>
+                <Link
+                  href={`/tags/${slug(t)}`}
+                  className={`relative flex items-center gap-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800/50 font-bold transition-all hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-lg hover:-translate-y-0.5 ${sizeClass}`}
+                >
+                  <span className="text-gray-900 dark:text-gray-100">{t}</span>
+                  <span className="text-xs font-black text-primary-500 bg-primary-500/10 rounded-full px-2 py-0.5">
+                    {count}
+                  </span>
+                </Link>
+              </div>
+            )
+          })}
         </div>
       </div>
     </>

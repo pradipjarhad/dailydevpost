@@ -4,32 +4,36 @@ import SocialIcon from '@/components/social-icons'
 
 export default function Footer() {
   return (
-    <footer>
-      <div className="mt-16 flex flex-col items-center pb-8">
-        <div className="mb-3 flex flex-wrap justify-center gap-4">
-          {siteMetadata.github && <SocialIcon kind="github" href={siteMetadata.github} size={6} />}
-          {siteMetadata.facebook && <SocialIcon kind="facebook" href={siteMetadata.facebook} size={6} />}
-          {siteMetadata.youtube && <SocialIcon kind="youtube" href={siteMetadata.youtube} size={6} />}
-          {siteMetadata.linkedin && <SocialIcon kind="linkedin" href={siteMetadata.linkedin} size={6} />}
-          {siteMetadata.twitter && <SocialIcon kind="twitter" href={siteMetadata.twitter} size={6} />}
-          {siteMetadata.instagram && <SocialIcon kind="instagram" href={siteMetadata.instagram} size={6} />}
-          {siteMetadata.goodReads && <SocialIcon kind="goodReads" href={siteMetadata.goodReads} size={6} />}
-          {siteMetadata.stackOverflow && <SocialIcon kind="stackOverflow" href={siteMetadata.stackOverflow} size={6} />}
-          {siteMetadata.stackExchange && <SocialIcon kind="stackExchange" href={siteMetadata.stackExchange} size={6} />}
-          {siteMetadata.kofi && <SocialIcon kind="kofi" href={siteMetadata.kofi} size={6} />}
+    <footer className="mt-16 pb-12 border-t border-gray-100 dark:border-gray-800/50">
+      <div className="flex flex-col items-center pt-10">
+        <div className="flex mb-6 space-x-6">
+          <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
+          <SocialIcon kind="github" href={siteMetadata.github} size={6} />
+          <SocialIcon kind="facebook" href={siteMetadata.facebook} size={6} />
+          <SocialIcon kind="youtube" href={siteMetadata.youtube} size={6} />
+          <SocialIcon kind="linkedin" href={siteMetadata.linkedin} size={6} />
+          <SocialIcon kind="twitter" href={siteMetadata.twitter} size={6} />
+          <SocialIcon kind="instagram" href={siteMetadata.instagram} size={6} />
         </div>
-        <div className="mb-3 flex flex-wrap justify-center gap-4">
-          <Link href="/privacy-policy">Privacy Policy</Link>
-          <Link href="/terms-and-conditions">Terms and Conditions</Link>
-        </div>
-        <div className="mb-8 flex flex-wrap justify-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>{`© 2025-${new Date().getFullYear()}`}</div>
-          <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
-          <div>{` • `}</div>
-          <Link href="/feed.xml">RSS</Link>
-          <div>{` • `}</div>
-          <Link href="/sitemap.xml">Sitemap</Link>
+        
+        <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-8 text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
+          <Link href="/" className="hover:text-primary-500 transition-colors">Home</Link>
+          <Link href="/blog" className="hover:text-primary-500 transition-colors">Archive</Link>
+          <Link href="/about" className="hover:text-primary-500 transition-colors">Expertise</Link>
+          <Link href="/contact" className="hover:text-primary-500 transition-colors">Connect</Link>
+        </nav>
+
+        <div className="flex flex-col items-center space-y-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <div className="flex space-x-2">
+            <div>{`© 2025-${new Date().getFullYear()}`}</div>
+            <div>{` • `}</div>
+            <Link href="/" className="hover:text-primary-500 transition-colors">{siteMetadata.title}</Link>
+          </div>
+          <div className="flex space-x-4">
+            <Link href="/privacy-policy" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Privacy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Terms</Link>
+            <Link href="/sitemap.xml" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Sitemap</Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -22,7 +22,7 @@ const ArticleImage = (props: ArticleImageProps) => {
         <Image
           src={props.src}
           alt={alt as string}
-          className={`${className} object-cover`}
+          className={`${className}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 100vw"
         />

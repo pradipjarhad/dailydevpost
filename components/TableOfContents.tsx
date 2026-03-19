@@ -127,27 +127,36 @@ const TableOfContents = ({ toc }: TableOfContentsProps) => {
 
             {/* Desktop Sidebar */}
             <div className="hidden xl:block">
-                <h3 className="mb-4 text-xs font-bold tracking-wider text-gray-500 uppercase dark:text-gray-400">
+                <div className="flex items-center gap-2 mb-6 text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-800 pb-2">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 6h16M4 12h16M4 18h7" />
+                    </svg>
                     Table of Contents
-                </h3>
-                <nav className="max-h-[calc(100vh-10rem)] overflow-y-auto pr-2 custom-scrollbar">
-                    <ul className="list-none space-y-2.5">
+                </div>
+                <nav className="max-h-[calc(100vh-12rem)] overflow-y-auto pr-4 custom-scrollbar">
+                    <ul className="list-none space-y-4">
                         {filteredToc.map((item) => {
                             const id = item.url.replace('#', '')
                             const isActive = activeId === id
                             return (
-                                <li key={item.url} className={`${item.depth === 3 ? 'ml-4' : ''}`}>
+                                <li key={item.url} className={`${item.depth === 3 ? 'ml-5' : ''}`}>
                                     <a
                                         href={item.url}
                                         onClick={(e) => handleClick(e, item.url)}
-                                        className={`block text-sm leading-snug transition-colors duration-200 border-l-2 pl-3 -ml-[2px]
+                                        className={`group flex items-center gap-3 text-[13px] leading-tight transition-all duration-300
                                         ${isActive
-                                                ? 'border-primary-500 text-primary-600 font-medium dark:border-primary-400 dark:text-primary-400'
-                                                : 'border-transparent text-gray-500 hover:text-gray-900 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-600'
+                                                ? 'text-primary-500 font-bold'
+                                                : 'text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100'
                                             }
                                     `}
                                         aria-current={isActive ? 'location' : undefined}
                                     >
+                                        <span className={`h-1.5 rounded-full transition-all duration-300 
+                                            ${isActive 
+                                                ? 'w-4 bg-primary-500' 
+                                                : 'w-1.5 bg-gray-200 dark:bg-gray-700 group-hover:w-3 group-hover:bg-gray-400 dark:group-hover:bg-gray-500'
+                                            }`} 
+                                        />
                                         {item.value}
                                     </a>
                                 </li>

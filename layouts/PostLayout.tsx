@@ -14,6 +14,7 @@ import TableOfContents, { TocItem } from '@/components/TableOfContents'
 import FAQ from '@/components/FAQ'
 
 import { allBlogs } from 'contentlayer/generated'
+import SectionContainer from '@/components/SectionContainer'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/content/${path}`
 
@@ -57,26 +58,19 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
     .slice(0, 2)
 
   return (
-    <>
+    <SectionContainer>
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
-      <article>
+      <article className="relative">
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-          <header className="pt-4 xl:pb-6">
-            <div className="space-y-1 text-center">
+          <header className="pt-6 xl:pb-10">
+            <div className="space-y-4 text-center">
               <dl className="space-y-10">
                 <div>
-                  <dt className="sr-only">Published on, Time to read</dt>
-                  <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                  <dt className="sr-only">Published on</dt>
+                  <dd className="text-sm font-black uppercase tracking-[0.2em] text-primary-500">
                     <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}{' '}
-                      &mdash;{' '}
-                    </time>{' '}
-                    <span className="time-to-read">
-                      <span role="img" aria-label="Clock">
-                        🕒
-                      </span>{' '}
-                      {content.readingTime.text}
-                    </span>
+                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)} &mdash; {content.readingTime.text}
+                    </time>
                   </dd>
                 </div>
               </dl>
@@ -86,33 +80,33 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
             </div>
           </header>
-          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-5 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
-            <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:dark:border-gray-700">
-              <div className="divide-gray-200 text-sm font-medium xl:col-start-1 xl:row-start-2 xl:divide-y dark:divide-gray-700">
+          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-5 xl:gap-x-10 xl:divide-y-0">
+            <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
+              <dt className="sr-only">Thumbnail</dt>
+              <dd>
                 {content.thumbnail && (
-                  <div className="pt-4 xl:pt-8">
+                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-900">
                     <Image
                       src={content.thumbnail}
-                      alt={content.title}
-                      className="block rounded-lg mx-auto my-0"
-                      width={250}
-                      height={250}
-                      style={{ height: 'auto' }}
-                      quality={90}
+                      alt={title}
+                      fill
+                      className="transition-transform duration-500 group-hover:scale-105"
+                      priority
                     />
                   </div>
                 )}
-              </div>
+              </dd>
             </dl>
-            <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
+            <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               {/* Mobile Table of Contents */}
               {toc && (
-                <div className="block xl:hidden mb-6 pt-6">
+                <div className="block xl:hidden mb-10 pt-6">
                   <TableOfContents toc={toc as TocItem[]} />
                 </div>
               )}
-
-              <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
+              <div className="prose max-w-none pb-12 pt-10 dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-black prose-p:leading-relaxed prose-p:text-gray-600 dark:prose-p:text-gray-300">
+                {children}
+              </div>
               {faqs && <FAQ faqs={faqs} />}
 
               {relatedPosts.length > 0 && (
@@ -122,17 +116,17 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     {relatedPosts.map((post) => (
                       <div key={post.slug} className="group relative">
                         {post.thumbnail && (
-                          <Link href={`/blog/${post.category}/${post.slug}`} className="block relative aspect-video w-full overflow-hidden rounded-lg mb-3">
+                          <Link href={`/blog/${post.slug}`} className="block relative aspect-video w-full overflow-hidden rounded-lg mb-3">
                             <Image
                               src={post.thumbnail}
                               alt={post.title}
                               fill
-                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              className="transition-transform duration-300 group-hover:scale-105"
                             />
                           </Link>
                         )}
                         <h4 className="text-lg font-semibold text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-                          <Link href={`/blog/${post.category}/${post.slug}`}>{post.title}</Link>
+                          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h4>
                       </div>
                     ))}
@@ -152,11 +146,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>
               </div>
-              {authorDetails.map((author) => (
-                <div className="pb-6 pt-6" key={author.name}>
-                  <AuthorCard author={author} />
-                </div>
-              ))}
               {commentsEnabled && slug && (
                 <div
                   className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
@@ -224,6 +213,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           </div>
         </div>
       </article>
-    </>
+    </SectionContainer>
   )
 }

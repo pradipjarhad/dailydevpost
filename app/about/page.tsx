@@ -1,4 +1,5 @@
-import { Authors, allAuthors } from 'contentlayer/generated'
+import { Authors, allAuthors, allBlogs } from 'contentlayer/generated'
+import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import AuthorLayout from '@/layouts/AuthorLayout'
 import siteMetadata from '@/data/siteMetadata'
@@ -18,6 +19,9 @@ export default function Page() {
     notFound()
   }
   const mainContent = coreContent(author)
+  
+  // Fetch the 3 most recent posts for social proof/authority
+  const latestPosts = allCoreContent(sortPosts(allBlogs)).slice(0, 3)
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -38,13 +42,36 @@ export default function Page() {
     ],
   }
 
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: author.name,
+    image: `${siteMetadata.siteUrl}${author.avatar}`,
+    jobTitle: author.occupation,
+    worksFor: {
+      '@type': 'Organization',
+      name: author.company || siteMetadata.title,
+    },
+    url: `${siteMetadata.siteUrl}/about`,
+    sameAs: [
+      author.twitter,
+      author.linkedin,
+      author.github,
+    ].filter(link => !!link),
+    description: author.motto || author.description,
+  }
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <AuthorLayout content={mainContent}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
+      />
+      <AuthorLayout content={mainContent} latestPosts={latestPosts}>
         <MDXLayoutRenderer code={author.body.code} />
       </AuthorLayout>
     </>

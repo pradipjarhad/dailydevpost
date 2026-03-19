@@ -1,5 +1,6 @@
 import Image from './Image'
 import SocialIcon from '@/components/social-icons'
+import Link from './Link'
 import { Authors } from 'contentlayer/generated'
 
 interface Props {
@@ -25,9 +26,11 @@ const AuthorCard = ({ author }: Props) => {
             )}
             <div className="flex flex-col text-center sm:text-left">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3 mb-2">
-                    <h3 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-gray-100">
-                        {name}
-                    </h3>
+                    <Link href="/about" className="hover:text-primary-500 transition-colors">
+                        <h3 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-gray-100">
+                            {name}
+                        </h3>
+                    </Link>
                     <div className="text-xs font-bold uppercase tracking-widest text-primary-500 py-0.5 px-2 rounded-full bg-primary-50 dark:bg-primary-900/20 border border-primary-100 dark:border-primary-800/30">
                         {occupation}
                     </div>

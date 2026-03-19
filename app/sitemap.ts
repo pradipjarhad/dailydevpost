@@ -37,7 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     'blog',
-    'categories',
+    // 'categories',
     // 'tags',
     'about',
     'contact',
@@ -48,5 +48,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date().toISOString().split('T')[0],
   }))
 
-  return [...routes, ...blogRoutes, ...tagRoutes, ...categoryRoutes]
+  return [...routes, ...blogRoutes]
 }

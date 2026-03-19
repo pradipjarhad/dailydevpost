@@ -216,12 +216,12 @@ export default function ListLayoutWithCategories({
                             <div key={path} className="group flex flex-col flex-1 overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-1 dark:bg-gray-800 dark:shadow-gray-800/40 border border-gray-100 dark:border-gray-700 h-full">
                                 {/* Thumbnail Image */}
                                 {thumbnail && (
-                                    <Link href={`/${path}`} className="relative block h-56 w-full overflow-hidden bg-gray-100 dark:bg-gray-800 flex-shrink-0">
+                                    <Link href={`/${path}`} className="relative block aspect-video w-full overflow-hidden flex-shrink-0">
                                         <Image
                                             src={thumbnail}
                                             alt={title}
                                             fill
-                                            className="object-cover transition-transform duration-300 hover:scale-105"
+                                            className="transition-transform duration-500 group-hover:scale-105"
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
                                     </Link>
@@ -284,7 +284,7 @@ export default function ListLayoutWithCategories({
                                                 </div>
                                             )}
                                             <div className="flex flex-col justify-center">
-                                                <span className="text-[14px] font-bold text-gray-900 dark:text-gray-100 leading-none mb-1 cursor-default">{author?.name}</span>
+                                                <Link href="/about" className="text-[14px] font-bold text-gray-900 dark:text-gray-100 leading-none mb-1 hover:text-primary-500 transition-colors">{author?.name}</Link>
                                                 <span className="text-[12px] text-gray-500 dark:text-gray-400 line-clamp-1 leading-none">{author?.occupation || author?.company}</span>
                                             </div>
                                         </div>

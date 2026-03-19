@@ -1,106 +1,83 @@
-const Note = ({ children }) => {
-    const Color = '#0969da';
-    return (
-        <>
-            <div className="not-prose border-l-4 pl-4 pr-10 py-2 mb-5" style={{ borderColor: Color, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg className="octicon octicon-info mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" style={{ fill: Color }}>
-                        <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
-                    </svg>
-                    <p style={{ margin: '0', color: Color }}>
-                        <strong>
-                            Note
-                        </strong>
-                    </p>
-                </div>
-                {children}
-            </div>
-        </>
-    )
-}
+import React from 'react'
 
-const Tip = ({ children }) => {
-    const Color = '#1f883d';
-    return (
-        <>
-            <div className="not-prose border-l-4 pl-4 pr-10 py-2 mb-5" style={{ borderColor: Color, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg className="octicon octicon-light-bulb mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" style={{ fill: Color }}>
-                        <path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path>
-                    </svg>
-                    <p style={{ margin: '0', color: Color }}>
-                        <strong>
-                            Tip
-                        </strong>
-                    </p>
-                </div>
-                {children}
-            </div>
-        </>
-    )
-}
+const Note = ({ children }) => (
+  <div className="relative my-8 overflow-hidden rounded-2xl bg-blue-50/40 dark:bg-blue-900/10 border border-blue-200/50 dark:border-blue-800/30 p-6 not-prose group transition-all duration-300 hover:shadow-lg hover:bg-blue-50/60 dark:hover:bg-blue-900/20">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <span className="text-sm font-black uppercase tracking-widest text-blue-600 dark:text-blue-400">Note</span>
+    </div>
+    <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+      {children}
+    </div>
+  </div>
+)
 
-const Important = ({ children }) => {
-    const Color = '#8250df';
-    return (
-        <>
-            <div className="not-prose border-l-4 pl-4 pr-10 py-2 mb-5" style={{ borderColor: Color, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg className="octicon octicon-report mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" style={{ fill: Color }}>
-                        <path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
-                    </svg>
-                    <p style={{ margin: '0', color: Color }}>
-                        <strong>
-                            Important
-                        </strong>
-                    </p>
-                </div>
-                {children}
-            </div>
-        </>
-    )
-}
+const Tip = ({ children }) => (
+  <div className="relative my-8 overflow-hidden rounded-2xl bg-emerald-50/40 dark:bg-emerald-900/10 border border-emerald-200/50 dark:border-emerald-800/30 p-6 not-prose group transition-all duration-300 hover:shadow-lg hover:bg-emerald-50/60 dark:hover:bg-emerald-900/20">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0012 18.75c-1.03 0-1.9-.4-2.593-.913l-.547-.547z" />
+        </svg>
+      </div>
+      <span className="text-sm font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">Pro Tip</span>
+    </div>
+    <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+      {children}
+    </div>
+  </div>
+)
 
-const Warning = ({ children }) => {
-    const Color = '#9a6700';
-    return (
-        <>
-            <div className="not-prose border-l-4 pl-4 pr-10 py-2 mb-5" style={{ borderColor: Color, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg className="octicon octicon-alert mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" style={{ fill: Color }}>
-                        <path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path>
-                    </svg>
-                    <p style={{ margin: '0', color: Color }}>
-                        <strong>
-                            Warning
-                        </strong>
-                    </p>
-                </div>
-                {children}
-            </div>
-        </>
-    )
-}
+const Important = ({ children }) => (
+  <div className="relative my-8 overflow-hidden rounded-2xl bg-indigo-50/40 dark:bg-indigo-900/10 border border-indigo-200/50 dark:border-indigo-800/30 p-6 not-prose group transition-all duration-300 hover:shadow-lg hover:bg-indigo-50/60 dark:hover:bg-indigo-900/20">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      </div>
+      <span className="text-sm font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400">Crucial</span>
+    </div>
+    <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+      {children}
+    </div>
+  </div>
+)
 
-const Caution = ({ children }) => {
-    const Color = '#cf222e';
-    return (
-        <>
-            <div className="not-prose border-l-4 pl-4 pr-10 py-2" style={{ borderColor: Color, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <svg className="octicon octicon-stop mr-2" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true" style={{ fill: Color }}>
-                        <path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path>
-                    </svg>
-                    <p style={{ margin: '0', color: Color }}>
-                        <strong>
-                            Caution
-                        </strong>
-                    </p>
-                </div>
-                {children}
-            </div>
-        </>
-    )
-}
+const Warning = ({ children }) => (
+  <div className="relative my-8 overflow-hidden rounded-2xl bg-amber-50/40 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-800/30 p-6 not-prose group transition-all duration-300 hover:shadow-lg hover:bg-amber-50/60 dark:hover:bg-amber-900/20">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <span className="text-sm font-black uppercase tracking-widest text-amber-600 dark:text-amber-400">Warning</span>
+    </div>
+    <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+      {children}
+    </div>
+  </div>
+)
+
+const Caution = ({ children }) => (
+  <div className="relative my-8 overflow-hidden rounded-2xl bg-rose-50/40 dark:bg-rose-900/10 border border-rose-200/50 dark:border-rose-800/30 p-6 not-prose group transition-all duration-300 hover:shadow-lg hover:bg-rose-50/60 dark:hover:bg-rose-900/20">
+    <div className="flex items-center gap-3 mb-3">
+      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-5 h-5">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+        </svg>
+      </div>
+      <span className="text-sm font-black uppercase tracking-widest text-rose-600 dark:text-rose-400">Caution</span>
+    </div>
+    <div className="text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+      {children}
+    </div>
+  </div>
+)
 
 export { Note, Tip, Important, Warning, Caution }
