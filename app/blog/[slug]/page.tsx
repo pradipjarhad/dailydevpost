@@ -141,6 +141,25 @@ export default async function Page(props: {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
+            {post.faqs && post.faqs.length > 0 && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'FAQPage',
+                            mainEntity: post.faqs.map((faq) => ({
+                                '@type': 'Question',
+                                name: faq.question,
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: faq.answer,
+                                },
+                            })),
+                        }),
+                    }}
+                />
+            )}
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(post.breadcrumbLd) }}

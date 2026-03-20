@@ -202,19 +202,6 @@ export const Blog = defineDocumentType(() => ({
           image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
           url: `${siteMetadata.siteUrl}/blog/${slug}`,
         }
-
-        const faqs = (doc as any).faqs
-        if (Array.isArray(faqs) && faqs.length > 0) {
-          data.mainEntity = faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          }))
-        }
-
         return data
       },
     },
