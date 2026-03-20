@@ -51,7 +51,7 @@ export default function Home({ posts }) {
         {heroPost && (
           <article className="relative group w-full rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-gray-900/5 dark:ring-white/10 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.1)]">
             {heroPost.thumbnail ? (
-              <div className="relative aspect-[4/3] sm:aspect-video lg:aspect-square xl:aspect-video w-full overflow-hidden bg-gray-900">
+              <div className="relative aspect-[3/2] w-full overflow-hidden bg-gray-900">
                 <Image
                   src={heroPost.thumbnail}
                   alt={heroPost.title}
@@ -62,6 +62,7 @@ export default function Home({ posts }) {
                   priority
                   placeholder="blur"
                   blurDataURL={`image?url=${heroPost.thumbnail}&w=800&q=1`}
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-80 pointer-events-none transition-opacity duration-300"></div>
               </div>
@@ -123,7 +124,7 @@ export default function Home({ posts }) {
               {recentPosts.map((post) => (
                 <article key={post.slug} className="relative flex flex-col bg-white dark:bg-gray-800/40 rounded-[1.5rem] shadow-sm ring-1 ring-gray-200 dark:ring-gray-700/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:ring-primary-500/20 dark:hover:ring-primary-500/20 hover:-translate-y-1 group">
                   {post.thumbnail && (
-                    <Link href={`/blog/${post.slug}`} className="block aspect-[16/9] overflow-hidden relative bg-gray-900">
+                    <Link href={`/blog/${post.slug}`} className="block aspect-[3/2] overflow-hidden relative bg-gray-900">
                       <Image
                         src={post.thumbnail}
                         alt={post.title}
@@ -133,6 +134,7 @@ export default function Home({ posts }) {
                         style={{ width: '100%', height: '100%' }}
                         placeholder="blur"
                         blurDataURL={`image?url=${post.thumbnail}&w=600&q=1`}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                       />
                       <div className="absolute inset-0 z-20 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-t-[1.5rem] pointer-events-none"></div>
                     </Link>

@@ -85,13 +85,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <dt className="sr-only">Thumbnail</dt>
               <dd>
                 {content.thumbnail && (
-                  <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-gray-900">
+                  <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-gray-900">
                     <Image
                       src={content.thumbnail}
                       alt={title}
                       fill
                       className="transition-transform duration-500 group-hover:scale-105"
                       priority
+                      sizes="(max-width: 1280px) 100vw, 230px"
                     />
                   </div>
                 )}
@@ -116,12 +117,13 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     {relatedPosts.map((post) => (
                       <div key={post.slug} className="group relative">
                         {post.thumbnail && (
-                          <Link href={`/blog/${post.slug}`} className="block relative aspect-video w-full overflow-hidden rounded-lg mb-3">
+                          <Link href={`/blog/${post.slug}`} className="block relative aspect-[3/2] w-full overflow-hidden rounded-lg mb-3">
                             <Image
                               src={post.thumbnail}
                               alt={post.title}
                               fill
                               className="transition-transform duration-300 group-hover:scale-105"
+                              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 345px"
                             />
                           </Link>
                         )}

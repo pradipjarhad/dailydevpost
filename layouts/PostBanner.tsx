@@ -33,8 +33,8 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <div className="space-y-1 pb-10 text-center dark:border-gray-700">
             <div className="w-full">
               <Bleed>
-                <div className="relative aspect-[2/1] w-full">
-                  <Image src={displayImage} alt={title} fill className="" />
+                <div className="relative aspect-[3/2] w-full">
+                  <Image src={displayImage} alt={title} fill className="" sizes="(max-width: 1152px) 100vw, 1152px" />
                 </div>
               </Bleed>
             </div>

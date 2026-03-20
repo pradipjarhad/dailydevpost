@@ -8,12 +8,13 @@ const Card = ({ title, description, imgSrc, href }) => (
     >
       {imgSrc &&
         (href ? (
-          <Link href={href} aria-label={`Link to ${title}`} className="block overflow-hidden aspect-[16/9] relative bg-gray-900">
+          <Link href={href} aria-label={`Link to ${title}`} className="block overflow-hidden aspect-[3/2] relative bg-gray-900">
             <Image
               alt={title}
               src={imgSrc}
               fill
               className="transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 768px) 100vw, 544px"
             />
             <div className="absolute inset-0 z-20 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </Link>
@@ -23,6 +24,7 @@ const Card = ({ title, description, imgSrc, href }) => (
               alt={title}
               src={imgSrc}
               fill
+              sizes="(max-width: 768px) 100vw, 544px"
             />
           </div>
         ))}
