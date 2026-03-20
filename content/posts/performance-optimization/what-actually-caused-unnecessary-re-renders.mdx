@@ -35,7 +35,7 @@ The page did not crash.
 
 So I assumed everything was fine.
 
-Just inefficient. (Kind of like [this bug I tracked down recently](/blog/debugging-and-fixes/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down)).
+Just inefficient. (Kind of like [this bug I tracked down recently](/blog/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down)).
 
 This article is not about performance theory.  
 It is about the very normal mistakes that caused unnecessary re-renders in my own projects.
@@ -189,7 +189,7 @@ The issue was grouping unrelated concerns together.
 
 A small UI toggle caused updates across parts of the app that had nothing to do with it.
 
-Splitting state into smaller, focused pieces reduced re-renders more than any memoization trick I tried later. (I wrote more about [removing state here](/blog/performance-optimization/the-time-i-removed-state-instead-of-adding-more)).
+Splitting state into smaller, focused pieces reduced re-renders more than any memoization trick I tried later. (I wrote more about [removing state here](/blog/the-time-i-removed-state-instead-of-adding-more)).
 
 ## 5. Using Context for Frequently Changing Values
 
@@ -337,4 +337,4 @@ Once you can answer that calmly, the fix is usually obvious.
 
 And often simple.
 
-If you are wondering how to fix these issues, I wrote about [how I actually reduced unnecessary re-renders](/blog/performance-optimization/how-i-actually-reduced-unnecessary-re-renders) in a follow-up post.
+If you are wondering how to fix these issues, I wrote about [how I actually reduced unnecessary re-renders](/blog/how-i-actually-reduced-unnecessary-re-renders) in a follow-up post.

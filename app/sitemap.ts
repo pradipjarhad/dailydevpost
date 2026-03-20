@@ -30,7 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const categoryRoutes = Object.keys(categoryCounts)
     .filter((cat) => categoryCounts[cat] >= 3)
     .map((cat) => ({
-      url: `${siteUrl}/categories/${slug(cat)}`,
+      url: `${siteUrl}/blog/category/${slug(cat)}`,
       lastModified: new Date().toISOString().split('T')[0],
     }))
 

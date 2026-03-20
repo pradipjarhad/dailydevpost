@@ -17,8 +17,6 @@ async function generate() {
     const baseRoutes = [
         '',
         'blog',
-        'categories',
-        'tags',
         'about',
         'contact',
         'privacy-policy',
