@@ -96,7 +96,7 @@ setTextColor("text-red-500"); // ✅
 // setTextColor("text-purple-200"); // ❌ Error!
 ```
 
-This is particularly powerful for [Edge vs. Origin](/blog/edge-vs-origin-logic-placement) architectures. We can type-safe our API routes so that a change in the server's directory structure immediately breaks the client's build.
+This is particularly powerful for [Edge vs. Origin](/blog/edge-vs-origin-business-logic-cdn) architectures. We can type-safe our API routes so that a change in the server's directory structure immediately breaks the client's build.
 
 ### The "Serializability Enforcement" Pattern
 
@@ -173,7 +173,7 @@ Within three months, their production error rate dropped by 70%. **TypeScript is
 
 In 2026, we don't just "write code." We **Orchestrate Systems**. 
 
-TypeScript is the glue that holds these systems together. It allows us to build [Energy-Efficient](/blog/sustainable-frontend-engineering-guide), [High-Performance](/blog/frontend-engineering/webgpu-for-frontend-vs-webgl) applications that are robust enough to survive the complexities of the modern web.
+TypeScript is the glue that holds these systems together. It allows us to build [Energy-Efficient](/blog/sustainable-frontend-engineering-guide), [High-Performance](/blog/webgpu-vs-webgl-performance-guide) applications that are robust enough to survive the complexities of the modern web.
 
 Stop treating TypeScript as an obstacle. Start treating it as your most powerful architectural tool. When your types are sound, your architecture is sound.
 
@@ -193,11 +193,11 @@ function sendToEdge<T>(data: Serialized<T>) {
 }
 ```
 
-This pattern prevents the "TypeError: Cannot read property of undefined" when a callback is lost during serialization. It forces you to think about [Data Locality](/blog/edge-vs-origin-logic-placement) at the type level.
+This pattern prevents the "TypeError: Cannot read property of undefined" when a callback is lost during serialization. It forces you to think about [Data Locality](/blog/edge-vs-origin-business-logic-cdn) at the type level.
 
 ### Type-Safe Edge Routing
 
-In 2026, we don't use string-based paths for routing. We use **Type-Aware Manifests**. Your [Edge functions](/blog/edge-computing-cold-start-optimization) export a type definition of their available routes, and the client "subscribes" to that type.
+In 2026, we don't use string-based paths for routing. We use **Type-Aware Manifests**. Your [Edge functions](/blog/edge-performance-cold-starts-guide) export a type definition of their available routes, and the client "subscribes" to that type.
 
 ```typescript
 // edge-routes.ts
@@ -215,9 +215,9 @@ This single pattern has eliminated more "Route Not Found" and "Malformed Body" e
 
 ### Conclusion: The TypeScript Orchestrator
 
-The senior frontend engineer of 2026 is an **Orchestrator**. You aren't just writing components; you are designing a type-safe contract that spans from the user's interaction in the browser, through the [Edge nodes](/blog/edge-computing-cold-start-optimization), and down to the origin database.
+The senior frontend engineer of 2026 is an **Orchestrator**. You aren't just writing components; you are designing a type-safe contract that spans from the user's interaction in the browser, through the [Edge nodes](/blog/edge-performance-cold-starts-guide), and down to the origin database.
 
-When your types can describe the whole system - from [memory layouts](/blog/frontend-engineering/webgpu-for-frontend-vs-webgl) to [carbon budgets](/blog/sustainable-frontend-engineering-guide) - you have truly mastered the machine.
+When your types can describe the whole system - from [memory layouts](/blog/webgpu-vs-webgl-performance-guide) to [carbon budgets](/blog/sustainable-frontend-engineering-guide) - you have truly mastered the machine.
 
 ---
 

@@ -68,7 +68,7 @@ As I discussed in [Ethical UI](/blog/ethical-ui-design-principles), security is 
 
 Because AI can handle the "boilerplate" of React or Svelte, we are seeing a massive "Flight to Fundamentals." In a 2026 interview, we will drill deep into topics that were once considered "too niche":
 
--   **Memory Forensics**: "Here is a heap snapshot. Where is the memory leak in this cluster post?" (See our [Memory Efficiency Guide](/blog/javascript-memory-efficiency-guide)).
+-   **Memory Forensics**: "Here is a heap snapshot. Where is the memory leak in this cluster post?" (See our [Memory Efficiency Guide](/blog/memory-safe-frontend-typedarrays-performance)).
 -   **V8 Optimization**: "Why is this tight loop causing a de-optimization in the JIT compiler?" (See our [V8 Garbage Collector guide](/blog/v8-garbage-collector-react-performance)).
 -   **Hardware Acceleration**: "When should we move this data processing from the CPU to a [WebGPU compute shader](/blog/webgpu-vs-webgl-performance-guide)?"
 
@@ -107,7 +107,8 @@ The web is becoming more complex, not less. While AI handles the "typing," we ne
 
 In 2026, the best way to "ace" your frontend interview is to stop thinking like a "coder" who follows a ticket. Start thinking like a **System Designer** who is responsible for the health, speed, and ethics of the entire platform.
 
-Master the [V8 engine](/blog/v8-garbage-collector-react-performance), master the [Edge infrastructure](/blog/edge-computing-cold-start-optimization), and master [Advanced TypeScript](/blog/advanced-typescript-resumability-guide). When you understand the "why," the "how" becomes the easy part.
+Master the [V8 engine](/blog/v8-garbage-collector-react-performance), master the [Edge infrastructure](/blog/edge-performance-cold-starts-guide), and master [Advanced TypeScript](/blog/advanced-typescript-resumability-guide).
+ When you understand the "why," the "how" becomes the easy part.
 
 Your next job isn't about writing code. It’s about building a legacy.
 
@@ -115,7 +116,8 @@ Your next job isn't about writing code. It’s about building a legacy.
 
 **Interviewer**: "We are seeing a performance bottleneck in our global checkout flow. The [LCP is high](/blog/v8-garbage-collector-react-performance) in South East Asia. How would you diagnose and fix this?"
 
-**Candidate**: "First, I’d check if we are doing a full [hydration of the cart components](/blog/server-actions-vs-useeffect-fetching). If so, I’d move that logic to a [Resumable pattern](/blog/advanced-typescript-resumability-guide) where the cart state is serialized at the [Edge](/blog/edge-computing-cold-start-optimization). Then, I’d analyze our [V8 heap snapshot](/blog/memory-safe-frontend-typedarrays-performance) to see if we're creating too many objects in the main thread during checkout. Finally, I’d audit our [font loading strategy](/blog/sustainable-frontend-engineering-guide) to ensure we're not blocking the render with heavy custom weights."
+**Candidate**: "First, I’d check if we are doing a full [hydration of the cart components](/blog/server-actions-vs-useeffect-fetching). If so, I’d move that logic to a [Resumable pattern](/blog/advanced-typescript-resumability-guide) where the cart state is serialized at the [Edge](/blog/edge-performance-cold-starts-guide).
+ Then, I’d analyze our [V8 heap snapshot](/blog/memory-safe-frontend-typedarrays-performance) to see if we're creating too many objects in the main thread during checkout. Finally, I’d audit our [font loading strategy](/blog/sustainable-frontend-engineering-guide) to ensure we're not blocking the render with heavy custom weights."
 
 **Interviewer**: "And what about the business requirement for 'nudging' users to finish their purchase?"
 
@@ -127,8 +129,8 @@ This is the "Full System" answer we are looking for in 2026.
 
 After your next interview, ask yourself these three questions:
 1.  **Did I mention "trade-offs"?** (If you didn't, you sounded like a junior).
-2.  **Did I discuss "gravity"?** (Did you account for [Data Locality](/blog/edge-vs-origin-logic-placement)?).
-3.  **Did I own the "End-to-End"?** (Did you talk about the [Compiler](/blog/react-compiler-performance-guide) and the [Edge](/blog/edge-computing-cold-start-optimization), or just the UI?).
+2.  **Did I discuss "gravity"?** (Did you account for [Data Locality](/blog/edge-vs-origin-business-logic-cdn)?).
+3.  **Did I own the "End-to-End"?** (Did you talk about the [Compiler](/blog/react-compiler-performance-guide) and the [Edge](/blog/edge-performance-cold-starts-guide), or just the UI?).
 
 Master the entire stack, and the job is yours.
 

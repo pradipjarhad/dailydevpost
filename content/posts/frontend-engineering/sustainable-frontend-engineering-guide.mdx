@@ -106,7 +106,7 @@ Last year, we audited a legacy e-commerce site. It was a "Standard React App" wi
 We applied three changes:
 1.  **Image Optimization**: Switched to AVIF and implemented aggressive lazy loading. (Saved 2MB).
 2.  **JS Cleanup**: Removed three unused analytics trackers and two legacy UI libraries. (Saved 800KB).
-3.  **Edge Caching**: Moved business logic to the [Edge](/blog/edge-vs-origin-logic-placement), reducing the number of round trips to the Origin.
+3.  **Edge Caching**: Moved business logic to the [Edge](/blog/edge-vs-origin-business-logic-cdn), reducing the number of round trips to the Origin.
 
 The footprint dropped to 0.4g of CO2. The site didn't just become "greener"; it became 4 seconds faster on mobile devices. **Sustainability is performance.**
 
@@ -116,7 +116,7 @@ I teach my senior engineers that our job isn't just to "ship features." It’s t
 
 In 2026, the "best" developers are those who build code that is invisible - it’s so efficient and fast that the user doesn't even notice the phone getting warm. We should be as proud of the bytes we *don't* ship as we are of the features we do.
 
-Sustainability is the ultimate engineering challenge. It requires you to optimize every layer of the stack, from the [V8 engine](/blog/v8-garbage-collector-react-performance) to the [CDN configuration](/blog/edge-computing-cold-start-optimization). 
+Sustainability is the ultimate engineering challenge. It requires you to optimize every layer of the stack, from the [V8 engine](/blog/v8-garbage-collector-react-performance) to the [CDN configuration](/blog/edge-performance-cold-starts-guide). 
 
 Let’s build a web that is fast for users and light for the planet. The time for "wasteful web development" is over.
 

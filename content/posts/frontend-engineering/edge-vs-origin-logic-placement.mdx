@@ -63,7 +63,7 @@ By moving business logic to the Edge, we eliminate those 70ms. We can handle aut
 I see many teams "over-Edge" their applications. They move everything to the Edge and then wonder why their complexity has skyrocketed. You should keep your logic at the Origin if:
 
 1.  **Heavy Data Mutation**: If a request requires updating five different tables with strict transaction integrity, do it at the Origin. Trying to coordinate distributed transactions from the Edge is a recipe for data corruption or massive latency.
-2.  **Large Dependency Trees**: If your logic requires a 10MB PDF generation library or a heavy image processing SDK, keep it at the Origin. [Edge cold starts](/blog/edge-computing-cold-start-optimization) are highly sensitive to bundle size.
+2.  **Large Dependency Trees**: If your logic requires a 10MB PDF generation library or a heavy image processing SDK, keep it at the Origin. [Edge cold starts](/blog/edge-performance-cold-starts-guide) are highly sensitive to bundle size.
 3.  **Long-Running Tasks**: Edge functions are usually capped at 10ms-50ms of CPU time. If you’re crunching numbers or training a local model, the Edge will kill your process before it finishes.
 
 ### The Decision Matrix: When to Move to the Edge
@@ -99,15 +99,15 @@ The biggest mistake I see "Senior" engineers make is failing to account for **da
 
 If your Edge function in Japan has to call a database in Ireland three times to render a single component, you have built a "Chatty Edge." You have effectively tripled the latency of your application. 
 
-In 2026, we solve this with **Read Replicas** and **Durable Objects**. We move the data *to* the Edge. If your data can't move, your code shouldn't either. I discuss this "Physics of the Web" extensively in my post on [Architecting for the Edge](/blog/edge-computing-cold-start-optimization).
+In 2026, we solve this with **Read Replicas** and **Durable Objects**. We move the data *to* the Edge. If your data can't move, your code shouldn't either. I discuss this "Physics of the Web" extensively in my post on [Architecting for the Edge](/blog/edge-performance-cold-starts-guide).
 
 ### Conclusion: Master the Hybrid Orchestration
 
-The **business logic placement 2026** strategy is about being a "Physics-Aware Engineer." Stop following the hype and start measuring the RTT. We are no longer "Frontend" or "Backend" developers; we are platform orchestrators balancing the [Edge performance](/blog/edge-computing-cold-start-optimization) with the [Origin reliability](/blog/frontend-development-roadmap-2026).
+The **business logic placement 2026** strategy is about being a "Physics-Aware Engineer." Stop following the hype and start measuring the RTT. We are no longer "Frontend" or "Backend" developers; we are platform orchestrators balancing the [Edge performance](/blog/edge-performance-cold-starts-guide) with the [Origin reliability](/blog/frontend-development-roadmap-2026).
 
 If you want a responsive app, move your *checks* to the Edge. If you want a reliable app, keep your *writes* at the Origin. I look forward to seeing how you balance the two in your next project.
 
 ---
 
 > [!TIP]
-> This deep dive into logic placement is a companion to our [Frontend Development Roadmap 2026](/blog/frontend-development-roadmap-2026). For more on performance, check out our guide on [Edge Computing and Cold Start Optimization](/blog/edge-computing-cold-start-optimization).
+> This deep dive into logic placement is a companion to our [Frontend Development Roadmap 2026](/blog/frontend-development-roadmap-2026). For more on performance, check out our guide on [Edge Computing and Cold Start Optimization](/blog/edge-performance-cold-starts-guide).

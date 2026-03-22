@@ -129,9 +129,9 @@ This is the "Full Stack Frontend." It’s cleaner, it’s faster, and it solves 
 
 ### The Resumability Connection
 
-As I discussed in [Architecting for the Edge](/blog/edge-computing-cold-start-optimization), the Edge is where our apps live in 2026. 
+As I discussed in [Architecting for the Edge](/blog/edge-performance-cold-starts-guide), the Edge is where our apps live in 2026. 
 
-Server Actions are designed for the Edge. Because they are just functions, they can be executed at the CDN level. When you call an action, it can run on a [V8 Isolate](/blog/edge-computing-cold-start-optimization#v8-isolates-vs-docker) near the user, perform a quick check, and return the result. This eliminates the "Origin round trip" for many common interactions.
+Server Actions are designed for the Edge. Because they are just functions, they can be executed at the CDN level. When you call an action, it can run on a [V8 Isolate](/blog/edge-performance-cold-starts-guide#v8-isolates-vs-docker) near the user, perform a quick check, and return the result. This eliminates the "Origin round trip" for many common interactions.
 
 ### Migration Guide: Step-by-Step
 
@@ -202,4 +202,4 @@ Server Actions solve this by being "HTML-First." You can actually submit a form 
 
 
 > [!TIP]
-> Navigating data boundaries is a core skill in our [Frontend Development Roadmap 2026](/blog/frontend-development-roadmap-2026). For more on architectural trade-offs, read our guide on [Edge vs Origin: The Logic Placement Guide](/blog/edge-vs-origin-logic-placement).
+> Navigating data boundaries is a core skill in our [Frontend Development Roadmap 2026](/blog/frontend-development-roadmap-2026). For more on architectural trade-offs, read our guide on [Edge vs Origin: The Logic Placement Guide](/blog/edge-vs-origin-business-logic-cdn).
