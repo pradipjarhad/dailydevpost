@@ -4,10 +4,13 @@ import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
 
-export const metadata = genPageMetadata({ title: 'Privacy Policy' })
+export const metadata = genPageMetadata({
+  title: 'Privacy Policy',
+  description: `Privacy Policy for ${siteMetadata.title} - Learn how we collect, use, and protect your data, including Google AdSense and cookie disclosures.`,
+})
 
 export default function Page() {
-  const effectiveDate = 'December 31, 2025'
+  const effectiveDate = 'March 22, 2026'
 
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -38,65 +41,112 @@ export default function Page() {
         <PageTitle>Privacy Policy</PageTitle>
         <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
           <p>
-            <strong>{siteMetadata.title}</strong> is a public learning diary by {siteMetadata.author}. This
-            Privacy Policy explains what information is collected on {siteMetadata.siteUrl} and how it is
-            used. <em>Effective date: {effectiveDate}.</em>
+            Welcome to <strong>{siteMetadata.title}</strong>. Your privacy is critically important to us.
+            This Privacy Policy document contains types of information that is collected and recorded by
+            {siteMetadata.title} and how we use it.
+          </p>
+          <p>
+            <em>Effective date: {effectiveDate}</em>
           </p>
 
-          <h2>Information we collect</h2>
+          <h2>1. Information We Collect</h2>
           <p>
-            We collect information you provide directly (for example, when you subscribe to the newsletter or
-            contact the author) and information collected automatically such as cookies and analytics data. We
-            do not sell personal data.
+            We collect several different types of information for various purposes to provide and improve our service to you:
+          </p>
+          <ul>
+            <li>
+              <strong>Personal Data:</strong> While using our site, we may ask you to provide us with certain personally
+              identifiable information that can be used to contact or identify you (e.g., email address when subscribing to our newsletter).
+            </li>
+            <li>
+              <strong>Usage Data:</strong> We may also collect information on how the Service is accessed and used.
+              This may include information such as your computer&apos;s IP address, browser type, browser version, the
+              pages of our site that you visit, the time and date of your visit, and other diagnostic data.
+            </li>
+          </ul>
+
+          <h2>2. Cookies and Tracking Technologies</h2>
+          <p>
+            We use cookies and similar tracking technologies to track the activity on our Service and hold certain information.
+            Cookies are files with a small amount of data which may include an anonymous unique identifier.
+          </p>
+          <p>
+            You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you
+            do not accept cookies, you may not be able to use some portions of our Service.
           </p>
 
-          <h2>Cookies &amp; analytics</h2>
+          <h2>3. Google AdSense & Third-Party Advertising</h2>
           <p>
-            The site may use cookies and analytics providers (e.g., Umami or Google Analytics if enabled) to
-            understand site usage and improve the content. Analytics data is typically aggregated and does not
-            identify you personally.
+            We use Google AdSense to serve ads on our website. Google, as a third-party vendor, uses cookies to serve ads
+            on <strong>{siteMetadata.title}</strong>. Google&apos;s use of advertising cookies enables it and its partners
+            to serve ads to our users based on their visit to our site and/or other sites on the Internet.
+          </p>
+          <ul>
+            <li>
+              Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits to your website or other websites.
+            </li>
+            <li>
+              Google&apos;s use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.
+            </li>
+            <li>
+              Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Ads Settings</a>.
+            </li>
+          </ul>
+          <p>
+            For more information on how Google uses data when you use our partners&apos; sites or apps, please visit
+            <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer"> policies.google.com/technologies/partner-sites</a>.
           </p>
 
-          <h2>Advertising Partners</h2>
+          <h2>4. Use of Data</h2>
+          <p>{siteMetadata.title} uses the collected data for various purposes:</p>
+          <ul>
+            <li>To provide and maintain our Service</li>
+            <li>To notify you about changes to our Service</li>
+            <li>To provide customer support</li>
+            <li>To gather analysis or valuable information so that we can improve our Service</li>
+            <li>To monitor the usage of our Service</li>
+            <li>To detect, prevent and address technical issues</li>
+          </ul>
+
+          <h2>5. GDPR and CCPA Compliance</h2>
           <p>
-            We may use third-party advertising companies (such as Google AdSense) to serve ads when you visit our website.
-            These companies may use cookies and similar technologies to collect information about your visits to this and
-            other websites in order to provide advertisements about goods and services of interest to you.
-            You can learn more about how Google uses data at <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">Google's Privacy & Terms</a>.
+            We are committed to ensuring that your data is handled according to the General Data Protection Regulation (GDPR)
+            and the California Consumer Privacy Act (CCPA).
+          </p>
+          <p>
+            If you are a resident of the European Economic Area (EEA) or California, you have certain data protection rights,
+            including the right to access, update, or delete the information we have on you.
           </p>
 
-          <h2>Third-party links</h2>
+          <h2>6. Third-Party Links</h2>
           <p>
-            The site links to third-party services (GitHub, Twitter, LinkedIn, etc.). These external sites have
-            their own privacy policies; we are not responsible for their content or practices.
+            Our Service may contain links to other sites that are not operated by us. If you click on a third-party link,
+            you will be directed to that third party&apos;s site. We strongly advise you to review the Privacy Policy of every site you visit.
           </p>
 
-          <h2>Data security</h2>
+          <h2>7. Data Security</h2>
           <p>
-            We take reasonable measures to protect the information collected on the site, but no internet
-            transmission is completely secure. If you have concerns about the security of your data, contact us
-            via the <Link href="/about">about page</Link>.
+            The security of your data is important to us, but remember that no method of transmission over the Internet,
+            or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to
+            protect your Personal Data, we cannot guarantee its absolute security.
           </p>
 
-          <h2>Children</h2>
+          <h2>8. Updates to This Policy</h2>
           <p>
-            This site is not intended for children under 13. We do not knowingly collect personal information
-            from children.
+            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new
+            Privacy Policy on this page and updating the &quot;effective date&quot; at the top of this Privacy Policy.
           </p>
 
-          <h2>Changes to this policy</h2>
+          <h2>9. Contact Us</h2>
           <p>
-            We may update this policy from time to time. The updated policy will be posted here with a revised
-            effective date.
+            If you have any questions about this Privacy Policy, please contact us:
           </p>
-
-          <h2>Contact</h2>
-          <p>
-            For questions about this policy, visit the <Link href="/about">about page</Link> or file an issue on the
-            project repository: <a href={siteMetadata.siteRepo} target="_blank" rel="noopener noreferrer">{siteMetadata.siteRepo}</a>.
-          </p>
+          <ul>
+            <li>By visiting the <Link href="/about">About Page</Link></li>
+            <li>By filing an issue on our <a href={siteMetadata.siteRepo} target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+          </ul>
         </div>
       </article>
     </SectionContainer>
   )
-}
+}
