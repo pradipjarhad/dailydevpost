@@ -12,7 +12,7 @@ export async function generateMetadata(props: { params: Promise<{ tag: string }>
   const tag = decodeURI(params.tag)
   return genPageMetadata({
     title: tag,
-    description: `${siteMetadata.title} ${tag} tagged content`,
+    robots: { index: true, follow: true },
     alternates: {
       canonical: './',
       types: {

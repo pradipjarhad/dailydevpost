@@ -7,13 +7,18 @@ import { notFound } from 'next/navigation'
 import siteMetadata, { postsPerPage } from '@/data/siteMetadata'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
+import categoryData from 'app/category-data.json' with { type: 'json' }
+
 export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
     const params = await props.params
     const category = params.category
+    const counts = categoryData as Record<string, number>
+    const postCount = counts[category] || 0
 
     return genPageMetadata({
         title: formatCategoryTitle(category),
         description: `${siteMetadata.title} - ${category} posts`,
+        robots: postCount < 5 ? { index: false, follow: true } : { index: true, follow: true },
         alternates: {
             canonical: './',
             types: {

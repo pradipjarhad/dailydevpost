@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const tagCounts = tagData as Record<string, number>
   const tagRoutes = Object.keys(tagCounts)
-    .filter((tag) => tagCounts[tag] >= 3)
+    .filter((tag) => tagCounts[tag] >= 1)
     .map((tag) => ({
       url: `${siteUrl}/tags/${slug(tag)}`,
       lastModified: new Date().toISOString().split('T')[0],
@@ -28,7 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const categoryCounts = categoryData as Record<string, number>
   const categoryRoutes = Object.keys(categoryCounts)
-    .filter((cat) => categoryCounts[cat] >= 3)
+    .filter((cat) => categoryCounts[cat] >= 5)
     .map((cat) => ({
       url: `${siteUrl}/blog/category/${slug(cat)}`,
       lastModified: new Date().toISOString().split('T')[0],
@@ -37,8 +37,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     'blog',
-    // 'categories',
-    // 'tags',
     'about',
     'contact',
     'privacy-policy',
@@ -48,5 +46,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date().toISOString().split('T')[0],
   }))
 
-  return [...routes, ...blogRoutes]
+  return [...routes, ...blogRoutes, ...tagRoutes, ...categoryRoutes]
 }
