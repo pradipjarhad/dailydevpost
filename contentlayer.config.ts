@@ -218,6 +218,20 @@ export const Blog = defineDocumentType(() => ({
         const category = doc._raw.sourceFileDir.replace(/\\/g, '/').split('/').pop()
         const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
 
+        const formatCategory = (segment: string) => {
+          const acronyms = ['DX', 'AI', 'SEO', 'CSS', 'JS', 'HTML', 'API', 'UI', 'UX', 'IT']
+          return segment
+            .split('-')
+            .map((word) => {
+              const upperWord = word.toUpperCase()
+              if (acronyms.includes(upperWord)) {
+                return upperWord
+              }
+              return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+            })
+            .join(' ')
+        }
+
         return {
           '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
@@ -237,7 +251,7 @@ export const Blog = defineDocumentType(() => ({
             {
               '@type': 'ListItem',
               'position': 3,
-              'name': category,
+              'name': formatCategory(category || ''),
               'item': `${siteMetadata.siteUrl}/blog/category/${category}`
             },
             {

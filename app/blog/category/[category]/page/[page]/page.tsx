@@ -64,6 +64,31 @@ export default async function Page(props: { params: Promise<{ category: string; 
         totalPages: Math.ceil(filteredPosts.length / postsPerPage),
     }
 
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+            {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: siteMetadata.siteUrl,
+            },
+            {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog',
+                item: `${siteMetadata.siteUrl}/blog`,
+            },
+            {
+                '@type': 'ListItem',
+                position: 3,
+                name: title,
+                item: `${siteMetadata.siteUrl}/blog/category/${category}`,
+            },
+        ],
+    }
+
     const breadcrumbItems = [
         { name: 'Home', path: '/' },
         { name: 'Blog', path: '/blog' },
@@ -72,6 +97,10 @@ export default async function Page(props: { params: Promise<{ category: string; 
 
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
             <Breadcrumbs items={breadcrumbItems} />
             <ListLayoutWithCategories
                 posts={filteredPosts}

@@ -7,12 +7,14 @@ import tagData from 'app/tag-data.json' with { type: 'json' };
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 export async function generateMetadata(props: { params: Promise<{ tag: string }> }): Promise<Metadata> {
   const params = await props.params
   const tag = decodeURI(params.tag)
+  const title = formatCategoryTitle(tag)
   return genPageMetadata({
-    title: tag,
+    title: title,
     robots: { index: true, follow: true },
     alternates: {
       canonical: './',
@@ -35,8 +37,7 @@ export const generateStaticParams = async () => {
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params
   const tag = params.tag
-  // Capitalize first letter and convert spaces to hyphens
-  const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
+  const title = formatCategoryTitle(tag)
 
   let sortedPosts = sortPosts(allBlogs)
 
