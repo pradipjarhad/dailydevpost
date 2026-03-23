@@ -4,6 +4,7 @@ import { slug } from 'github-slugger'
 import tagData from 'app/tag-data.json' with { type: 'json' };
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata = genPageMetadata({
   title: 'Tags',
@@ -35,12 +36,18 @@ export default async function Page() {
     ],
   }
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Tags', path: '/tags', isLast: true },
+  ]
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <Breadcrumbs items={breadcrumbItems} />
       <div className="flex flex-col items-center justify-center py-12 md:py-20">
         <div className="text-center space-y-4 mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">

@@ -8,7 +8,6 @@ import { SearchConfig } from 'pliny/search'
 import SearchProviderWrapper from '@/components/SearchProviderWrapper'
 import Header from '@/components/Header'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
@@ -129,7 +128,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <SearchProviderWrapper searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
                 <main id="skip-nav" className="mb-auto">
-                  <Breadcrumbs />
                   {children}
                 </main>
               </SearchProviderWrapper>

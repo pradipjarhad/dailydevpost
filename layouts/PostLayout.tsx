@@ -15,6 +15,8 @@ import FAQ from '@/components/FAQ'
 
 import { allBlogs } from 'contentlayer/generated'
 import SectionContainer from '@/components/SectionContainer'
+import Breadcrumbs from '@/components/Breadcrumbs'
+import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/content/${path}`
 
@@ -40,6 +42,14 @@ interface LayoutProps {
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
   const { filePath, path, slug, date, title, tags, toc, faqs, category } = content
   const basePath = path.split('/')[0]
+
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Blog', path: '/blog' },
+    { name: formatCategoryTitle(category || ''), path: `/blog/category/${category}` },
+    { name: title, path: `/blog/${slug}`, isLast: true },
+  ]
+
   const commentsEnabled =
     siteMetadata.comments?.provider &&
     (siteMetadata.comments as unknown as { enableFor?: string[] })?.enableFor?.includes('blog') &&
@@ -61,6 +71,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
     <SectionContainer>
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article className="relative">
+        <Breadcrumbs items={breadcrumbItems} />
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-10">
             <div className="space-y-4 text-center">
@@ -87,7 +98,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 {content.thumbnail && (
                   <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-gray-900">
                     <Image
-                      src={content.thumbnail}
+                       src={content.thumbnail}
                       alt={title}
                       fill
                       className="transition-transform duration-500 group-hover:scale-105"

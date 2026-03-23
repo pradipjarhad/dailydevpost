@@ -6,6 +6,7 @@ import { allBlogs } from 'contentlayer/generated'
 import tagData from 'app/tag-data.json' with { type: 'json' };
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export async function generateMetadata(props: { params: Promise<{ tag: string }> }): Promise<Metadata> {
   const params = await props.params
@@ -64,6 +65,12 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     ],
   }
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Tags', path: '/tags' },
+    { name: title, path: `/tags/${tag}`, isLast: true },
+  ]
+
   // Runtime filtering - this happens on each request
   const today = new Date()
   today.setUTCHours(0, 0, 0, 0)
@@ -96,6 +103,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <Breadcrumbs items={breadcrumbItems} />
       <ListLayout posts={posts} title={title} />
     </>
   )

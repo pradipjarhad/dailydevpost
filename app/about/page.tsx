@@ -6,6 +6,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { coreContent } from 'pliny/utils/contentlayer'
 import { genPageMetadata } from 'app/seo'
 import { notFound } from 'next/navigation'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata = genPageMetadata({
   title: 'About DailyDevPost | Performance Engineering & Technical Mastery',
@@ -42,6 +43,11 @@ export default function Page() {
     ],
   }
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about', isLast: true },
+  ]
+
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -71,6 +77,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
+      <Breadcrumbs items={breadcrumbItems} />
       <AuthorLayout content={mainContent} latestPosts={latestPosts}>
         <MDXLayoutRenderer code={author.body.code} />
       </AuthorLayout>

@@ -5,6 +5,7 @@ import { genPageMetadata } from 'app/seo'
 import siteMetadata, { postsPerPage } from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const generateStaticParams = async () => {
     const paths = [] as { category: string; page: string }[]
@@ -63,12 +64,21 @@ export default async function Page(props: { params: Promise<{ category: string; 
         totalPages: Math.ceil(filteredPosts.length / postsPerPage),
     }
 
+    const breadcrumbItems = [
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog' },
+        { name: title, path: `/blog/category/${category}`, isLast: true },
+    ]
+
     return (
-        <ListLayoutWithCategories
-            posts={filteredPosts}
-            initialDisplayPosts={initialDisplayPosts}
-            pagination={pagination}
-            title={title}
-        />
+        <>
+            <Breadcrumbs items={breadcrumbItems} />
+            <ListLayoutWithCategories
+                posts={filteredPosts}
+                initialDisplayPosts={initialDisplayPosts}
+                pagination={pagination}
+                title={title}
+            />
+        </>
     )
 }

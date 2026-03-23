@@ -3,7 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import { genPageMetadata } from 'app/seo'
 import { postsPerPage } from '@/data/siteMetadata'
-
+import Breadcrumbs from '@/components/Breadcrumbs'
 import siteMetadata from '@/data/siteMetadata'
 
 export const metadata = genPageMetadata({ title: 'Blog' })
@@ -39,12 +39,18 @@ export default async function BlogPage() {
         ],
     }
 
+    const breadcrumbItems = [
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog', isLast: true },
+    ]
+
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
+            <Breadcrumbs items={breadcrumbItems} />
             <ListLayoutWithCategories
                 posts={posts}
                 initialDisplayPosts={initialDisplayPosts}

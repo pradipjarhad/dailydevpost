@@ -3,6 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 const POSTS_PER_PAGE = 6
 
@@ -39,12 +40,20 @@ export default async function Page(props: { params: Promise<{ page: string }> })
         totalPages: Math.ceil(posts.length / POSTS_PER_PAGE),
     }
 
+    const breadcrumbItems = [
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog', isLast: true },
+    ]
+
     return (
-        <ListLayoutWithCategories
-            posts={posts}
-            initialDisplayPosts={initialDisplayPosts}
-            pagination={pagination}
-            title="All Posts"
-        />
+        <>
+            <Breadcrumbs items={breadcrumbItems} />
+            <ListLayoutWithCategories
+                posts={posts}
+                initialDisplayPosts={initialDisplayPosts}
+                pagination={pagination}
+                title="All Posts"
+            />
+        </>
     )
 }

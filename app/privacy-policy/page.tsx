@@ -3,6 +3,7 @@ import PageTitle from '@/components/PageTitle'
 import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata = genPageMetadata({
   title: 'Privacy Policy',
@@ -31,12 +32,18 @@ export default function Page() {
     ],
   }
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Privacy Policy', path: '/privacy-policy', isLast: true },
+  ]
+
   return (
     <SectionContainer>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
+      <Breadcrumbs items={breadcrumbItems} />
       <article className="py-6">
         <PageTitle>Privacy Policy</PageTitle>
         <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
@@ -149,4 +156,4 @@ export default function Page() {
       </article>
     </SectionContainer>
   )
-}
+}

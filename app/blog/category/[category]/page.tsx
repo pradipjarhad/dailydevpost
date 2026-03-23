@@ -6,6 +6,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import siteMetadata, { postsPerPage } from '@/data/siteMetadata'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
+import Breadcrumbs from '@/components/Breadcrumbs'
 
 import categoryData from 'app/category-data.json' with { type: 'json' }
 
@@ -86,12 +87,19 @@ export default async function CategoryPage(props: { params: Promise<{ category: 
         ],
     }
 
+    const breadcrumbItems = [
+        { name: 'Home', path: '/' },
+        { name: 'Blog', path: '/blog' },
+        { name: title, path: `/blog/category/${category}`, isLast: true },
+    ]
+
     return (
         <>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
             />
+            <Breadcrumbs items={breadcrumbItems} />
             <ListLayoutWithCategories
                 posts={filteredPosts}
                 initialDisplayPosts={initialDisplayPosts}
