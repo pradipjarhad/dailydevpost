@@ -62,15 +62,25 @@ export default async function CategoryPage(props: { params: Promise<{ category: 
         totalPages: Math.ceil(filteredPosts.length / postsPerPage),
     }
 
-    const breadcrumbItems = [
-        { name: 'Home', path: '/' },
-        { name: 'Blog', path: '/blog' },
-        { name: title, path: `/blog/category/${category}`, isLast: true },
-    ]
+
+    const collectionPageSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: title,
+        description: `${siteMetadata.title} - ${category} posts`,
+        url: `${siteMetadata.siteUrl}/blog/category/${category}`,
+        publisher: {
+            '@id': `${siteMetadata.siteUrl}/#organization`
+        }
+    }
 
     return (
         <>
-            <Breadcrumbs items={breadcrumbItems} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+            />
+            <Breadcrumbs />
             <ListLayoutWithCategories
                 posts={filteredPosts}
                 initialDisplayPosts={initialDisplayPosts}

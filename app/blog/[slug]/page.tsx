@@ -105,6 +105,14 @@ export default async function Page(props: {
     const next = sortedCoreContents[postIndex - 1]
     const mainContent = coreContent(post)
     const jsonLd = JSON.parse(JSON.stringify(post.structuredData))
+    jsonLd['@id'] = `${siteMetadata.siteUrl}/blog/${slug}/#article`
+    jsonLd['mainEntityOfPage'] = {
+        '@type': 'WebPage',
+        '@id': `${siteMetadata.siteUrl}/blog/${slug}/#webpage`,
+    }
+    jsonLd['publisher'] = {
+        '@id': `${siteMetadata.siteUrl}/#organization`
+    }
     jsonLd['author'] = authorList.map((author) => {
         const authorResults = allAuthors.find((p) => p.slug === author)
         if (!authorResults) {
@@ -114,22 +122,11 @@ export default async function Page(props: {
             }
         }
         
-        const sameAs: string[] = []
-        if (authorResults.twitter) sameAs.push(authorResults.twitter)
-        if (authorResults.linkedin) sameAs.push(authorResults.linkedin)
-        if (authorResults.github) sameAs.push(authorResults.github)
-        
         return {
+            '@id': author === 'default' ? `${siteMetadata.siteUrl}/#person` : `${siteMetadata.siteUrl}/about/#${author}`,
             '@type': 'Person',
             name: authorResults.name,
-            jobTitle: authorResults.occupation,
-            description: authorResults.motto || authorResults.description,
-            url: authorResults.twitter || authorResults.linkedin || authorResults.github || siteMetadata.siteUrl,
-            sameAs: sameAs.length > 0 ? sameAs : undefined,
-            worksFor: {
-                '@type': 'Organization',
-                name: authorResults.company || siteMetadata.title,
-            }
+            url: `${siteMetadata.siteUrl}/about`,
         }
     })
 
@@ -141,25 +138,6 @@ export default async function Page(props: {
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {post.faqs && post.faqs.length > 0 && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            '@context': 'https://schema.org',
-                            '@type': 'FAQPage',
-                            mainEntity: post.faqs.map((faq) => ({
-                                '@type': 'Question',
-                                name: faq.question,
-                                acceptedAnswer: {
-                                    '@type': 'Answer',
-                                    text: faq.answer,
-                                },
-                            })),
-                        }),
-                    }}
-                />
-            )}
             <Layout content={mainContent} authorDetails={allAuthors} next={next} prev={prev}>
                 <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
             </Layout>

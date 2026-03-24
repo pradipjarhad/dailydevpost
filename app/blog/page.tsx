@@ -21,14 +21,10 @@ export default async function BlogPage() {
     }
 
 
-    const breadcrumbItems = [
-        { name: 'Home', path: '/' },
-        { name: 'Blog', path: '/blog', isLast: true },
-    ]
 
     return (
         <>
-            <Breadcrumbs items={breadcrumbItems} />
+            <Breadcrumbs />
             <ListLayoutWithCategories
                 posts={posts}
                 initialDisplayPosts={initialDisplayPosts}

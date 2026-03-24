@@ -43,12 +43,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const { filePath, path, slug, date, title, tags, toc, faqs, category } = content
   const basePath = path.split('/')[0]
 
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Blog', path: '/blog' },
-    { name: formatCategoryTitle(category || ''), path: `/blog/category/${category}` },
-    { name: title, path: `/blog/${slug}`, isLast: true },
-  ]
 
   const commentsEnabled =
     siteMetadata.comments?.provider &&
@@ -71,7 +65,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
     <SectionContainer>
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article className="relative">
-        <Breadcrumbs items={breadcrumbItems} />
+        <Breadcrumbs category={category} />
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-10">
             <div className="space-y-4 text-center">

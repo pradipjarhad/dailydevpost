@@ -41,11 +41,6 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
 
   let sortedPosts = sortPosts(allBlogs)
 
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Tags', path: '/tags' },
-    { name: title, path: `/tags/${tag}`, isLast: true },
-  ]
 
   // Runtime filtering - this happens on each request
   const today = new Date()
@@ -73,9 +68,21 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     )
   }
 
+  const collectionPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    description: `Articles tagged with ${title} on ${siteMetadata.title}`,
+    url: `${siteMetadata.siteUrl}/tags/${tag}`,
+  }
+
   return (
     <>
-      <Breadcrumbs items={breadcrumbItems} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
+      <Breadcrumbs />
       <ListLayout posts={posts} title={title} />
     </>
   )

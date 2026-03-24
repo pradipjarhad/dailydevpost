@@ -17,14 +17,10 @@ export default async function Page() {
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => a.localeCompare(b))
 
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Tags', path: '/tags', isLast: true },
-  ]
 
   return (
     <>
-      <Breadcrumbs items={breadcrumbItems} />
+      <Breadcrumbs />
       <div className="flex flex-col items-center justify-center py-12 md:py-20">
         <div className="text-center space-y-4 mb-16">
           <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl">

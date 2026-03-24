@@ -8,8 +8,26 @@ import SearchButton from './SearchButton'
 import logo from "../public/static/images/logo.png"
 
 const Header = () => {
+  const navigationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'itemListElement': headerNavLinks.map((link, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'item': {
+        '@type': 'SiteNavigationElement',
+        'name': link.title,
+        'url': `${siteMetadata.siteUrl}${link.href}`
+      }
+    }))
+  }
+
   return (
     <header className="flex items-center justify-between pt-10 pb-4 relative z-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
+      />
       <div>
         <Link href="/" aria-label={siteMetadata.headerTitle}>
           <div className="flex items-center space-x-2">

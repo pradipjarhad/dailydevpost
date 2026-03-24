@@ -13,9 +13,11 @@ interface BreadcrumbItem {
 
 interface BreadcrumbsProps {
     items?: BreadcrumbItem[]
+    category?: string
+    categoryPath?: string
 }
 
-const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
+const Breadcrumbs = ({ items, category, categoryPath }: BreadcrumbsProps) => {
     const pathname = usePathname()
 
     // Don't show breadcrumbs on the homepage
@@ -34,35 +36,59 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
                 i++ // skip the next segment (the page number) as well
                 continue
             }
+
+            // Skip 'category' in '/blog/category/...' paths
+            if (baseSegments[i] === 'category' && i > 0 && baseSegments[i - 1] === 'blog') {
+                continue
+            }
             pathSegments.push(baseSegments[i])
+        }
+
+        const finalSegments: BreadcrumbItem[] = pathSegments.map((segment, index) => {
+            let href = `/${pathSegments.slice(0, index + 1).join('/')}`
+            
+            // Rewrite /blog/category to /blog
+            if (href === '/blog/category') {
+                href = '/blog'
+            }
+            // For blog posts, rewrite their category breadcrumb to point to the actual category page.
+            else if (pathSegments[0] === 'blog' && index === 1 && segment !== 'page' && segment !== 'category') {
+                href = `/blog/category/${segment}`
+            }
+
+            return {
+                name: formatCategoryTitle(segment),
+                path: href,
+                isLast: index === pathSegments.length - 1
+            }
+        })
+
+        // Inject category if provided for blog posts
+        if (category && pathSegments[0] === 'blog' && pathSegments.length === 2) {
+            const blogIndex = 1 // After 'Home'
+            const catItem = {
+                name: formatCategoryTitle(category),
+                path: categoryPath || `/blog/category/${category}`,
+                isLast: false
+            }
+            finalSegments.splice(1, 0, catItem)
+            // Fix isLast and positions if needed
+            finalSegments[finalSegments.length - 1].isLast = true
         }
 
         crumbs = [
             { name: 'Home', path: '/' },
-            ...pathSegments.map((segment, index) => {
-                let href = `/${pathSegments.slice(0, index + 1).join('/')}`
-                
-                // Rewrite /blog/category to /blog
-                if (href === '/blog/category') {
-                    href = '/blog'
-                }
-                // For blog posts, rewrite their category breadcrumb to point to the actual category page.
-                else if (pathSegments[0] === 'blog' && index === 1 && segment !== 'page' && segment !== 'category') {
-                    href = `/blog/category/${segment}`
-                }
-
-                return {
-                    name: formatCategoryTitle(segment),
-                    path: href,
-                    isLast: index === pathSegments.length - 1
-                }
-            })
+            ...finalSegments
         ]
     }
 
     const breadcrumbSchema = {
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
+        '@id': `${siteMetadata.siteUrl}${pathname === '/' ? '' : pathname}/#breadcrumb`,
+        mainEntityOfPage: {
+            '@id': `${siteMetadata.siteUrl}${pathname === '/' ? '' : pathname}`
+        },
         itemListElement: crumbs.map((crumb, index) => ({
             '@type': 'ListItem',
             position: index + 1,

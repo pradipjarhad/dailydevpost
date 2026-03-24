@@ -64,15 +64,22 @@ export default async function Page(props: { params: Promise<{ category: string; 
         totalPages: Math.ceil(filteredPosts.length / postsPerPage),
     }
 
-    const breadcrumbItems = [
-        { name: 'Home', path: '/' },
-        { name: 'Blog', path: '/blog' },
-        { name: title, path: `/blog/category/${category}`, isLast: true },
-    ]
+
+    const collectionPageSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        name: `${title} - Page ${pageNumber}`,
+        description: `${siteMetadata.title} - ${category} posts, page ${pageNumber}`,
+        url: `${siteMetadata.siteUrl}/blog/category/${category}/page/${pageNumber}`,
+    }
 
     return (
         <>
-            <Breadcrumbs items={breadcrumbItems} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+            />
+            <Breadcrumbs />
             <ListLayoutWithCategories
                 posts={filteredPosts}
                 initialDisplayPosts={initialDisplayPosts}

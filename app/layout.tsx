@@ -1,19 +1,16 @@
 import 'css/tailwind.css'
-import 'css/custom.css'
+import 'pliny/search/kbar.css'
 
 import { Inter } from 'next/font/google'
-import React from 'react'
-import Analytics from '@/components/Analytics'
-import { SearchConfig } from 'pliny/search'
-import SearchProviderWrapper from '@/components/SearchProviderWrapper'
+import siteMetadata from '@/data/siteMetadata'
 import Header from '@/components/Header'
-import ReadingProgressBar from '@/components/ReadingProgressBar'
 import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
-import siteMetadata from '@/data/siteMetadata'
-import { ThemeProviders } from './theme-providers'
+import { SearchConfig } from 'pliny/search'
 import { Metadata } from 'next'
-
+import SearchProviderWrapper from '@/components/SearchProviderWrapper'
+import AdSense from '@/components/AdSense'
+import Analytics from '@/components/Analytics'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -29,9 +26,6 @@ export const metadata: Metadata = {
   },
   description: siteMetadata.description,
   keywords: siteMetadata.keywords,
-  authors: [{ name: siteMetadata.author }],
-  creator: siteMetadata.author,
-  publisher: siteMetadata.author,
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -42,7 +36,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   alternates: {
-    canonical: siteMetadata.siteUrl,
+    canonical: './',
     types: {
       'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
     },
@@ -65,14 +59,16 @@ export const metadata: Metadata = {
   },
 }
 
-// import AdSense from '@/components/AdSense'
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const websiteSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${siteMetadata.siteUrl}/#website`,
     name: siteMetadata.title,
     url: siteMetadata.siteUrl,
+    publisher: {
+      '@id': `${siteMetadata.siteUrl}/#organization`
+    },
     potentialAction: {
       '@type': 'SearchAction',
       target: {
@@ -86,25 +82,44 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const organizationSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${siteMetadata.siteUrl}/#organization`,
     name: siteMetadata.title,
     url: siteMetadata.siteUrl,
-    logo: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
+      width: 600,
+      height: 60
+    },
     sameAs: [
+      siteMetadata.github,
       siteMetadata.twitter,
       siteMetadata.linkedin,
-      siteMetadata.github,
       siteMetadata.instagram,
-    ].filter((link) => !!link),
+    ].filter(link => !!link),
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: siteMetadata.email,
+      contactType: 'customer support'
+    }
   }
 
   return (
     <html
       lang={siteMetadata.language}
       className={`${inter.variable} scroll-smooth overflow-x-clip`}
-      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
+        <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
+        <link rel="manifest" href="/static/favicons/site.webmanifest" />
+        <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#5bbad5" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
@@ -113,38 +128,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        <link rel="apple-touch-icon" sizes="76x76" href="/static/favicons/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/static/favicons/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/static/favicons/favicon-16x16.png" />
-        <link rel="manifest" href="/static/favicons/site.webmanifest" />
-        <meta name="msapplication-TileColor" content="#000000" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
-        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+        <AdSense pId="4867746193796582" />
       </head>
-      <body className="bg-white text-black antialiased dark:bg-gray-950 dark:text-white">
-        <ThemeProviders>
-          <a
-            href="#skip-nav"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-primary-500 focus:shadow-md dark:focus:bg-gray-900"
-          >
-            Skip to content
-          </a>
-          <ReadingProgressBar />
-          <SectionContainer>
-            <div className="flex min-h-screen flex-col justify-between font-sans">
-              <SearchProviderWrapper searchConfig={siteMetadata.search as SearchConfig}>
-                <Header />
-                <main id="skip-nav" className="mb-auto">
-                  {children}
-                </main>
-              </SearchProviderWrapper>
-              <Footer />
-            </div>
-          </SectionContainer>
-        </ThemeProviders>
+      <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
         <Analytics gaId={siteMetadata.analytics?.googleAnalytics?.googleAnalyticsId || ''} />
-        {/* <AdSense pId={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE || ''} /> */}
+        <SectionContainer>
+          <div className="flex h-screen flex-col justify-between font-sans">
+            <Header />
+            <main className="mb-auto">
+              <SearchProviderWrapper searchConfig={siteMetadata.search as SearchConfig}>
+                {children}
+              </SearchProviderWrapper>
+            </main>
+            <Footer />
+          </div>
+        </SectionContainer>
       </body>
     </html>
   )

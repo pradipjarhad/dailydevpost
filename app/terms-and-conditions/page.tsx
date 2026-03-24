@@ -13,14 +13,10 @@ export const metadata = genPageMetadata({
 export default function Page() {
   const effectiveDate = 'March 22, 2026'
 
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Terms and Conditions', path: '/terms-and-conditions', isLast: true },
-  ]
 
   return (
     <SectionContainer>
-      <Breadcrumbs items={breadcrumbItems} />
+      <Breadcrumbs />
       <article className="py-6">
         <PageTitle>Terms and Conditions</PageTitle>
         <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">

@@ -25,14 +25,11 @@ export default function Page() {
   const latestPosts = allCoreContent(sortPosts(allBlogs)).slice(0, 3)
 
 
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about', isLast: true },
-  ]
 
   const personSchema = {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': `${siteMetadata.siteUrl}/#person`,
     name: author.name,
     image: `${siteMetadata.siteUrl}${author.avatar}`,
     jobTitle: author.occupation,
@@ -55,7 +52,7 @@ export default function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
       />
-      <Breadcrumbs items={breadcrumbItems} />
+      <Breadcrumbs />
       <AuthorLayout content={mainContent} latestPosts={latestPosts}>
         <MDXLayoutRenderer code={author.body.code} />
       </AuthorLayout>

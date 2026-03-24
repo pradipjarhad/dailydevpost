@@ -12,6 +12,12 @@ export const useInteraction = (): boolean => {
 
         const events = ['scroll', 'click', 'mousemove', 'touchstart', 'keydown']
 
+        // Check if there's a search query in the URL to trigger interaction immediately
+        const params = new URLSearchParams(window.location.search)
+        if (params.has('q')) {
+            setInteracted(true)
+        }
+
         events.forEach(event => {
             window.addEventListener(event, handleInteraction, { once: true, passive: true })
         })
