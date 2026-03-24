@@ -39,6 +39,9 @@ importers:
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
+      kbar:
+        specifier: 0.1.0-beta.45
+        version: 0.1.0-beta.45(@types/react-dom@18.3.1)(@types/react@18.3.13)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       next-contentlayer2:
         specifier: 0.5.3
         version: 0.5.3(acorn@8.14.0)(contentlayer2@0.5.3(acorn@8.14.0)(esbuild@0.25.2))(esbuild@0.25.2)(next@15.4.10(@babel/core@7.26.0)(@opentelemetry/api@1.4.1)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
