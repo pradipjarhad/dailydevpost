@@ -1,5 +1,4 @@
 import 'css/tailwind.css'
-import 'pliny/search/kbar.css'
 
 import { Inter } from 'next/font/google'
 import siteMetadata from '@/data/siteMetadata'
