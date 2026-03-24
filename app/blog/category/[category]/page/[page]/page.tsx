@@ -65,19 +65,28 @@ export default async function Page(props: { params: Promise<{ category: string; 
     }
 
 
-    const collectionPageSchema = {
+    const categoryUrl = `${siteMetadata.siteUrl}/blog/category/${category}/page/${pageNumber}`
+    const collectionGraph = {
         '@context': 'https://schema.org',
-        '@type': 'CollectionPage',
-        name: `${title} - Page ${pageNumber}`,
-        description: `${siteMetadata.title} - ${category} posts, page ${pageNumber}`,
-        url: `${siteMetadata.siteUrl}/blog/category/${category}/page/${pageNumber}`,
+        '@graph': [
+            {
+                '@type': 'CollectionPage',
+                '@id': `${categoryUrl}/#webpage`,
+                url: categoryUrl,
+                name: `${title} - Page ${pageNumber}`,
+                description: `${siteMetadata.title} - ${category} posts, page ${pageNumber}`,
+                isPartOf: { '@id': `${siteMetadata.siteUrl}/#website` },
+                breadcrumb: { '@id': `${categoryUrl}/#breadcrumb` },
+                publisher: { '@id': `${siteMetadata.siteUrl}/#organization` }
+            }
+        ]
     }
 
     return (
         <>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
             />
             <Breadcrumbs />
             <ListLayoutWithCategories

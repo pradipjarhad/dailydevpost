@@ -68,19 +68,28 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     )
   }
 
-  const collectionPageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: title,
-    description: `Articles tagged with ${title} on ${siteMetadata.title}`,
-    url: `${siteMetadata.siteUrl}/tags/${tag}`,
-  }
+    const tagUrl = `${siteMetadata.siteUrl}/tags/${tag}`
+    const collectionGraph = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'CollectionPage',
+                '@id': `${tagUrl}/#webpage`,
+                url: tagUrl,
+                name: title,
+                description: `Articles tagged with ${title} on ${siteMetadata.title}`,
+                isPartOf: { '@id': `${siteMetadata.siteUrl}/#website` },
+                breadcrumb: { '@id': `${tagUrl}/#breadcrumb` },
+                publisher: { '@id': `${siteMetadata.siteUrl}/#organization` }
+            }
+        ]
+    }
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
       />
       <Breadcrumbs />
       <ListLayout posts={posts} title={title} />

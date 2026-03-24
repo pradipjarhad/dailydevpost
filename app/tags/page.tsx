@@ -18,8 +18,29 @@ export default async function Page() {
   const sortedTags = tagKeys.sort((a, b) => a.localeCompare(b))
 
 
+  const tagsUrl = `${siteMetadata.siteUrl}/tags`
+  const collectionGraph = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        '@id': `${tagsUrl}/#webpage`,
+        url: tagsUrl,
+        name: 'Tags',
+        description: 'Topics and categories of technical documentation in the lab.',
+        isPartOf: { '@id': `${siteMetadata.siteUrl}/#website` },
+        breadcrumb: { '@id': `${tagsUrl}/#breadcrumb` },
+        publisher: { '@id': `${siteMetadata.siteUrl}/#organization` }
+      }
+    ]
+  }
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
+      />
       <Breadcrumbs />
       <div className="flex flex-col items-center justify-center py-12 md:py-20">
         <div className="text-center space-y-4 mb-16">

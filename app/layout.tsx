@@ -60,48 +60,56 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const websiteSchema = {
+  const mainGraph = {
     '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': `${siteMetadata.siteUrl}/#website`,
-    name: siteMetadata.title,
-    url: siteMetadata.siteUrl,
-    publisher: {
-      '@id': `${siteMetadata.siteUrl}/#organization`
-    },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${siteMetadata.siteUrl}?q={search_term_string}`
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${siteMetadata.siteUrl}/#organization`,
+        name: siteMetadata.title,
+        url: siteMetadata.siteUrl,
+        logo: {
+          '@type': 'ImageObject',
+          '@id': `${siteMetadata.siteUrl}/#logo`,
+          url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
+          contentUrl: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
+          width: 600,
+          height: 60,
+          caption: siteMetadata.title
+        },
+        image: {
+          '@id': `${siteMetadata.siteUrl}/#logo`
+        },
+        sameAs: [
+          siteMetadata.github,
+          siteMetadata.twitter,
+          siteMetadata.linkedin,
+          siteMetadata.instagram,
+        ].filter(link => !!link),
+        contactPoint: {
+          '@type': 'ContactPoint',
+          email: siteMetadata.email,
+          contactType: 'customer support'
+        }
       },
-      'query-input': 'required name=search_term_string'
-    }
-  }
-
-  const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': `${siteMetadata.siteUrl}/#organization`,
-    name: siteMetadata.title,
-    url: siteMetadata.siteUrl,
-    logo: {
-      '@type': 'ImageObject',
-      url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
-      width: 600,
-      height: 60
-    },
-    sameAs: [
-      siteMetadata.github,
-      siteMetadata.twitter,
-      siteMetadata.linkedin,
-      siteMetadata.instagram,
-    ].filter(link => !!link),
-    contactPoint: {
-      '@type': 'ContactPoint',
-      email: siteMetadata.email,
-      contactType: 'customer support'
-    }
+      {
+        '@type': 'WebSite',
+        '@id': `${siteMetadata.siteUrl}/#website`,
+        name: siteMetadata.title,
+        url: siteMetadata.siteUrl,
+        publisher: {
+          '@id': `${siteMetadata.siteUrl}/#organization`
+        },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: {
+            '@type': 'EntryPoint',
+            urlTemplate: `${siteMetadata.siteUrl}?q={search_term_string}`
+          },
+          'query-input': 'required name=search_term_string'
+        }
+      }
+    ]
   }
 
   return (
@@ -122,11 +130,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(mainGraph) }}
         />
         <AdSense pId="4867746193796582" />
       </head>

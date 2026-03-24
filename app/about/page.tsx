@@ -33,9 +33,18 @@ export default function Page() {
     name: author.name,
     image: `${siteMetadata.siteUrl}${author.avatar}`,
     jobTitle: author.occupation,
+    knowsAbout: [
+      'React', 'Next.js', 'JavaScript', 'TypeScript', 'Frontend Engineering', 
+      'Performance Optimization', 'Web Vitals', 'AI-Assisted Development', 
+      'Debugging', 'Software Engineering'
+    ],
+    description: author.description,
+    brand: {
+      '@type': 'Brand',
+      name: siteMetadata.title,
+    },
     worksFor: {
-      '@type': 'Organization',
-      name: author.company || siteMetadata.title,
+      '@id': `${siteMetadata.siteUrl}/#organization`
     },
     url: `${siteMetadata.siteUrl}/about`,
     sameAs: [
@@ -43,7 +52,6 @@ export default function Page() {
       author.linkedin,
       author.github,
     ].filter(link => !!link),
-    description: author.motto || author.description,
   }
 
   return (

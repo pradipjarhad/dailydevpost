@@ -22,8 +22,29 @@ export default async function BlogPage() {
 
 
 
+    const blogUrl = `${siteMetadata.siteUrl}/blog`
+    const collectionGraph = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'CollectionPage',
+                '@id': `${blogUrl}/#webpage`,
+                url: blogUrl,
+                name: 'Blog',
+                description: siteMetadata.description,
+                isPartOf: { '@id': `${siteMetadata.siteUrl}/#website` },
+                breadcrumb: { '@id': `${blogUrl}/#breadcrumb` },
+                publisher: { '@id': `${siteMetadata.siteUrl}/#organization` }
+            }
+        ]
+    }
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
+            />
             <Breadcrumbs />
             <ListLayoutWithCategories
                 posts={posts}

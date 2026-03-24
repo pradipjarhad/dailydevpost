@@ -105,30 +105,51 @@ export default async function Page(props: {
     const next = sortedCoreContents[postIndex - 1]
     const mainContent = coreContent(post)
     const jsonLd = JSON.parse(JSON.stringify(post.structuredData))
-    jsonLd['@id'] = `${siteMetadata.siteUrl}/blog/${slug}/#article`
-    jsonLd['mainEntityOfPage'] = {
-        '@type': 'WebPage',
-        '@id': `${siteMetadata.siteUrl}/blog/${slug}/#webpage`,
-    }
-    jsonLd['publisher'] = {
-        '@id': `${siteMetadata.siteUrl}/#organization`
-    }
-    jsonLd['author'] = authorList.map((author) => {
-        const authorResults = allAuthors.find((p) => p.slug === author)
-        if (!authorResults) {
-            return {
+    const postUrl = `${siteMetadata.siteUrl}/blog/${slug}`
+    
+    const articleGraph = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'WebPage',
+                '@id': `${postUrl}/#webpage`,
+                url: postUrl,
+                name: post.title,
+                isPartOf: { '@id': `${siteMetadata.siteUrl}/#website` },
+                breadcrumb: { '@id': `${postUrl}/#breadcrumb` },
+                description: post.summary,
+                inLanguage: siteMetadata.language,
+                potentialAction: [
+                    {
+                        '@type': 'ReadAction',
+                        target: [postUrl]
+                    }
+                ]
+            },
+            {
+                ...jsonLd,
+                '@id': `${postUrl}/#article`,
+                isPartOf: { '@id': `${postUrl}/#webpage` },
+                author: authorList.map((author) => ({
+                    '@id': author === 'default' ? `${siteMetadata.siteUrl}/#person` : `${siteMetadata.siteUrl}/about/#${author}`
+                })),
+                publisher: { '@id': `${siteMetadata.siteUrl}/#organization` },
+                mainEntityOfPage: { '@id': `${postUrl}/#webpage` },
+                wordCount: post.readingTime.words,
+            },
+            {
                 '@type': 'Person',
-                name: author,
+                '@id': `${siteMetadata.siteUrl}/#person`,
+                name: siteMetadata.author,
+                url: `${siteMetadata.siteUrl}/about`,
+                sameAs: [
+                    siteMetadata.twitter,
+                    siteMetadata.github,
+                    siteMetadata.linkedin
+                ].filter(Boolean)
             }
-        }
-        
-        return {
-            '@id': author === 'default' ? `${siteMetadata.siteUrl}/#person` : `${siteMetadata.siteUrl}/about/#${author}`,
-            '@type': 'Person',
-            name: authorResults.name,
-            url: `${siteMetadata.siteUrl}/about`,
-        }
-    })
+        ]
+    }
 
     const Layout = layouts[post.layout || defaultLayout]
 
