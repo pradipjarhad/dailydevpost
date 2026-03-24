@@ -3,6 +3,7 @@
 import Link from './Link'
 import { usePathname } from 'next/navigation'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
+import siteMetadata from '@/data/siteMetadata'
 
 interface BreadcrumbItem {
     name: string
@@ -59,54 +60,71 @@ const Breadcrumbs = ({ items }: BreadcrumbsProps) => {
         ]
     }
 
+    const breadcrumbSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: crumbs.map((crumb, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: crumb.name,
+            item: crumb.path.startsWith('http') ? crumb.path : `${siteMetadata.siteUrl}${crumb.path === '/' ? '' : crumb.path}`
+        }))
+    }
+
     return (
-        <nav aria-label="Breadcrumb" className="mb-6 mt-0 flex max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <ol 
-                className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0"
-            >
-                {crumbs.map((crumb, index) => {
-                    const isLast = crumb.isLast || index === crumbs.length - 1
-                    
-                    return (
-                        <li 
-                            key={`${crumb.path}-${index}`} 
-                            className="flex items-center"
-                        >
-                            {index > 0 && (
-                                <svg
-                                    className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-600 mx-0.5"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            )}
-                            
-                            {isLast ? (
-                                <span 
-                                    className="font-semibold text-gray-900 dark:text-gray-100 truncate max-w-[200px] sm:max-w-md" 
-                                    aria-current="page"
-                                >
-                                    {crumb.name}
-                                </span>
-                            ) : (
-                                <Link
-                                    href={crumb.path}
-                                    className="font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                                >
-                                    <span>{crumb.name}</span>
-                                </Link>
-                            )}
-                        </li>
-                    )
-                })}
-            </ol>
-        </nav>
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <nav aria-label="Breadcrumb" className="mb-6 mt-0 flex max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
+                <ol 
+                    className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0"
+                >
+                    {crumbs.map((crumb, index) => {
+                        const isLast = crumb.isLast || index === crumbs.length - 1
+                        
+                        return (
+                            <li 
+                                key={`${crumb.path}-${index}`} 
+                                className="flex items-center"
+                            >
+                                {index > 0 && (
+                                    <svg
+                                        className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-600 mx-0.5"
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                )}
+                                
+                                {isLast ? (
+                                    <span 
+                                        className="font-semibold text-gray-900 dark:text-gray-100 truncate max-w-[200px] sm:max-w-md" 
+                                        aria-current="page"
+                                    >
+                                        {crumb.name}
+                                    </span>
+                                ) : (
+                                    <Link
+                                        href={crumb.path}
+                                        className="font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
+                                    >
+                                        <span>{crumb.name}</span>
+                                    </Link>
+                                )}
+                            </li>
+                        )
+                    })}
+                </ol>
+            </nav>
+        </>
     )
 }
 

@@ -24,24 +24,6 @@ export default function Page() {
   // Fetch the 3 most recent posts for social proof/authority
   const latestPosts = allCoreContent(sortPosts(allBlogs)).slice(0, 3)
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: siteMetadata.siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'About',
-        item: `${siteMetadata.siteUrl}/about`,
-      },
-    ],
-  }
 
   const breadcrumbItems = [
     { name: 'Home', path: '/' },
@@ -69,10 +51,6 @@ export default function Page() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

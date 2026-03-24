@@ -7,25 +7,6 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 export const metadata = genPageMetadata({ title: 'Projects' })
 
 export default function Projects() {
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: siteMetadata.siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Projects',
-        item: `${siteMetadata.siteUrl}/projects`,
-      },
-    ],
-  }
-
   const breadcrumbItems = [
     { name: 'Home', path: '/' },
     { name: 'Projects', path: '/projects', isLast: true },
@@ -33,10 +14,6 @@ export default function Projects() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Breadcrumbs items={breadcrumbItems} />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pb-8 pt-6 md:space-y-5">

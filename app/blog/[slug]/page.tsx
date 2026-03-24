@@ -160,10 +160,6 @@ export default async function Page(props: {
                     }}
                 />
             )}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(post.breadcrumbLd) }}
-            />
             <Layout content={mainContent} authorDetails={allAuthors} next={next} prev={prev}>
                 <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
             </Layout>

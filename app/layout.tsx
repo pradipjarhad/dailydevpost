@@ -73,6 +73,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     '@type': 'WebSite',
     name: siteMetadata.title,
     url: siteMetadata.siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${siteMetadata.siteUrl}?q={search_term_string}`
+      },
+      'query-input': 'required name=search_term_string'
+    }
   }
 
   const organizationSchema = {

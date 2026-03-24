@@ -13,36 +13,13 @@ export const metadata = genPageMetadata({
 export default function Page() {
   const effectiveDate = 'March 22, 2026'
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: siteMetadata.siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Privacy Policy',
-        item: `${siteMetadata.siteUrl}/privacy-policy`,
-      },
-    ],
-  }
-
-  const breadcrumbItems = [
+    const breadcrumbItems = [
     { name: 'Home', path: '/' },
     { name: 'Privacy Policy', path: '/privacy-policy', isLast: true },
   ]
 
   return (
     <SectionContainer>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Breadcrumbs items={breadcrumbItems} />
       <article className="py-6">
         <PageTitle>Privacy Policy</PageTitle>

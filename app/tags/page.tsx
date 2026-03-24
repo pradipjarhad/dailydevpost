@@ -17,25 +17,6 @@ export default async function Page() {
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => a.localeCompare(b))
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Home',
-        item: siteMetadata.siteUrl,
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Tags',
-        item: `${siteMetadata.siteUrl}/tags`,
-      },
-    ],
-  }
-
   const breadcrumbItems = [
     { name: 'Home', path: '/' },
     { name: 'Tags', path: '/tags', isLast: true },
@@ -43,10 +24,6 @@ export default async function Page() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
       <Breadcrumbs items={breadcrumbItems} />
       <div className="flex flex-col items-center justify-center py-12 md:py-20">
         <div className="text-center space-y-4 mb-16">
