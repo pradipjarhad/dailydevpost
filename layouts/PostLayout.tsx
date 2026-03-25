@@ -62,12 +62,19 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
     .sort((a, b) => b.score - a.score || new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 2)
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: formatCategoryTitle(basePath), path: `/${basePath}` },
+    ...(category ? [{ name: formatCategoryTitle(category), path: `/${basePath}/category/${category}` }] : []),
+    { name: title, path: `/${path}`, isLast: true }
+  ]
+
   return (
     <SectionContainer>
       <ReadingProgressBar />
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article className="relative">
-        <Breadcrumbs category={category} />
+        <Breadcrumbs items={breadcrumbItems} />
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header className="pt-6 xl:pb-10">
             <div className="space-y-4 text-center">

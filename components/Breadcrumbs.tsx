@@ -83,9 +83,9 @@ const Breadcrumbs = ({ items, category, categoryPath }: BreadcrumbsProps) => {
     }
 
     return (
-        <nav aria-label="Breadcrumb" className="mb-6 mt-0 flex max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <nav aria-label="Breadcrumb" className="mb-6 mt-0 block max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
             <ol 
-                className="flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0"
+                className="inline-flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0"
             >
                 {crumbs.map((crumb, index) => {
                     const isLast = crumb.isLast || index === crumbs.length - 1
