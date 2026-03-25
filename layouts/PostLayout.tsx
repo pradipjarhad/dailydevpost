@@ -102,8 +102,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 {content.thumbnail && (
                   <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-gray-900">
                     <Image
-                       src={content.thumbnail}
-                      alt={title}
+                      src={content.thumbnail}
+                      alt={`Cover image for ${tags?.join(', ') || 'programming'} concepts for: ${title}`}
                       fill
                       className="transition-transform duration-500 group-hover:scale-105"
                       priority
@@ -135,7 +135,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                           <Link href={`/blog/${post.slug}`} className="block relative aspect-[3/2] w-full overflow-hidden rounded-lg mb-3">
                             <Image
                               src={post.thumbnail}
-                              alt={post.title}
+                              alt={`Illustration of ${post.tags?.join(', ') || 'programming'} concepts for: ${post.title}`}
                               fill
                               className="transition-transform duration-300 group-hover:scale-105"
                               sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 345px"
@@ -153,7 +153,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
               {authorDetails && authorDetails.length > 0 && (
                 <div className="py-8 border-t border-gray-200 dark:border-gray-800">
-                  <h3 className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-6">Published By</h3>
+                  <h3 className="text-xs uppercase tracking-widest text-gray-600 dark:text-gray-400 font-bold mb-6">Published By</h3>
                   <AuthorCard author={authorDetails[0]} />
                 </div>
               )}
@@ -189,7 +189,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               <div className="divide-gray-200 text-sm font-medium leading-5 xl:divide-y dark:divide-gray-700">
                 {tags && (
                   <div className="py-4 xl:py-8">
-                    <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                    <h2 className="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400">
                       Tags
                     </h2>
                     <div style={{ display: 'block' }}>
@@ -203,7 +203,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
                     {prev && prev.path && (
                       <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400">
                           ⬅️ Previous Article
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
@@ -213,7 +213,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     )}
                     {next && next.path && (
                       <div>
-                        <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400">
                           Next Article ➡️
                         </h2>
                         <div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">

@@ -46,7 +46,7 @@ const Breadcrumbs = ({ items, category, categoryPath }: BreadcrumbsProps) => {
 
         const finalSegments: BreadcrumbItem[] = pathSegments.map((segment, index) => {
             let href = `/${pathSegments.slice(0, index + 1).join('/')}`
-            
+
             // Rewrite /blog/category to /blog
             if (href === '/blog/category') {
                 href = '/blog'
@@ -83,21 +83,21 @@ const Breadcrumbs = ({ items, category, categoryPath }: BreadcrumbsProps) => {
     }
 
     return (
-        <nav aria-label="Breadcrumb" className="mb-6 mt-0 block max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <ol 
-                className="inline-flex items-center space-x-1 whitespace-nowrap text-sm text-gray-400 dark:text-gray-500 min-w-0"
+        <nav aria-label="Breadcrumb" className="mb-4 mt-0 block max-w-full overflow-x-auto pb-0 scrollbar-none sm:scrollbar-default" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <ol
+                className="inline-flex items-center space-x-1 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 min-w-0"
             >
                 {crumbs.map((crumb, index) => {
                     const isLast = crumb.isLast || index === crumbs.length - 1
-                    
+
                     return (
-                        <li 
-                            key={`${crumb.path}-${index}`} 
+                        <li
+                            key={`${crumb.path}-${index}`}
                             className="flex items-center"
                         >
                             {index > 0 && (
                                 <svg
-                                    className="h-4 w-4 flex-shrink-0 text-gray-400 dark:text-gray-600 mx-0.5"
+                                    className="h-4 w-4 flex-shrink-0 text-gray-500 dark:text-gray-500 mx-0.5"
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                     aria-hidden="true"
@@ -109,10 +109,10 @@ const Breadcrumbs = ({ items, category, categoryPath }: BreadcrumbsProps) => {
                                     />
                                 </svg>
                             )}
-                            
+
                             {isLast ? (
-                                <span 
-                                    className="font-semibold text-gray-900 dark:text-gray-100 truncate max-w-[200px] sm:max-w-md" 
+                                <span
+                                    className="font-semibold text-gray-900 dark:text-gray-100 truncate max-w-[200px] sm:max-w-md"
                                     aria-current="page"
                                 >
                                     {crumb.name}

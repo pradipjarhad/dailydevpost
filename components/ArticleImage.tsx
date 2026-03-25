@@ -27,7 +27,7 @@ const ArticleImage = (props: ArticleImageProps) => {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 100vw"
         />
       </div>
-      <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400 italic">
+      <figcaption className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400 italic">
         Image: {alt}
       </figcaption>
     </figure>
