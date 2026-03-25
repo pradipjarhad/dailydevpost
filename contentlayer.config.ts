@@ -191,9 +191,10 @@ export const Blog = defineDocumentType(() => ({
       type: 'json',
       resolve: (doc) => {
         const slug = doc.slug ? doc.slug.split('/').pop() : doc._raw.sourceFileName.replace(/\.mdx?$/, '')
+        const readTimeMinutes = Math.round(readingTime(doc.body.raw).minutes)
+        const timeRequired = `PT${readTimeMinutes}M`
 
         const data: any = {
-          '@context': 'https://schema.org',
           '@type': 'BlogPosting',
           headline: doc.title,
           datePublished: doc.date,
@@ -201,6 +202,11 @@ export const Blog = defineDocumentType(() => ({
           description: doc.summary,
           image: doc.thumbnail || (doc.images ? doc.images[0] : undefined),
           url: `${siteMetadata.siteUrl}/blog/${slug}`,
+          articleSection: doc.category,
+          keywords: Array.isArray(doc.tags) ? doc.tags : undefined,
+          inLanguage: 'en-US',
+          timeRequired: timeRequired,
+          isAccessibleForFree: true,
         }
         return data
       },
@@ -233,7 +239,6 @@ export const Blog = defineDocumentType(() => ({
         }
 
         return {
-          '@context': 'https://schema.org',
           '@type': 'BreadcrumbList',
           'itemListElement': [
             {
@@ -283,6 +288,8 @@ export const Authors = defineDocumentType(() => ({
     layout: { type: 'string' },
     description: { type: 'string' },
     motto: { type: 'string' },
+    jobTitle: { type: 'string' },
+    worksFor: { type: 'string' },
   },
   computedFields,
 }))

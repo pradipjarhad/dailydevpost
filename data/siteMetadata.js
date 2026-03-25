@@ -4,7 +4,7 @@ const siteMetadata = {
     author: 'Pradip Jarhad',
     headerTitle: 'Daily Dev Post',
     description: 'DailyDevPost is a frontend development blog covering React, JavaScript, debugging techniques, performance improvements, productivity tips, AI tools and real-world developer experiences. Learn from real mistakes, real projects and daily coding challenges. Stop building software and start engineering it.',
-    language: 'en-us',
+    language: 'en-US',
     theme: 'dark', // system, dark or light
     siteUrl: 'https://dailydevpost.com',
     keywords: [
@@ -109,6 +109,12 @@ const siteMetadata = {
         //   indexName: 'docsearch',
         // },
     },
+    // Structured Data
+    organizationName: 'Daily Dev Post',
+    personName: 'Pradip Jarhad',
+    personJobTitle: 'Software Developer',
+    personDescription: "Software Developer specializing in UI/UX and Ethical Design. Pradip translates daily development struggles into actionable lessons on React, JavaScript, and high-performance engineering.",
+    personKnowsAbout: ['React', 'Next.js', 'JavaScript', 'TypeScript', 'User Experience Design', 'Frontend Engineering'],
 }
 
 module.exports = siteMetadata

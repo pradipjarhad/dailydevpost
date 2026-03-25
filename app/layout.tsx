@@ -10,6 +10,7 @@ import { Metadata } from 'next'
 import SearchProviderWrapper from '@/components/SearchProviderWrapper'
 import AdSense from '@/components/AdSense'
 import Analytics from '@/components/Analytics'
+import { ThemeProviders } from './theme-providers'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     type: 'website',
   },
   alternates: {
-    canonical: './',
+    canonical: siteMetadata.siteUrl,
     types: {
       'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
     },
@@ -59,62 +60,10 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const mainGraph = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'Organization',
-        '@id': `${siteMetadata.siteUrl}/#organization`,
-        name: siteMetadata.title,
-        url: siteMetadata.siteUrl,
-        logo: {
-          '@type': 'ImageObject',
-          '@id': `${siteMetadata.siteUrl}/#logo`,
-          url: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
-          contentUrl: `${siteMetadata.siteUrl}${siteMetadata.siteLogo}`,
-          width: 600,
-          height: 60,
-          caption: siteMetadata.title
-        },
-        image: {
-          '@id': `${siteMetadata.siteUrl}/#logo`
-        },
-        sameAs: [
-          siteMetadata.github,
-          siteMetadata.twitter,
-          siteMetadata.linkedin,
-          siteMetadata.instagram,
-        ].filter(link => !!link),
-        contactPoint: {
-          '@type': 'ContactPoint',
-          email: siteMetadata.email,
-          contactType: 'customer support'
-        }
-      },
-      {
-        '@type': 'WebSite',
-        '@id': `${siteMetadata.siteUrl}/#website`,
-        name: siteMetadata.title,
-        url: siteMetadata.siteUrl,
-        publisher: {
-          '@id': `${siteMetadata.siteUrl}/#organization`
-        },
-        potentialAction: {
-          '@type': 'SearchAction',
-          target: {
-            '@type': 'EntryPoint',
-            urlTemplate: `${siteMetadata.siteUrl}?q={search_term_string}`
-          },
-          'query-input': 'required name=search_term_string'
-        }
-      }
-    ]
-  }
-
   return (
     <html
       lang={siteMetadata.language}
-      className={`${inter.variable} scroll-smooth overflow-x-clip`}
+      className={`${inter.variable} overflow-x-clip`}
       suppressHydrationWarning
     >
       <head>
@@ -127,25 +76,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(mainGraph) }}
-        />
         <AdSense pId="4867746193796582" />
       </head>
-      <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
-        <Analytics gaId={siteMetadata.analytics?.googleAnalytics?.googleAnalyticsId || ''} />
-        <SectionContainer>
-          <div className="flex h-screen flex-col justify-between font-sans">
-            <Header />
-            <main className="mb-auto">
+      <body 
+        className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white"
+        suppressHydrationWarning
+      >
+        <ThemeProviders>
+          <Analytics gaId={siteMetadata.analytics?.googleAnalytics?.googleAnalyticsId || ''} />
+          <SectionContainer>
+            <div className="flex h-screen flex-col justify-between font-sans">
               <SearchProviderWrapper searchConfig={siteMetadata.search as SearchConfig}>
-                {children}
+                <Header />
+                <main className="mb-auto">
+                  {children}
+                </main>
+                <Footer />
               </SearchProviderWrapper>
-            </main>
-            <Footer />
-          </div>
-        </SectionContainer>
+            </div>
+          </SectionContainer>
+        </ThemeProviders>
       </body>
     </html>
   )

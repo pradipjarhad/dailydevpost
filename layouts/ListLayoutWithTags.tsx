@@ -35,7 +35,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+    <div className="space-y-2 pb-6 pt-4 md:space-y-5">
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
@@ -85,7 +85,7 @@ export default function ListLayoutWithTags({
   return (
     <>
       <div>
-        <div className="pb-6 pt-6">
+        <div className="py-4">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
             {title}
           </h1>
@@ -108,7 +108,10 @@ export default function ListLayoutWithTags({
                   return (
                     <li key={t} className="my-3">
                       {pathname.split('/tags/')[1] === slug(t) ? (
-                        <h3 className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500">
+                        <h3 
+                          className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500"
+                          aria-current="page"
+                        >
                           {`${t} (${tagCounts[t]})`}
                         </h3>
                       ) : (
@@ -128,10 +131,10 @@ export default function ListLayoutWithTags({
           </div>
           <div>
             <ul>
-              {displayPosts.map((post) => {
+              {displayPosts.map((post, index) => {
                 const { path, date, title, summary, tags, thumbnail } = post
                 return (
-                  <li key={path} className="py-5">
+                  <li key={path} className="py-4">
                     <article className="flex flex-row space-x-5">
                       {thumbnail && (
                         <div className="flex-none">
@@ -143,6 +146,7 @@ export default function ListLayoutWithTags({
                             className="thumbnail-image"
                             style={{ height: 'auto' }}
                             quality={50}
+                            priority={index === 0}
                           />
                         </div>
                       )}

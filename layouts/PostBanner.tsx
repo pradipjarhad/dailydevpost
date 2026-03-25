@@ -8,6 +8,7 @@ import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
 
 interface LayoutProps {
   content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
@@ -27,6 +28,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
 
   return (
     <>
+      <ReadingProgressBar />
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article>
         <div>
@@ -40,6 +42,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
             </div>
             <div className="relative pt-10">
               <PageTitle>{title}</PageTitle>
+              <p className="sr-only summary">{content.summary}</p>
             </div>
           </div>
           <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>

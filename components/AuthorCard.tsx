@@ -8,6 +8,7 @@ interface Props {
 }
 
 const AuthorCard = ({ author }: Props) => {
+    if (!author) return null
     const { name, avatar, occupation, company, email, twitter, linkedin, github } = author
 
     return (

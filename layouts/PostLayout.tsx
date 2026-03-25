@@ -12,6 +12,7 @@ import SocialShare from '@/components/SocialShare'
 import AuthorCard from '@/components/AuthorCard'
 import TableOfContents, { TocItem } from '@/components/TableOfContents'
 import FAQ from '@/components/FAQ'
+import ReadingProgressBar from '@/components/ReadingProgressBar'
 
 import { allBlogs } from 'contentlayer/generated'
 import SectionContainer from '@/components/SectionContainer'
@@ -63,6 +64,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
   return (
     <SectionContainer>
+      <ReadingProgressBar />
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article className="relative">
         <Breadcrumbs category={category} />
@@ -81,6 +83,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
+                <p className="sr-only summary">{content.summary}</p>
                 <SocialShare title={title} url={`${siteMetadata.siteUrl}/${path}`} />
               </div>
             </div>
@@ -110,13 +113,13 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <TableOfContents toc={toc as TocItem[]} />
                 </div>
               )}
-              <div className="prose max-w-none pb-12 pt-10 dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-black prose-p:leading-relaxed prose-p:text-gray-600 dark:prose-p:text-gray-300">
+              <div className="prose max-w-none pb-8 pt-6 dark:prose-invert prose-headings:scroll-mt-20 prose-headings:font-black prose-p:leading-relaxed prose-p:text-gray-600 dark:prose-p:text-gray-300">
                 {children}
               </div>
               {faqs && <FAQ faqs={faqs} />}
 
               {relatedPosts.length > 0 && (
-                <div className="py-8 md:py-10">
+                <div className="py-6 md:py-8">
                   <h3 className="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">Related Articles</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {relatedPosts.map((post) => (
@@ -141,7 +144,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 </div>
               )}
 
-              <div className="py-8">
+              {authorDetails && authorDetails.length > 0 && (
+                <div className="py-8 border-t border-gray-200 dark:border-gray-800">
+                  <h3 className="text-xs uppercase tracking-widest text-gray-500 dark:text-gray-400 font-bold mb-6">Published By</h3>
+                  <AuthorCard author={authorDetails[0]} />
+                </div>
+              )}
+
+              <div className="py-6">
                 <div className="text-base text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/60 p-6 md:p-8 rounded-2xl relative overflow-hidden ring-1 ring-gray-100 dark:ring-gray-700/50">
                   <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-5 pointer-events-none">☕</div>
                   <p className="flex items-center relative z-10 font-medium">
@@ -150,12 +160,12 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </p>
                 </div>
               </div>
-              <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
+              <div className="py-4 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={editUrl(filePath)}>View this article on GitHub</Link>
               </div>
               {commentsEnabled && slug && (
                 <div
-                  className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
+                  className="py-4 text-center text-gray-700 dark:text-gray-300"
                   id="comment"
                 >
                   <Comments slug={slug} />

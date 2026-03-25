@@ -11,12 +11,6 @@ interface SearchProviderWrapperProps {
 }
 
 export default function SearchProviderWrapper({ searchConfig, children }: SearchProviderWrapperProps) {
-    const interacted = useInteraction()
-
-    if (!interacted) {
-        return <>{children}</>
-    }
-
     return (
         <SearchProvider searchConfig={searchConfig}>
             <SearchQueryHandler />

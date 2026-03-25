@@ -8,28 +8,10 @@ import SearchButton from './SearchButton'
 import logo from "../public/static/images/logo.png"
 
 const Header = () => {
-  const navigationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'ItemList',
-    'itemListElement': headerNavLinks.map((link, index) => ({
-      '@type': 'ListItem',
-      'position': index + 1,
-      'item': {
-        '@type': 'SiteNavigationElement',
-        'name': link.title,
-        'url': `${siteMetadata.siteUrl}${link.href}`
-      }
-    }))
-  }
-
   return (
     <header className="flex items-center justify-between pt-10 pb-4 relative z-50">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchema) }}
-      />
       <div>
-        <Link href="/" aria-label={siteMetadata.headerTitle}>
+        <Link href="/">
           <div className="flex items-center space-x-2">
             <Image
               src={logo}
@@ -37,6 +19,7 @@ const Header = () => {
               width={100}
               height={100}
               className="w-8 h-8 min-[375px]:w-12 min-[375px]:h-12 sm:w-14 sm:h-14 object-contain"
+              priority
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
               <div className="text-base min-[375px]:text-xl sm:text-2xl xl:text-3xl leading-tight font-bold whitespace-nowrap">
@@ -56,7 +39,7 @@ const Header = () => {
             <Link
               key={link.title}
               href={link.href}
-              className="hidden font-medium text-gray-900 dark:text-gray-100 xl:block"
+              className="hidden font-medium text-gray-900 hover:text-primary-500 transition-colors dark:text-gray-100 dark:hover:text-primary-400 xl:block"
             >
               {link.title}
             </Link>

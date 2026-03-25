@@ -10,25 +10,8 @@ interface FAQProps {
 const FAQ = ({ faqs }: FAQProps) => {
     if (!faqs || faqs.length === 0) return null
 
-    const faqSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-                '@type': 'Answer',
-                text: faq.answer,
-            },
-        })),
-    }
-
     return (
-        <section className="mt-12 mb-10 border-t border-gray-200 pt-10 dark:border-gray-700">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-            />
+        <section className="mt-8 mb-8 border-t border-gray-200 pt-6 dark:border-gray-700">
             <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl mb-8">
                 Frequently Asked Questions
             </h2>
