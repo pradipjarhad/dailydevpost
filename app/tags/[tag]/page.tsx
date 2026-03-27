@@ -20,7 +20,7 @@ export async function generateMetadata(props: { params: Promise<{ tag: string }>
     alternates: {
       canonical: './',
       types: {
-        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${tag}/feed.xml`,
+        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${slug(tag).replace(/\s+/g, '-')}/feed.xml`,
       },
     },
   })
@@ -69,7 +69,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     )
   }
 
-    const tagUrl = `${siteMetadata.siteUrl}/tags/${tag}`
+    const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag).replace(/\s+/g, '-')}`
     const collectionGraph = {
         '@context': 'https://schema.org',
         '@graph': [

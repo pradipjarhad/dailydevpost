@@ -21,10 +21,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const tagCounts = tagData as Record<string, number>
   const tagRoutes = Object.keys(tagCounts)
     .filter((tag) => tagCounts[tag] >= 1)
-    .map((tag) => ({
-      url: `${siteUrl}/tags/${slug(tag)}`,
-      lastModified: new Date().toISOString().split('T')[0],
-    }))
+    .map((tag) => {
+      // Ensure any spaces are replaced with valid hyphens
+      const tagSlug = slug(tag).replace(/\s+/g, '-');
+      return {
+        url: `${siteUrl}/tags/${tagSlug}`,
+        lastModified: new Date().toISOString().split('T')[0],
+      }
+    })
 
   const categoryCounts = categoryData as Record<string, number>
   const categoryRoutes = Object.keys(categoryCounts)
