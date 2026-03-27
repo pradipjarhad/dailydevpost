@@ -33,6 +33,7 @@ interface LayoutProps {
     frontmatter?: { comments?: boolean };
     faqs?: { question: string; answer: string }[];
     category?: string;
+    thumbnailAlt?: string;
   }
   authorDetails: CoreContent<Authors>[]
   next?: { path: string; title: string }
@@ -103,7 +104,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-gray-900">
                     <Image
                       src={content.thumbnail}
-                      alt={`Cover image for ${tags?.join(', ') || 'programming'} concepts for: ${title}`}
+                      alt={content.thumbnailAlt || `Cover image for ${tags?.join(', ') || 'programming'} concepts for: ${title}`}
                       fill
                       className="transition-transform duration-500 group-hover:scale-105"
                       priority

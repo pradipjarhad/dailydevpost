@@ -16,6 +16,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogRoutes = posts.map((post) => ({
     url: post.url,
     lastModified: post.lastmod || post.date,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
   }))
 
   const tagCounts = tagData as Record<string, number>
@@ -27,6 +29,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       return {
         url: `${siteUrl}/tags/${tagSlug}`,
         lastModified: new Date().toISOString().split('T')[0],
+        changeFrequency: 'weekly' as const,
+        priority: 0.6,
       }
     })
 
@@ -36,6 +40,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((cat) => ({
       url: `${siteUrl}/blog/category/${slug(cat)}`,
       lastModified: new Date().toISOString().split('T')[0],
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
     }))
 
   const routes = [
@@ -48,6 +54,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ].map((route) => ({
     url: `${siteUrl}/${route}`,
     lastModified: new Date().toISOString().split('T')[0],
+    changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
+    priority: route === '' ? 1.0 : 0.8,
   }))
 
   return [...routes, ...blogRoutes, ...tagRoutes, ...categoryRoutes]

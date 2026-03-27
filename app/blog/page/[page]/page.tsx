@@ -21,6 +21,7 @@ export async function generateMetadata(props: { params: Promise<{ page: string }
     return genPageMetadata({
         title: `Page ${page}`,
         description: siteMetadata.description,
+        robots: { index: false, follow: true },
         alternates: {
             canonical: `${siteMetadata.siteUrl}/blog/page/${page}`,
         }

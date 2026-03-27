@@ -27,6 +27,7 @@ faqs:
   - question: "Is hydration mismatch a React issue or a Next.js issue?"
     answer: >-
       Primarily React. Hydration is part of React’s rendering contract. Next.js 15 surfaces it more clearly due to stricter defaults and App Router architecture.
+thumbnailAlt: "Detailed visual guide and illustration for How to Fix “Hydration Mismatch” in Next.js 15, focusing on Modern React, Frontend Engineering, Build In Public best practices and tutorials."
 ---
 
 Hydration mismatch in Next.js 15 happens when the HTML rendered on the server does not match what React renders on the client during hydration. The fix is to make server output deterministic and move browser-only logic into `useEffect`, client components, or `dynamic()` with `ssr: false`. Most hydration mismatch next js errors are caused by non-deterministic values like time, randomness, browser APIs, or conditional rendering that behaves differently between server and client.

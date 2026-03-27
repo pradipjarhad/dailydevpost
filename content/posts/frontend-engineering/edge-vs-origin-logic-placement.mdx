@@ -18,6 +18,7 @@ faqs:
     answer: "Not quite. 'Serverless' is a billing and management model (pay-per-use, no managed servers). 'Edge Printing' is a geographic model (running code at the network's perimeter). You can have regional serverless (Lambda) or Edge serverless (Workers)."
   - question: "Should I move my authentication logic to the Edge?"
     answer: "Yes, for 'Gatekeeping' (deciding if a request should proceed). Verifying a JWT signature is a perfect stateless task for the Edge. However, 'Session Creation' (logging in) should still happen at the Origin where you have secure, direct access to your user database."
+thumbnailAlt: "Detailed visual guide and illustration for Edge vs Origin: Where Should Your Code Live for Maximum Performance in 2026?, focusing on Web Performance Optimization, Software Architecture best practices and tutorials."
 ---
 
 I remember when the CDN was just a place for our images and CSS. We called it "Static Asset Delivery." We had a "Backend" in a big data center and a "Frontend" in the user's browser. The boundary was clear, the deployment was simple, and the latency was... well, it was what it was.
