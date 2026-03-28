@@ -57,3 +57,7 @@ yarn-error.log*
 .mdc
 pnpm-lock.yaml
 next-env.d.ts
+content-audit-data.json
+scripts/extract-frontmatter.js
+plan/content_execution_plan.md
+plan/content_roadmap.md

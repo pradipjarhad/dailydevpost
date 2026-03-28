@@ -5,6 +5,7 @@ import Image from './Image'
 import CustomLink from './Link'
 import ArticleImage from './ArticleImage'
 import { Note, Tip, Important, Warning, Caution } from './Admonitions'
+import AeoAnswer from './AeoAnswer'
 import dynamic from 'next/dynamic'
 
 const BlogNewsletterForm = dynamic(() => import('pliny/ui/BlogNewsletterForm'))
@@ -21,6 +22,7 @@ export const components: MDXComponents = {
   Important,
   Warning,
   Caution,
+  AeoAnswer,
   table: ({ children }) => (
     <div className="w-full overflow-x-auto">
       <table>{children}</table>
