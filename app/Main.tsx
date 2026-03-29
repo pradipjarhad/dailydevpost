@@ -60,8 +60,6 @@ export default function Home({ posts }) {
                   height={450}
                   style={{ width: '100%', height: '100%' }}
                   priority
-                  placeholder="blur"
-                  blurDataURL={`image?url=${heroPost.thumbnail}&w=800&q=1`}
                   sizes="(max-width: 1024px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 z-20 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-80 pointer-events-none transition-opacity duration-300"></div>
@@ -132,8 +130,6 @@ export default function Home({ posts }) {
                         width={600}
                         height={338}
                         style={{ width: '100%', height: '100%' }}
-                        placeholder="blur"
-                        blurDataURL={`image?url=${post.thumbnail}&w=600&q=1`}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                       />
                       <div className="absolute inset-0 z-20 ring-1 ring-inset ring-black/10 dark:ring-white/10 rounded-t-[1.5rem] pointer-events-none"></div>

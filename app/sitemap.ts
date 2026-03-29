@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 import { allBlogs } from 'contentlayer/generated'
 import { filterPostsByPublishDate } from 'app/utils'
 import siteMetadata from '@/data/siteMetadata'
-import tagData from 'app/tag-data.json' with { type: 'json' }
-import categoryData from 'app/category-data.json' with { type: 'json' }
+import tagData from 'app/tag-data.json'
+import categoryData from 'app/category-data.json'
 import { slug } from 'github-slugger'
 
 export default function sitemap(): MetadataRoute.Sitemap {

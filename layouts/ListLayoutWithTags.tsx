@@ -9,7 +9,7 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
-import tagData from 'app/tag-data.json' with { type: 'json' };
+import tagData from 'app/tag-data.json';
 import Image from '@/components/Image'
 
 interface PaginationProps {

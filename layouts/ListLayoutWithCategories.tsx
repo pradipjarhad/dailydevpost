@@ -9,7 +9,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import { allAuthors } from 'contentlayer/generated'
 import Link from '@/components/Link'
-import categoryData from 'app/category-data.json' with { type: 'json' };
+import categoryData from 'app/category-data.json';
 import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'

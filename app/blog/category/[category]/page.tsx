@@ -9,7 +9,7 @@ import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import headerNavLinks from '@/data/headerNavLinks'
 
-import categoryData from 'app/category-data.json' with { type: 'json' }
+import categoryData from 'app/category-data.json'
 
 export async function generateMetadata(props: { params: Promise<{ category: string }> }): Promise<Metadata> {
     const params = await props.params

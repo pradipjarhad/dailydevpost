@@ -4,7 +4,7 @@ import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { allBlogs } from 'contentlayer/generated'
-import tagData from 'app/tag-data.json' with { type: 'json' };
+import tagData from 'app/tag-data.json';
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
