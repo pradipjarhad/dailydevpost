@@ -73,6 +73,9 @@ export default function Page() {
             </li>
           </ul>
           <p>
+            Please be aware that third parties (including Google and other ad networks) may be placing and reading cookies on your users&apos; browsers, or using web beacons to collect information as a result of ad serving on our website.
+          </p>
+          <p>
             For more information on how Google uses data when you use our partners&apos; sites or apps, please visit
             <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer"> policies.google.com/technologies/partner-sites</a>.
           </p>
@@ -122,8 +125,8 @@ export default function Page() {
             If you have any questions about this Privacy Policy, please contact us:
           </p>
           <ul>
-            <li>By visiting the <Link href="/about">About Page</Link></li>
-            <li>By filing an issue on our <a href={siteMetadata.siteRepo} target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+            <li>By visiting our <Link href="/contact" className="font-bold underline">Contact Page</Link></li>
+            <li>By emailing us directly at <a href={`mailto:${siteMetadata.email}`} className="font-bold underline">{siteMetadata.email}</a></li>
           </ul>
         </div>
       </article>

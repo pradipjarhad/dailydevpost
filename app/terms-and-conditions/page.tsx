@@ -116,8 +116,8 @@ export default function Page() {
             If you have any questions about these Terms, please contact us:
           </p>
           <ul>
-            <li>By visiting the <Link href="/about">About Page</Link></li>
-            <li>By filing an issue on our <a href={siteMetadata.siteRepo} target="_blank" rel="noopener noreferrer">GitHub Repository</a></li>
+            <li>By visiting our <Link href="/contact" className="font-bold underline">Contact Page</Link></li>
+            <li>By emailing us directly at <a href={`mailto:${siteMetadata.email}`} className="font-bold underline">{siteMetadata.email}</a></li>
           </ul>
         </div>
       </article>
