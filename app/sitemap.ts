@@ -28,7 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const tagSlug = slug(tag).replace(/\s+/g, '-');
       return {
         url: `${siteUrl}/tags/${tagSlug}`,
-        lastModified: new Date().toISOString().split('T')[0],
         changeFrequency: 'weekly' as const,
         priority: 0.6,
       }
@@ -39,7 +38,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((cat) => categoryCounts[cat] >= 5)
     .map((cat) => ({
       url: `${siteUrl}/blog/category/${slug(cat)}`,
-      lastModified: new Date().toISOString().split('T')[0],
       changeFrequency: 'weekly' as const,
       priority: 0.6,
     }))
@@ -53,7 +51,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'terms-and-conditions',
   ].map((route) => ({
     url: `${siteUrl}/${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
     changeFrequency: (route === '' ? 'weekly' : 'monthly') as 'weekly' | 'monthly',
     priority: route === '' ? 1.0 : 0.8,
   }))

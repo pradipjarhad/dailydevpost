@@ -26,25 +26,24 @@ interface ListLayoutProps {
 function Pagination({ totalPages, currentPage }: PaginationProps) {
   const pathname = usePathname()
   // Clean up the path to get the base for pagination
-  // If we are at /blog/page/2, we want /blog
-  // If we are at /blog/category/page/2, we want /blog/category
-  // If we are at /blog, we want /blog
-  // If we are at /blog/category, we want /blog/category
-  const basePath = pathname.replace(/\/page\/\d+$/, '')
+  const basePath = pathname.replace(/\/page\/\d+$/, '').replace(/\/$/, '')
   const prevPage = currentPage - 1 > 0
   const nextPage = currentPage + 1 <= totalPages
+
+  const prevPageNumber = Math.max(1, currentPage - 1)
+  const nextPageNumber = Math.min(totalPages, currentPage + 1)
 
   return (
     <div className="space-y-2 pb-6 pt-4 md:space-y-5">
       <nav className="flex justify-between">
         {!prevPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
+          <button className="cursor-auto disabled:opacity-50" disabled={true}>
             Previous
           </button>
         )}
         {prevPage && (
           <Link
-            href={currentPage - 1 === 1 ? `${basePath}/` : `${basePath}/page/${currentPage - 1}`}
+            href={prevPageNumber === 1 ? `${basePath}/` : `${basePath}/page/${prevPageNumber}`}
             rel="prev"
           >
             Previous
@@ -54,12 +53,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           {currentPage} of {totalPages}
         </span>
         {!nextPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
+          <button className="cursor-auto disabled:opacity-50" disabled={true}>
             Next
           </button>
         )}
         {nextPage && (
-          <Link href={`${basePath}/page/${currentPage + 1}`} rel="next">
+          <Link href={`${basePath}/page/${nextPageNumber}`} rel="next">
             Next
           </Link>
         )}

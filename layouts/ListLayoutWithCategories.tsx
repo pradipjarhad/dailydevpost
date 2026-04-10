@@ -41,18 +41,21 @@ const generatePagination = (currentPage: number, totalPages: number) => {
 function Pagination({ totalPages, currentPage }: PaginationProps) {
     const pathname = usePathname()
     // basePath removes the trailing /page/... so we can append cleanly
-    const basePath = pathname.replace(/\/page\/\d+$/, '')
+    const basePath = pathname.replace(/\/page\/\d+$/, '').replace(/\/$/, '')
 
     const prevPage = currentPage - 1 > 0
     const nextPage = currentPage + 1 <= totalPages
     const pages = generatePagination(currentPage, totalPages)
+
+    const prevPageNumber = Math.max(1, currentPage - 1)
+    const nextPageNumber = Math.min(totalPages, currentPage + 1)
 
     return (
         <div className="flex flex-col items-center justify-center pb-12 pt-10">
             <nav aria-label="Pagination Navigation" className="flex items-center space-x-1 sm:space-x-2">
                 {/* Previous Button */}
                 <Link
-                    href={currentPage - 1 === 1 ? `${basePath}/` : `${basePath}/page/${currentPage - 1}`}
+                    href={prevPageNumber === 1 ? `${basePath}/` : `${basePath}/page/${prevPageNumber}`}
                     rel="prev"
                     className={`flex items-center justify-center w-10 h-10 rounded-lg border transition-all duration-200 ${prevPage
                             ? 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:text-primary-600 hover:border-primary-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-primary-400 dark:hover:border-primary-500 shadow-sm'
@@ -102,7 +105,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 
                 {/* Next Button */}
                 <Link
-                    href={nextPage ? `${basePath}/page/${currentPage + 1}` : '#'}
+                    href={nextPage ? `${basePath}/page/${nextPageNumber}` : '#'}
                     rel="next"
                     className={`flex items-center justify-center w-10 h-10 rounded-lg border transition-all duration-200 ${nextPage
                             ? 'border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:text-primary-600 hover:border-primary-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-700 dark:hover:text-primary-400 dark:hover:border-primary-500 shadow-sm'
