@@ -92,8 +92,8 @@ graph TD
     
     subgraph "No Upward Imports"
     direction BT
-        packages -.x-> apps
-        tooling -.x-> packages
+        packages -.->|X| apps
+        tooling -.->|X| packages
     end
 ```
 
