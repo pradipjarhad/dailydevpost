@@ -22,7 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const tagCounts = tagData as Record<string, number>
   const tagRoutes = Object.keys(tagCounts)
-    .filter((tag) => tagCounts[tag] >= 1)
+    .filter((tag) => tagCounts[tag] >= 5)
     .map((tag) => {
       // Ensure any spaces are replaced with valid hyphens
       const tagSlug = slug(tag).replace(/\s+/g, '-');
