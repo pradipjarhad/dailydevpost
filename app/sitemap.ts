@@ -6,6 +6,8 @@ import tagData from 'app/tag-data.json'
 import categoryData from 'app/category-data.json'
 import { slug } from 'github-slugger'
 
+export const dynamic = 'force-static'
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteMetadata.siteUrl
 

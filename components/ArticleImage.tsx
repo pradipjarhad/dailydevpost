@@ -4,6 +4,7 @@ interface ArticleImageProps {
   src: string
   alt?: string
   className?: string
+  priority?: boolean
 }
 
 const ArticleImage = (props: ArticleImageProps) => {
@@ -25,6 +26,7 @@ const ArticleImage = (props: ArticleImageProps) => {
           className={`${className}`}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 100vw"
+          priority={props.priority}
         />
       </div>
       <figcaption className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400 italic">
