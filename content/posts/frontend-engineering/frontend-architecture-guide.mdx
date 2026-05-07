@@ -128,6 +128,8 @@ Today, a true **production frontend architecture example** demands absolute type
 ### Why We Use the BFF Pattern
 Getting data to the UI safely requires a clear plan. In larger teams, a frontend might need to talk to 15 different microservices (Billing, Users, Analytics, Notifications).
 
+*(Read the full deep-dive: [The Backend-For-Frontend (BFF) Pattern Explained: Why Your Frontend Needs a Personal Assistant](/blog/the-backend-for-frontend-bff-pattern-explained))*
+
 Instead of making the user's phone send 15 different network requests, we rely entirely on the **Backend for Frontend pattern**. 
 
 Our Next.js server acts as the BFF. The server talks to all 15 microservices itself. It gathers the data, shapes it exactly how the UI needs it, strips out any sensitive personal info, and then hands it directly to the components. The user only receives the exact data they need to see. 
