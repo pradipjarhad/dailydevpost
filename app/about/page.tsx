@@ -13,6 +13,7 @@ export const metadata = genPageMetadata({
   title: 'About DailyDevPost | Performance Engineering & Technical Mastery',
   description:
     'The lab for the Craftsman Developer. We document the hard-earned logic of Performance Optimization, Frontend Architecture, and AI-Assisted Engineering.',
+  path: 'about',
 })
 
 export default function Page() {

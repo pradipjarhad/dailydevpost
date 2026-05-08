@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 export const metadata = genPageMetadata({
   title: 'Privacy Policy',
   description: `Privacy Policy for ${siteMetadata.title} - Learn how we collect, use, and protect your data, including Google AdSense and cookie disclosures.`,
+  path: 'privacy-policy',
 })
 
 export default function Page() {

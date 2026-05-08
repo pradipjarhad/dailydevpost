@@ -30,6 +30,9 @@ export function genPageMetadata({ title, description, image, path, ...rest }: Pa
       card: 'summary_large_image',
       images: image ? [image] : [siteMetadata.socialBanner],
     },
+    alternates: {
+      canonical: url,
+    },
     ...rest,
   }
 }

@@ -7,7 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 
-export const metadata = genPageMetadata({ title: 'Blog' })
+export const metadata = genPageMetadata({ title: 'Blog', path: 'blog' })
 
 export default async function BlogPage() {
     const posts = allCoreContent(sortPosts(allBlogs))

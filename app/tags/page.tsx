@@ -9,8 +9,8 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 
 export const metadata = genPageMetadata({
   title: 'Tags',
-  description: 'Things I blog about',
-  robots: { index: true, follow: true },
+  description: 'Explore topics and technologies I write about, such as React, Next.js, performance optimization, and more.',
+  path: 'tags',
 })
 
 export default async function Page() {
@@ -73,14 +73,14 @@ export default async function Page() {
         image: `${siteMetadata.siteUrl}/static/images/pradip-profile.jpg`,
         worksFor: { '@id': `${siteMetadata.siteUrl}/#organization` },
         knowsAbout: [
-          'React', 
-          'User Experience Design', 
+          'React',
+          'User Experience Design',
           'Frontend Engineering'
         ],
         sameAs: [
-            siteMetadata.twitter,
-            siteMetadata.github,
-            siteMetadata.linkedin
+          siteMetadata.twitter,
+          siteMetadata.github,
+          siteMetadata.linkedin
         ].filter(Boolean)
       },
       {
@@ -94,8 +94,8 @@ export default async function Page() {
         publisher: { '@id': `${siteMetadata.siteUrl}/#organization` },
         inLanguage: 'en-US',
         speakable: {
-            '@type': 'SpeakableSpecification',
-            cssSelector: ['h1', 'p']
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['h1', 'p']
         }
       },
       {
@@ -103,19 +103,19 @@ export default async function Page() {
         '@id': `${siteMetadata.siteUrl}/#navigation`,
         name: 'Main Navigation',
         itemListElement: headerNavLinks.map((link, index) => ({
-            '@type': 'SiteNavigationElement',
-            position: index + 1,
-            name: link.title,
-            url: link.href.includes('http') ? link.href : `${siteMetadata.siteUrl}${link.href}`
+          '@type': 'SiteNavigationElement',
+          position: index + 1,
+          name: link.title,
+          url: link.href.includes('http') ? link.href : `${siteMetadata.siteUrl}${link.href}`
         }))
       },
       {
-          '@type': 'BreadcrumbList',
-          '@id': `${tagsUrl}/#breadcrumb`,
-          itemListElement: [
-              { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteMetadata.siteUrl },
-              { '@type': 'ListItem', 'position': 2, 'name': 'Tags', 'item': tagsUrl }
-          ]
+        '@type': 'BreadcrumbList',
+        '@id': `${tagsUrl}/#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteMetadata.siteUrl },
+          { '@type': 'ListItem', 'position': 2, 'name': 'Tags', 'item': tagsUrl }
+        ]
       }
     ]
   }
@@ -137,16 +137,16 @@ export default async function Page() {
           </p>
           <div className="h-1.5 w-20 bg-primary-500 rounded-full mx-auto"></div>
         </div>
-        
+
         <div className="flex max-w-4xl flex-wrap justify-center gap-4">
           {tagKeys.length === 0 && (
-             <div className="text-gray-500 dark:text-gray-400 italic">No tags identified in current build.</div>
+            <div className="text-gray-500 dark:text-gray-400 italic">No tags identified in current build.</div>
           )}
           {sortedTags.map((t) => {
             const count = tagCounts[t]
             // Scale based on frequency for a "cloud" feel
             const sizeClass = count > 10 ? 'text-lg px-6 py-2.5' : count > 5 ? 'text-base px-5 py-2' : 'text-sm px-4 py-1.5'
-            
+
             return (
               <div key={t} className="group relative">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-500 to-blue-600 rounded-full blur opacity-0 group-hover:opacity-20 transition duration-300"></div>

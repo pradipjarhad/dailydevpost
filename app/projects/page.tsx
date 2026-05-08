@@ -4,7 +4,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({ title: 'Projects' })
+export const metadata = genPageMetadata({ title: 'Projects', path: 'projects' })
 
 export default function Projects() {
 

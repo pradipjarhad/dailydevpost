@@ -3,7 +3,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ContactForm from '@/components/ContactForm'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({ title: 'Contact' })
+export const metadata = genPageMetadata({ title: 'Contact', path: 'contact' })
 
 export default function Contact() {
     return (

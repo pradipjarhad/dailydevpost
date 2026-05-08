@@ -8,6 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 export const metadata = genPageMetadata({
   title: 'Terms and Conditions',
   description: `Terms and Conditions for ${siteMetadata.title} - Read our rules, user responsibilities, and legal disclaimers for using our website.`,
+  path: 'terms-and-conditions',
 })
 
 export default function Page() {
