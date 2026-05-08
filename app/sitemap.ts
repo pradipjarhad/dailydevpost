@@ -27,7 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .filter((tag) => tagCounts[tag] >= 5)
     .map((tag) => {
       // Ensure any spaces are replaced with valid hyphens
-      const tagSlug = slug(tag).replace(/\s+/g, '-');
+      const tagSlug = slug(tag);
       return {
         url: `${siteUrl}/tags/${tagSlug}`,
         changeFrequency: 'weekly' as const,

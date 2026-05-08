@@ -22,7 +22,7 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
         description: `${siteMetadata.title} - ${category} posts`,
         robots: postCount < 5 ? { index: false, follow: true } : { index: true, follow: true },
         alternates: {
-            canonical: './',
+            canonical: `${siteMetadata.siteUrl}/blog/category/${category}`,
             types: {
                 'application/rss+xml': `${siteMetadata.siteUrl}/blog/category/${category}/feed.xml`,
             },

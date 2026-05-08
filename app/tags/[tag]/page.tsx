@@ -14,13 +14,22 @@ export async function generateMetadata(props: { params: Promise<{ tag: string }>
   const params = await props.params
   const tag = decodeURI(params.tag)
   const title = formatCategoryTitle(tag)
+  
+  // Count posts for this tag to decide on indexing (must match TagPage logic)
+  const postCount = allBlogs.filter(
+    (post) => post.tags && post.tags.map((t) => slug(t)).includes(slug(tag))
+  ).length
+
   return genPageMetadata({
     title: title,
-    robots: { index: true, follow: true },
+    robots: { 
+      index: postCount >= 3, // NoIndex if less than 3 posts to avoid "thin content" issues
+      follow: true 
+    },
     alternates: {
-      canonical: './',
+      canonical: `${siteMetadata.siteUrl}/tags/${slug(tag)}`,
       types: {
-        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${slug(tag).replace(/\s+/g, '-')}/feed.xml`,
+        'application/rss+xml': `${siteMetadata.siteUrl}/tags/${slug(tag)}/feed.xml`,
       },
     },
   })
@@ -69,7 +78,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     )
   }
 
-    const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag).replace(/\s+/g, '-')}`
+    const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag)}`
     const collectionGraph = {
         '@context': 'https://schema.org',
         '@graph': [
