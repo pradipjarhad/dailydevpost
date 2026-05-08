@@ -21,6 +21,7 @@ export async function generateMetadata(props: { params: Promise<{ category: stri
         title: formatCategoryTitle(category),
         description: `${siteMetadata.title} - ${category} posts`,
         robots: postCount < 5 ? { index: false, follow: true } : { index: true, follow: true },
+        path: `blog/category/${category}`,
         alternates: {
             canonical: `${siteMetadata.siteUrl}/blog/category/${category}`,
             types: {

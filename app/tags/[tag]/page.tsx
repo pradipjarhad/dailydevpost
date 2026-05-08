@@ -22,6 +22,7 @@ export async function generateMetadata(props: { params: Promise<{ tag: string }>
 
   return genPageMetadata({
     title: title,
+    path: `tags/${slug(tag)}`,
     robots: { 
       index: postCount >= 3, // NoIndex if less than 3 posts to avoid "thin content" issues
       follow: true 

@@ -10,7 +10,7 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 export const metadata = genPageMetadata({
   title: 'Tags',
   description: 'Things I blog about',
-  robots: { index: false, follow: true },
+  robots: { index: true, follow: true },
 })
 
 export default async function Page() {

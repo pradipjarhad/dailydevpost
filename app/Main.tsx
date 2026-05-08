@@ -3,6 +3,7 @@ import Tag from '@/components/Tag'
 import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
+import { slug } from 'github-slugger'
 
 const MAX_DISPLAY = 5
 
@@ -73,7 +74,7 @@ export default function Home({ posts }) {
                 {heroPost.tags.slice(0, 3).map((tag) => (
                   <Link
                     key={tag}
-                    href={`/tags/${tag}`}
+                    href={`/tags/${slug(tag)}`}
                     className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500 hover:bg-primary-600 text-white shadow-sm transition-colors"
                   >
                     {tag}
