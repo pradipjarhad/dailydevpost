@@ -8,6 +8,7 @@ import tagData from 'app/tag-data.json';
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
+import { notFound } from 'next/navigation'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
 export async function generateMetadata(props: { params: Promise<{ tag: string }> }): Promise<Metadata> {
@@ -45,6 +46,8 @@ export const generateStaticParams = async () => {
   return paths
 }
 
+export const dynamicParams = false
+
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params
   const tag = params.tag
@@ -70,13 +73,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
 
   // If the tag doesn't exist, return not found
   if (posts.length === 0) {
-    return (
-      <div className="mt-24 text-center">
-        <h2 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-          No posts found
-        </h2>
-      </div>
-    )
+    notFound()
   }
 
     const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag)}`
