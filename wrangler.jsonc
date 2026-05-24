@@ -3,6 +3,7 @@
   "name": "dailydevpost",
   "compatibility_date": "2026-05-24",
   "compatibility_flags": ["nodejs_compat"],
+  "keep_names": false,
   "observability": {
     "enabled": true
   },
