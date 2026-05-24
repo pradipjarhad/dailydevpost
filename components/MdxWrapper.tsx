@@ -16,8 +16,8 @@ const MDXLayoutRenderer = dynamic(
 
 interface MdxWrapperProps {
   code: string
-  components?: Record<string, React.ComponentType<any>>
-  toc?: any
+  components?: Record<string, React.ComponentType<unknown>>
+  toc?: unknown
 }
 
 export default function MdxWrapper({ code, components, toc }: MdxWrapperProps) {
