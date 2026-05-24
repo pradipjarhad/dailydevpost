@@ -5,7 +5,10 @@
   "scripts": {
     "start": "next dev",
     "dev": "cross-env INIT_CWD=$PWD next dev",
-    "build": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs",
+    "build": "next build && cross-env NODE_OPTIONS='--experimental-json-modules' node ./scripts/postbuild.mjs && opennextjs-cloudflare build --skipNextBuild",
+    "build:cf": "opennextjs-cloudflare build",
+    "preview:cf": "pnpm build:cf && wrangler dev",
+    "deploy:cf": "pnpm build:cf && wrangler deploy",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
@@ -47,6 +50,7 @@
   },
   "devDependencies": {
     "@next/bundle-analyzer": "15.4.10",
+    "@opennextjs/cloudflare": "^1.19.11",
     "@svgr/webpack": "^8.1.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -73,7 +77,8 @@
     "prettier-plugin-tailwindcss": "^0.6.9",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "wrangler": "^4.94.0"
   },
   "resolutions": {
     "@opentelemetry/api": "1.4.1",

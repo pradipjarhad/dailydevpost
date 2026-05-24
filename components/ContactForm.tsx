@@ -10,16 +10,13 @@ export default function ContactForm() {
         setStatus('submitting')
         const form = event.currentTarget
         const formData = new FormData(form)
-        const entries = Array.from(formData.entries()).filter(
-            (entry): entry is [string, string] => typeof entry[1] === 'string'
-        )
-        const body = new URLSearchParams(entries).toString()
+        const data = Object.fromEntries(formData.entries())
 
         try {
-            const response = await fetch('/__forms.html', {
+            const response = await fetch('/api/contact', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: body,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
             })
 
             if (response.ok) {
