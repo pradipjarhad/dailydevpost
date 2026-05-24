@@ -46,7 +46,7 @@ export const generateStaticParams = async () => {
   return paths
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params

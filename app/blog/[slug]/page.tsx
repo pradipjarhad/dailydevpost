@@ -79,7 +79,7 @@ export async function generateMetadata(props: {
     }
 }
 
-export const dynamicParams = false
+export const dynamicParams = true
 
 export const generateStaticParams = async () => {
     return allBlogs.map((p) => ({
