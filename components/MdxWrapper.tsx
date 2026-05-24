@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
 import React from 'react'
@@ -16,8 +17,8 @@ const MDXLayoutRenderer = dynamic(
 
 interface MdxWrapperProps {
   code: string
-  components?: Record<string, React.ComponentType<unknown>>
-  toc?: unknown
+  components?: Record<string, React.ComponentType<any>>
+  toc?: any
 }
 
 export default function MdxWrapper({ code, components, toc }: MdxWrapperProps) {
