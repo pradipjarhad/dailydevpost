@@ -17,7 +17,7 @@ const MDXLayoutRenderer = dynamic(
 
 interface MdxWrapperProps {
   code: string
-  components?: Record<string, React.ComponentType<any>>
+  components?: any
   toc?: any
 }
 
