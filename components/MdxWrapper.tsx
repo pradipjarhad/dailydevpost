@@ -3,6 +3,7 @@
 
 import React from 'react'
 import dynamic from 'next/dynamic'
+import { components } from '@/components/MDXComponents'
 
 // Dynamically import Pliny's MDXLayoutRenderer with SSR disabled.
 // This completely bypasses Cloudflare Worker's V8 "Code generation from strings disallowed" (EvalError) constraint
@@ -17,10 +18,9 @@ const MDXLayoutRenderer = dynamic(
 
 interface MdxWrapperProps {
   code: string
-  components?: any
   toc?: any
 }
 
-export default function MdxWrapper({ code, components, toc }: MdxWrapperProps) {
+export default function MdxWrapper({ code, toc }: MdxWrapperProps) {
   return <MDXLayoutRenderer code={code} components={components} toc={toc} />
 }
