@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import siteMetadata from '@/data/siteMetadata'
 
-export const runtime = 'edge' // Run on Cloudflare Edge (Workers/Pages)
-
 export async function POST(request: Request) {
     try {
         const contentType = request.headers.get('content-type') || ''
