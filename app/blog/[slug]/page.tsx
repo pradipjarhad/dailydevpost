@@ -3,7 +3,7 @@ import 'katex/dist/katex.css'
 
 import PageTitle from '@/components/PageTitle'
 import { components } from '@/components/MDXComponents'
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
+import MdxWrapper from '@/components/MdxWrapper'
 import { sortPosts, coreContent, allCoreContent, CoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs, allAuthors } from 'contentlayer/generated'
 import type { Authors, Blog } from 'contentlayer/generated'
@@ -252,7 +252,7 @@ export default async function Page(props: {
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(articleGraph) }}
             />
             <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
-                <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
+                <MdxWrapper code={post.body.code} components={components} toc={post.toc} />
             </Layout>
         </>
     )

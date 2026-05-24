@@ -1,6 +1,6 @@
 import { Authors, allAuthors, allBlogs } from 'contentlayer/generated'
 import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
-import { MDXLayoutRenderer } from 'pliny/mdx-components'
+import MdxWrapper from '@/components/MdxWrapper'
 import AuthorLayout from '@/layouts/AuthorLayout'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
@@ -139,7 +139,7 @@ export default function Page() {
       />
       <Breadcrumbs />
       <AuthorLayout content={mainContent} latestPosts={latestPosts}>
-        <MDXLayoutRenderer code={author.body.code} />
+        <MdxWrapper code={author.body.code} />
       </AuthorLayout>
     </>
   )
