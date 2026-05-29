@@ -26,9 +26,9 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Email and message are required.' }, { status: 400 })
         }
 
-        const resendApiKey = process.env.NEXT_PUBLIC_RESEND_API_KEY
+        const resendApiKey = process.env.RESEND_API_KEY || process.env.NEXT_PUBLIC_RESEND_API_KEY
         if (!resendApiKey) {
-            console.error('NEXT_PUBLIC_RESEND_API_KEY is not defined in environment variables.')
+            console.error('RESEND_API_KEY or NEXT_PUBLIC_RESEND_API_KEY is not defined in environment variables.')
             return NextResponse.json({ error: 'Mail delivery service not configured.' }, { status: 500 })
         }
 
@@ -68,12 +68,12 @@ export async function POST(request: Request) {
             })
         })
 
-        const resendData = await resendResponse.json() as { id?: string; error?: { message: string } }
+        const resendData = await resendResponse.json() as { id?: string; message?: string; error?: { message: string } }
 
         if (!resendResponse.ok) {
             console.error('Resend API response error:', resendData)
             return NextResponse.json({
-                error: resendData.error?.message || 'Failed to deliver message via email provider.'
+                error: resendData.message || resendData.error?.message || 'Failed to deliver message via email provider.'
             }, { status: resendResponse.status })
         }
 
