@@ -24,24 +24,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const tagCounts = tagData as Record<string, number>
   const tagRoutes = Object.keys(tagCounts)
-    .filter((tag) => tagCounts[tag] >= 5)
+    .filter((tag) => tagCounts[tag] >= 3)
     .map((tag) => {
       // Ensure any spaces are replaced with valid hyphens
       const tagSlug = slug(tag);
       return {
         url: `${siteUrl}/tags/${tagSlug}`,
         changeFrequency: 'weekly' as const,
-        priority: 0.6,
+        priority: 0.7,
       }
     })
 
   const categoryCounts = categoryData as Record<string, number>
   const categoryRoutes = Object.keys(categoryCounts)
-    .filter((cat) => categoryCounts[cat] >= 5)
+    .filter((cat) => categoryCounts[cat] >= 3)
     .map((cat) => ({
       url: `${siteUrl}/blog/category/${slug(cat)}`,
       changeFrequency: 'weekly' as const,
-      priority: 0.6,
+      priority: 0.7,
     }))
 
   const routes = [
