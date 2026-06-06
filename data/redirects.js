@@ -5,7 +5,7 @@
 const redirects = [
     {
         "source": "/categories",
-        "destination": "/blog",
+        "destination": "/topics",
         "permanent": true
     },
     {
@@ -15,7 +15,17 @@ const redirects = [
     },
     {
         "source": "/blog/:category(ai-for-developers|build-in-public|career-and-growth|debugging-and-fixes|dev-diary|frontend-engineering|javascript-deep-dives|performance-optimization|tooling-and-dx)",
-        "destination": "/blog/category/:category",
+        "destination": "/topics/:category",
+        "permanent": true
+    },
+    {
+        "source": "/blog/category/:category(ai-for-developers|build-in-public|career-and-growth|debugging-and-fixes|dev-diary|frontend-engineering|javascript-deep-dives|performance-optimization|tooling-and-dx)",
+        "destination": "/topics/:category",
+        "permanent": true
+    },
+    {
+        "source": "/blog/category/:category(ai-for-developers|build-in-public|career-and-growth|debugging-and-fixes|dev-diary|frontend-engineering|javascript-deep-dives|performance-optimization|tooling-and-dx)/page/:page",
+        "destination": "/topics/:category/page/:page",
         "permanent": true
     },
     {

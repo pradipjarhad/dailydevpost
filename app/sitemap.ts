@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const categoryRoutes = Object.keys(categoryCounts)
     .filter((cat) => categoryCounts[cat] >= 3)
     .map((cat) => ({
-      url: `${siteUrl}/blog/category/${slug(cat)}`,
+      url: `${siteUrl}/topics/${slug(cat)}`,
       changeFrequency: 'weekly' as const,
       priority: 0.7,
     }))
@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const routes = [
     '',
     'blog',
+    'topics',
     'about',
     'contact',
     'privacy-policy',

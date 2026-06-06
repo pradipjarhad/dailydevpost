@@ -8,7 +8,7 @@ interface Props {
 const Category = ({ text }: Props) => {
     return (
         <Link
-            href={`/blog/category/${slug(text)}`}
+            href={`/topics/${slug(text)}`}
             className="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
         >
             {text.split(' ').join('-')}

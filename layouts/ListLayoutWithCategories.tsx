@@ -143,12 +143,13 @@ export default function ListLayoutWithCategories({
 
     return (
         <>
-            <div className="pb-12 pt-6">
-                <div className="flex flex-col items-center mb-10 text-center">
-                    <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 dark:text-gray-100 border-b-2 border-primary-500 pb-2 inline-block">
-                        {title}
-                    </h1>
-                </div>
+            <div className="w-full">
+                <div className="pb-12 pt-6">
+                    <div className="flex flex-col items-center mb-10 text-center">
+                        <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 dark:text-gray-100 border-b-2 border-primary-500 pb-2 inline-block">
+                            {title}
+                        </h1>
+                    </div>
 
                 {/* Mobile Category Filters Toggle */}
                 <div className="flex md:hidden items-center justify-between mb-6 px-4">
@@ -180,12 +181,12 @@ export default function ListLayoutWithCategories({
                     </Link>
                     {sortedCategories.map((cat) => {
                         // Determine if this category is active
-                        const isActive = pathname.includes(`/blog/category/${slug(cat)}`)
+                        const isActive = pathname.includes(`/topics/${slug(cat)}`) || pathname.includes(`/blog/category/${slug(cat)}`)
                         const categoryTitle = formatCategoryTitle(cat)
                         return (
                             <Link
                                 key={cat}
-                                href={`/blog/category/${slug(cat)}`}
+                                href={`/topics/${slug(cat)}`}
                                 className={`px-3 py-2 sm:px-4 sm:py-2 text-center text-sm font-medium rounded-md transition-colors ${isActive
                                     ? 'bg-primary-500 text-white shadow-md'
                                     : 'bg-white text-gray-700 shadow-sm border border-gray-100 hover:text-primary-500 dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 dark:hover:text-primary-400'
@@ -233,7 +234,7 @@ export default function ListLayoutWithCategories({
                                 <div className="flex flex-col flex-1 p-6">
                                     {/* Category and Read Time */}
                                     <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-gray-500 mb-4">
-                                        <Link href={`/blog/category/${slug(post.category || '')}`} className="text-gray-500 hover:text-primary-500 transition-colors">
+                                        <Link href={`/topics/${slug(post.category || '')}`} className="text-gray-500 hover:text-primary-500 transition-colors">
                                             {postCategory}
                                         </Link>
                                         <span className="flex items-center gap-1 text-gray-400">
@@ -305,6 +306,7 @@ export default function ListLayoutWithCategories({
                     })}
                 </div>
             </div>
+        </div>
 
             {pagination && pagination.totalPages > 1 && (
                 <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />

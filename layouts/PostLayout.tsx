@@ -66,7 +66,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
   const breadcrumbItems = [
     { name: 'Home', path: '/' },
     { name: formatCategoryTitle(basePath), path: `/${basePath}` },
-    ...(category ? [{ name: formatCategoryTitle(category), path: `/${basePath}/category/${category}` }] : []),
+    ...(category ? [{ name: formatCategoryTitle(category), path: `/topics/${category}` }] : []),
     { name: title, path: `/${path}`, isLast: true }
   ]
 
@@ -91,7 +91,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dl>
               <div>
                 <PageTitle>{title}</PageTitle>
-                <p className="sr-only summary">{content.summary}</p>
+                {content.summary && (
+                  <p className="mx-auto mt-4 max-w-3xl text-base leading-8 text-gray-600 dark:text-gray-300">
+                    {content.summary}
+                  </p>
+                )}
                 <SocialShare title={title} url={`${siteMetadata.siteUrl}/${path}`} />
               </div>
             </div>
@@ -161,11 +165,19 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 
               <div className="py-6">
                 <div className="text-base text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/60 p-6 md:p-8 rounded-2xl relative overflow-hidden ring-1 ring-gray-100 dark:ring-gray-700/50">
-                  <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-5 pointer-events-none">☕</div>
-                  <p className="flex items-center relative z-10 font-medium">
-                    <span role="img" aria-label="Coffee" className="mr-3 text-2xl">☕</span>
-                    Did you like the article? <Link href="https://ko-fi.com/dailydevpost" className="ml-1.5 text-primary-500 font-bold hover:text-primary-600 dark:hover:text-primary-400 transition-colors">Support me on Ko-Fi!</Link>
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 text-6xl opacity-5 pointer-events-none">📩</div>
+                  <p className="text-base font-medium mb-3 text-gray-900 dark:text-gray-100">
+                    Want fewer bugs and faster builds?
                   </p>
+                  <p className="leading-7 text-gray-700 dark:text-gray-300 mb-4">
+                    Subscribe for weekly developer strategies, performance checklists, and AI workflows that help you ship better code.
+                  </p>
+                  <Link
+                    href="/newsletter"
+                    className="inline-flex items-center rounded-xl bg-primary-500 px-5 py-3 text-sm font-semibold text-white hover:bg-primary-600 transition-colors"
+                  >
+                    Join the newsletter
+                  </Link>
                 </div>
               </div>
               <div className="py-4 text-sm text-gray-700 dark:text-gray-300">

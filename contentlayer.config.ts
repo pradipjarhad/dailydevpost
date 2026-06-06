@@ -258,7 +258,7 @@ export const Blog = defineDocumentType(() => ({
               '@type': 'ListItem',
               'position': 3,
               'name': formatCategory(category || ''),
-              'item': `${siteMetadata.siteUrl}/blog/category/${category}`
+              'item': `${siteMetadata.siteUrl}/topics/${category}`
             },
             {
               '@type': 'ListItem',

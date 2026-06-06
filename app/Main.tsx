@@ -41,7 +41,7 @@ export default function Home({ posts }) {
               Latest Posts
             </Link>
             <Link
-              href="/categories"
+              href="/topics"
               className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-8 py-3.5 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-all duration-200"
             >
               Browse Topics
@@ -96,7 +96,7 @@ export default function Home({ posts }) {
                 <time dateTime={heroPost.date}>{formatDate(heroPost.date, siteMetadata.locale)}</time>
                 <span className="mx-1">&bull;</span>
                 <Link
-                  href={`/blog/category/${heroPost.category}`}
+                  href={`/topics/${heroPost.category}`}
                   className="text-primary-500 hover:text-primary-400 capitalize transition-colors"
                 >
                   {heroPost.category.replace(/-/g, ' ')}
@@ -142,7 +142,7 @@ export default function Home({ posts }) {
                         {formatDate(post.date, siteMetadata.locale)}
                       </time>
                       <span className="text-gray-300 dark:text-gray-600">|</span>
-                      <Link href={`/blog/category/${post.category}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors uppercase tracking-wider text-xs font-bold">
+                      <Link href={`/topics/${post.category}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 transition-colors uppercase tracking-wider text-xs font-bold">
                         {post.category.replace(/-/g, ' ')}
                       </Link>
                     </div>
@@ -188,7 +188,7 @@ export default function Home({ posts }) {
                   </span>
                   {topic.title}
                 </h2>
-                <Link href={`/blog/category/${topic.id}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-semibold text-sm flex items-center transition-colors">
+                <Link href={`/topics/${topic.id}`} className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400 font-semibold text-sm flex items-center transition-colors">
                   More in {topic.title} <span className="ml-1.5" aria-hidden="true">&rarr;</span>
                 </Link>
               </div>

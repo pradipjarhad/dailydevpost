@@ -2,7 +2,8 @@
 title: "What Is the JavaScript Temporal API and How Do You Replace Moment.js?"
 date: 2026-02-03
 slug: "what-is-the-javascript-temporal-api-and-how-do-you-replace-moment-js"
-tags: ['Frontend Engineering']
+tags:
+  - Frontend Engineering
 thumbnail: '/static/images/blog/javascript-deep-dives/what-is-the-javascript-temporal-api-and-how-do-you-replace-moment-js.png'
 draft: false
 summary: >-
@@ -23,7 +24,8 @@ faqs:
   - question: "Is Temporal API production-ready in 2026?"
     answer: >-
       Yes for modern runtimes. Verify support. Use the official polyfill where necessary.
-thumbnailAlt: "Detailed visual guide and illustration for What Is the JavaScript Temporal API and How Do You Replace Moment.js?, focusing on Frontend Engineering best practices and tutorials."
+thumbnailAlt: >-
+  Detailed visual guide and illustration for What Is the JavaScript Temporal API and How Do You Replace Moment.js?, focusing on Frontend Engineering best practices and tutorials.
 ---
 
 The **JavaScript Temporal API** is the standards-based replacement for both the legacy `Date` object and libraries like Moment.js. It provides immutable, timezone-aware, predictable date and time handling. If you are looking for a **JavaScript Temporal API migration guide**, the short version is this. Replace parsing with `Temporal.PlainDate` or `Temporal.Instant`, replace timezone logic with `Temporal.ZonedDateTime`, and replace date math with `.add()` and `.subtract()` on immutable Temporal objects.
