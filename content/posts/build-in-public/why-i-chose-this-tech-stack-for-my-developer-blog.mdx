@@ -1,6 +1,7 @@
 ---
 title: "Why I Chose This Tech Stack for My Developer Blog"
 date: '2026-02-01'
+lastmod: 2026-06-07
 slug: "why-i-chose-this-tech-stack-for-my-developer-blog"
 tags:
   - Modern React
@@ -45,219 +46,172 @@ When writing feels like work before the work begins, you stop doing it. Quietly.
 This post is not about the “best” stack.  
 It’s about the one that finally stopped getting in my way.
 
-## I Had to Be Honest About What Kind of Blog This Was
+## What I needed from the stack
 
-Before tools, I had to answer a boring question.
+My goal was not to build a product site.
+It was to build a developer blog with:
 
-What am I actually building?
+- long-form posts that include code
+- predictable routing and layout
+- easy metadata management
+- content that lives in a code repository
+- minimal ceremony for publishing
 
-Not a product site.  
-Not a newsletter funnel.  
-Not a personal brand machine.
+Those constraints shaped every choice.
 
-Just a developer blog.
+## The stack criteria I used
 
-- Long posts  
-- Lots of code  
-- Internal links everywhere  
-- Posts that assume the reader thinks, not scrolls  
+Instead of asking “What is trendy?”, I asked:
 
-That ruled out a lot of options immediately.
+- Will this keep the writing flow smooth?
+- Will this make it easy to refactor later?
+- Can I understand the full system without hunting through too many tools?
+- Does this feel like a codebase, not a CMS?
 
-Anything that treated writing as “content production” felt wrong.  
-Anything that forced me into an admin panel broke my focus.
+If the stack added noise, I rejected it.
 
-I wanted the blog to feel like a codebase.  
-Because that’s where I’m comfortable.
+## Why I chose Next.js
 
-## Why I Didn’t Use WordPress, Ghost or a Headless CMS
+Yes, Next.js is more than a blog needs.
 
-I’ve used them. Properly. Not casually.
+That is the point.
 
-They work. That’s not the issue.
-
-The issue is context switching.
-
-You write in an editor.  
-Then you manage content in a browser.  
-Then you debug styling in a different place.  
-Then you wonder where a field is coming from.
-
-It never feels like one system.
-
-- Versioning content becomes awkward  
-- Refactoring posts feels risky  
-- Renaming a slug feels scary  
-
-As a developer, I already have tools that solve these problems well.
-
-Git.  
-Diff.  
-Search.  
-Refactor.
-
-I did not want to configure plugins. (I care [more about writing than configuring](/blog/what-i-care-about-more-than-frameworks)).
-I didn’t want a blogging tool.  
-I wanted a repository I could trust.
-
-## Why I Chose Next.js Instead of a Static Site Generator
-
-Yes, Next.js is “more” than a blog needs.
-
-That argument misses the point.
-
-I didn’t choose it for features.  
 I chose it because it removed decisions.
 
-With many static site generators, you spend time learning the tool.  
-With Next.js, you spend time writing code.
+- routing became file-based
+- layouts became obvious
+- metadata stayed next to the page
+- the app felt like a code repository
 
-Routing feels obvious.  
-Layouts feel predictable.  
-Metadata lives where it should.
+With many static site generators, you learn the tool.
+With Next.js, you write the project.
 
-I wasn’t fighting the framework.  
-That alone was worth the trade-off.
+That made the blog feel more natural.
 
-## Why the App Router Mattered More Than I Expected
+## Why the App Router mattered
 
-This surprised me.
-
-I didn’t care much about the App Router at first.  
+At first, I didn’t care about the App Router.
 I thought it was just a new pattern.
 
-It changed how the project felt.
+It changed the way the project felt.
 
-Layouts stopped being clever.  
-They became boring in a good way.
+Layouts stopped being clever. They became boring in a good way.
 
-Content pages felt like files again.  
-Not abstractions. Not config.
+Pages became files again, not abstractions.
 
-SEO logic didn’t live in some shared utility.  
-It lived next to the page.
+SEO logic lived next to the page.
 
-The blog stopped feeling like a system I had to remember.  
-It became something I could return to after weeks away.
+This matters when you return after weeks away.
 
-That matters when writing is intermittent.
-
-## Why I Used Tailwind for a Writing-First Site
+## Why I used Tailwind for a writing-first site
 
 I’ve written CSS for years.
 
-I know how to do typography.  
-I also know how easy it is to overthink it.
+Tailwind helped me make styling predictable.
 
-Spacing.  
-Line height.  
-Margins.  
-Tiny tweaks that never end.
+- no cascade surprises
+- fixed typography decisions
+- consistent spacing
 
-Tailwind let me lock decisions early.
+The real benefit was mental quiet.
 
-Once the prose styles felt right, they stayed right.
+When the prose looked right, I did not have to think about CSS anymore.
 
-- No cascade surprises  
-- No “why does this paragraph look different?” moments  
+## Why I chose MDX
 
-I don’t think about styling when I write now.
+Plain markdown is simple, but it becomes limiting quickly.
 
-That’s the real benefit.
-
-Not speed.  
-Not consistency.
-
-Mental quiet.
-
-## Why I Chose MDX Even Though It Complicates Things
-
-Plain markdown is simple.
-
-It’s also limiting once posts get serious.
-
-Code blocks are not just decoration.  
+Code blocks are not just decoration.
 They are part of the argument.
-
-Sometimes I need callouts.  
-Sometimes side notes.  
-Sometimes reusable examples.
 
 MDX lets content behave like code.
 
-That sounds abstract until you’ve tried to explain something complex without it.
+It lets me use callouts, reusable components, and side notes without hacking around the format.
 
-Once I crossed a certain depth of writing, markdown started pushing back.  
-MDX stopped that friction.
+Yes, it adds complexity.
+But it removes more friction than it creates.
 
-Yes, it adds complexity.  
-But it removes more than it adds.
+## Why Contentlayer matters
 
-## Why I Didn’t Just Use Raw MDX Files
+Raw MDX works until it doesn't.
 
-Raw MDX works. Until it doesn’t.
+Once you have many posts, structure becomes important.
 
-The first time you mistype frontmatter and nothing builds, you feel it.  
-The second time, you get annoyed.  
-The third time, you want guardrails.
+Contentlayer gives you:
 
-Contentlayer gave me something simple but important.
+- typed content data
+- predictable frontmatter
+- build-time errors that point to the problem
 
-Structure.
+That made refactoring posts feel safer.
 
-- Types for content  
-- Predictable fields  
-- Errors that point to the problem  
+It also made the repo feel more like a content codebase.
 
-Refactoring posts stopped being scary.
+## Why Netlify instead of Vercel
 
-That changed how confident I felt writing long pieces.  
-Confidence affects output more than people admit.
-
-## Why I Hosted on Netlify Instead of Vercel
-
-Vercel is great.  
-This isn’t a protest.
-
-I wanted hosting that faded into the background.
+I wanted hosting that disappeared.
 
 Netlify felt boring in the right way.
 
-- Builds were predictable  
-- Deploys were clear  
-- Nothing felt magical  
+- predictable builds
+- clear deploys
+- no surprises
 
-For a content site, that’s a feature.
+For a content-heavy blog, that is a feature.
 
-I don’t want to think about hosting while writing.  
-I want it to disappear.
+I did not want hosting to compete with writing.
 
-## The Problems This Stack Still Has
+## The real trade-offs in this setup
 
-This setup is not perfect.
+This stack is not perfect.
 
-- Build times grow as content grows  
-- MDX errors can be annoying  
-- App Router abstractions can be confusing at first  
+- build times can grow as content grows
+- MDX errors can be annoying
+- App Router patterns can be confusing at first
 
-You need to be comfortable reading your own tools.  
-You need to accept that simplicity has a cost.
+The real cost is accepting a little complexity for more control.
 
-If you want instant publishing with zero setup, this isn’t for you.
+If you want zero setup, this is not the stack for you.
 
-## Who Should Not Copy This Setup
+## Who should use this stack
 
-This matters more than recommendations.
+This stack fits you if you want:
 
-Don’t use this if:
+- a writing-first blog in a code repo
+- easy internal linking and SEO
+- a content workflow that feels like code
+- a system you can maintain yourself
 
-- You want a visual editor  
-- You publish rarely  
-- You enjoy experimenting with design weekly  
-- You don’t like reading build logs  
+It is not the right choice if you want:
 
-This stack rewards consistency.  
-Not novelty.
+- a visual editor
+- rare publishing
+- a lightweight, no-code blog
+- to avoid reading build logs
+
+## How to choose your own blog stack
+
+If you are picking a stack, use this decision checklist:
+
+- What is the main thing I want to build?
+- Will this stack keep the authoring flow smooth?
+- Will I be able to understand the whole system after a week away?
+- Does this stack feel like a codebase or like a CMS?
+- What will I have to learn just to publish one post?
+
+The best stack is the one that helps you ship content reliably.
+
+## What I want other developers to know
+
+The stack is not the story.
+
+The story is the work you get done.
+
+If the technology helps you write and refactor without friction, then it is the right stack.
+
+If it gets in the way, it is not.
+
+That is the decision I made for this blog.
 
 ## What Actually Mattered in the End
 

@@ -26,6 +26,7 @@ const siteMetadata = {
     ],
     postsPerPage: 6,
     siteRepo: 'https://github.com/pradipjarhad/dailydevpost',
+    adSenseClient: 'ca-pub-6888335168018589',
     siteLogo: '/static/images/logo.png',
     image: '/static/images/logo.png',
     socialBanner: '/static/images/logo.png',

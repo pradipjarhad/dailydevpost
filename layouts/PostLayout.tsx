@@ -13,6 +13,7 @@ import AuthorCard from '@/components/AuthorCard'
 import TableOfContents, { TocItem } from '@/components/TableOfContents'
 import FAQ from '@/components/FAQ'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
+import AdSlot from '@/components/AdSlot'
 
 import { allBlogs } from 'contentlayer/generated'
 import SectionContainer from '@/components/SectionContainer'
@@ -96,6 +97,9 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     {content.summary}
                   </p>
                 )}
+                {/* <div className="my-8">
+                  <AdSlot slotId="1234567890" className="mx-auto max-w-full" />
+                </div> */}
                 <SocialShare title={title} url={`${siteMetadata.siteUrl}/${path}`} />
               </div>
             </div>

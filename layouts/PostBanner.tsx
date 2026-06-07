@@ -9,6 +9,7 @@ import PageTitle from '@/components/PageTitle'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
+import AdSlot from '@/components/AdSlot'
 
 interface LayoutProps {
   content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
@@ -45,6 +46,9 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <p className="sr-only summary">{content.summary}</p>
             </div>
           </div>
+          {/* <div className="my-10">
+            <AdSlot slotId="1234567890" className="mx-auto max-w-full" />
+          </div> */}
           <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>
           {commentsEnabled && slug && (
             <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">

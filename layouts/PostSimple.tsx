@@ -8,6 +8,7 @@ import PageTitle from '@/components/PageTitle'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ReadingProgressBar from '@/components/ReadingProgressBar'
+import AdSlot from '@/components/AdSlot'
 
 interface LayoutProps {
   content: CoreContent<Blog> & { frontmatter?: { comments?: boolean } }
@@ -45,6 +46,9 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
               </div>
             </div>
           </header>
+          {/* <div className="my-8">
+            <AdSlot slotId="1234567890" className="mx-auto max-w-full" />
+          </div> */}
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-6 dark:divide-gray-700 xl:divide-y-0">
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose max-w-none pb-6 pt-6 dark:prose-invert">{children}</div>

@@ -1,7 +1,7 @@
 ---
 title: "A Bug Caused by a Wrong Assumption I Made"
 date: 2026-01-20
-lastmod: 2026-06-03
+lastmod: 2026-06-07
 slug: "a-bug-caused-by-a-wrong-assumption-i-made"
 tags:
   - Build In Public
@@ -28,195 +28,162 @@ thumbnailAlt: >-
   Detailed visual guide and illustration for A Bug Caused by a Wrong Assumption I Made, focusing on Build In Public, Modern React best practices and tutorials.
 ---
 
-This bug did not come from a complex algorithm.  
-It did not come from a race condition I barely understood.  
-It did not come from some edge case.
+This bug did not come from a complex algorithm.
+It did not come from a race condition.
+It did not come from an exotic edge case.
 
 It came from a wrong assumption.
 
-And what made it worse is that the assumption felt reasonable.  
-It felt safe.  
+And the worst part is the assumption felt reasonable.
 It felt obvious.
+It felt safe.
 
-Which is why I didn’t question it.
+That’s why it stuck.
 
-## The App Was “Working”
+## When “working” is not the same as “correct"
 
-At the time, I was working on a fairly normal frontend feature.
+The application looked fine.
+The UI rendered.
+The network requests completed.
+No red errors.
 
-Nothing fancy.
+This is the exact moment when assumptions become dangerous.
+If you never question what you believe about your data, you will keep building the same fragile structure.
 
-A page that:
+## The assumption that broke the feature
 
-- Fetches data from an API  
-- Displays a list  
-- Allows the user to interact with it  
-- Updates the UI based on state
+This time, my assumption was:
 
-The kind of thing I had built many times before.
+> “This data will only change when the user explicitly triggers an action.”
 
-The app worked.  
-The UI looked correct.  
-There were no errors in the console.  
-No crashes.  
-No warnings.
+That assumption showed up in three places:
 
-QA tested it.  
-Product was happy.  
-I moved on.
+- initial state from props
+- effect hooks with empty dependency arrays
+- memoized values that never recomputed
 
-That’s usually how bugs begin.
+Those are the most common places assumptions hide in React code.
 
-Not with failure.  
-But with false confidence.
+## How I found the bug
 
-## The Assumption I Made
+The bug was subtle.
+It did not crash the app. It only showed up after some time.
+So I treated the investigation like a detective case.
 
-Here was my assumption:
+### Step 1: write down what you believe
 
-> **“This data will only change when the user explicitly triggers an action.”**
+Before changing code, I wrote:
 
-So I wrote my code around that idea.
+- I believe the data is immutable until a user event.
+- I believe `props.items` never changes.
+- I believe the effect only needs to run once.
 
-I assumed:
+This is the most important step.
+If you cannot clearly state your assumption, you cannot debug it.
 
-- The API response shape would stay consistent  
-- The data would not update in the background  
-- State changes would only happen in one place  
-- A component would render once per user action
+### Step 2: confirm or reject each belief
 
-Because that’s how it worked during development.
-
-And that’s a dangerous sentence.
-
-## How the Assumption Shaped the Code
-
-Because of this assumption, I did a few things that felt harmless at the time.
-
-### Derived state from props (once)
-
-```js
-const [items, setItems] = useState(props.items)
-```
-
-### Skipped dependencies in `useEffect`
+I added minimal instrumentation:
 
 ```js
 useEffect(() => {
+  console.log('fetchData run')
   fetchData()
 }, [])
 ```
 
-### Memoized aggressively
+```js
+console.log('items changed', items)
+```
+
+Then I reproduced the scenario.
+The logs showed the data changing even when I had not clicked anything.
+
+That rejected the most dangerous assumption: the data was not static.
+
+### Step 3: inspect the code that depends on that assumption
+
+I found two problems:
+
+1. `useState(props.items)` was only initialized once.
+2. a memoized value used `[]` as its dependency list.
+
+That combination meant the component kept stale data intentionally.
+
+## The fix: trust the data flow, not the assumption
+
+The safest rule I adopted was:
+
+> If a value can change from props, do not initialize it in state without an update mechanism.
+
+In practice, this means:
+
+- avoid `useState(props.something)` unless you manage updates explicitly
+- prefer derived values when the source is props
+- keep effect dependencies honest
+
+### Before
 
 ```js
+const [items, setItems] = useState(props.items)
+
+useEffect(() => {
+  fetchData()
+}, [])
+
 const processedItems = useMemo(() => {
   return items.filter(item => item.active)
 }, [])
 ```
 
-Everything looked clean.  
-Short.  
-Readable.
-
-I remember thinking:
-
-> “Nice. This is simple.”
-
-It was simple because it was incomplete.
-
-## The Bug Appeared Later
-
-Weeks later, someone reported a strange issue.
-
-Not always reproducible.  
-Not happening for every user.  
-Not crashing the app.
-
-Just… wrong behavior.
-
-Sometimes:
-
-- The list showed outdated data  
-- A button stopped responding correctly  
-- A value on the screen didn’t match the backend
-
-Refreshing the page fixed it.
-
-That made it worse.
-
-Because now it felt like:
-
-- Maybe a network issue  
-- Maybe caching  
-- Maybe user error
-
-Classic excuses.
-
-## My First Reaction
-
-My first reaction was not curiosity.
-
-It was defense.
-
-> “I didn’t change anything there.”  
-> “That code is stable.”  
-> “It’s been live for weeks.”
-
-This is another quiet mistake we make.
-
-We trust time instead of logic.
-
-Just because code has existed without obvious failure does not mean it’s correct.
-
-## Digging Into the Problem
-
-Eventually, I sat down and really looked at it.
-
-I added logs.  
-I slowed things down.  
-I tried to reproduce it locally.
-
-Slowly, a pattern appeared.
-
-The data was changing.  
-Just not when I expected it to.
-
-There was:
-
-- A background refetch  
-- A shared store update  
-- Another component mutating the source
-
-The data changed without user interaction.
-
-And my component did not react to it.
-
-Because I told React:
-
-> “Don’t worry. This never changes.”
-
-That was the assumption.
-
-## The Exact Moment It Clicked
-
-I stared again at this line:
+### After
 
 ```js
-const [items, setItems] = useState(props.items)
+const items = props.items
+
+useEffect(() => {
+  fetchData()
+}, [fetchData])
+
+const processedItems = useMemo(() => {
+  return items.filter(item => item.active)
+}, [items])
 ```
 
-And asked myself:
+Now the component recomputed when the data changed.
+The bug disappeared.
 
-> “When does this update?”
+## A better debugging checklist for assumptions
 
-The answer was simple.
+When you feel confident in your code, run through these questions:
 
-Only once.
+- Did I assume a prop never changes?
+- Did I only initialize state once from props?
+- Did I use `[]` in a dependency list because the code “should only run once”?
+- Am I memoizing something that really depends on changing values?
+- If the data changes outside my component, can this component respond?
 
-Because that’s how `useState` works.
+If the answer is yes to any of those, you likely have an assumption waiting to break.
 
-I had assumed:
+## Why this matters beyond React
+
+This bug was not special to React.
+It was special to any code that treats the world as stable when it is not.
+
+The real skill is not writing the code that works today.
+It is writing the code that still works when reality changes.
+
+That is what makes a fix durable.
+That is what makes engineering reliable.
+
+## The lesson
+
+When your app is “working,” the next important question is:
+
+> What have I assumed without testing?
+
+Answer that question honestly.
+Then write the code so it does not depend on the answer.
 
 > Props change → state updates automatically
 

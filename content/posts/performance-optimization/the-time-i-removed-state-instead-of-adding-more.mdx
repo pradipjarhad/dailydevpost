@@ -1,6 +1,7 @@
 ---
 title: "The Time I Removed State Instead of Adding More (And Why It Made Everything Better)"
 date: 2026-01-10
+lastmod: 2026-06-07
 slug: "the-time-i-removed-state-instead-of-adding-more"
 tags:
   - Build In Public
@@ -29,57 +30,46 @@ thumbnailAlt: >-
 
 For a long time, my default response to a UI problem was simple.
 
-“I probably need more state.”
+“Add more state.”
 
-Something felt off?  
-Add state.
+Something didn’t update? Add state.
+Something looked wrong? Add state.
+Something felt fragile? Add state.
 
-Something didn’t [re-render correctly](/blog/what-actually-caused-unnecessary-re-renders)?    
-Add state.
+That pattern works for a while. Then it starts to feel like the code is fighting itself.
 
-User interaction got slightly complex?  
-Add state.
+This post is not about a single React trick. It is about the state audit that helped me stop adding state as a reflex, and start asking better questions.
 
-At first, this felt productive. State is powerful. It gives your UI memory. It makes things dynamic. It feels like the right tool.
+## When state becomes a liability
 
-But one day, I hit a moment where adding more state didn’t just feel unnecessary. It actively made things worse.
+State is useful when it stores information that truly changes over time.
+But not every value in your component belongs there.
 
-This post is about that moment.  
-Not a success story.  
-Not a framework lesson.  
-Just a quiet realization that changed how I think about components.
+These are the warning signs that your component has too much state:
 
-## The Problem Looked Innocent
+- You have more than one state variable representing the same idea.
+- You find yourself syncing updates across multiple hooks.
+- A small UI change requires touching two or three separate state setters.
+- You introduce `useEffect` just to keep state values in sync.
+- The component works, but it feels fragile and hard to reason about.
 
-I was working on a simple UI feature.
+If this sounds familiar, you are not alone.
 
-Nothing fancy.  
-A list of items.  
-Each item could be selected.  
-When selected, some details appeared on the side.
+## The state audit: three questions before adding state
 
-Classic pattern. You’ve built this a hundred times.
+Before you reach for `useState`, ask yourself:
 
-So naturally, I started with state.
+1. **Can this value be derived from existing props or state?**
+2. **Does this value represent a real event or piece of data, or just a UI condition?**
+3. **Will storing it make the component harder to keep in sync?**
 
-```jsx
-const [selectedItem, setSelectedItem] = useState(null)
-```
+If the answer is “yes” to the first question and “probably” to the third, do not add state yet.
 
-Click an item and update `selectedItem`.  
-Render details based on it.
+## The better pattern: derive instead of store
 
-All good.
+Here is the refactor that changed everything.
 
-Then came small changes.
-
-- Highlight the active item  
-- Disable some buttons when nothing is selected  
-- Show a message when the same item is clicked again  
-
-Still fine.
-
-But slowly, the state started growing.
+### Before: duplicate state
 
 ```jsx
 const [selectedItem, setSelectedItem] = useState(null)
@@ -87,127 +77,56 @@ const [isItemSelected, setIsItemSelected] = useState(false)
 const [activeIndex, setActiveIndex] = useState(null)
 ```
 
-At the time, this didn’t feel wrong.
+The component was trying to keep three values aligned.
+That means three opportunities for them to drift apart.
 
-Each piece of state had a reason.  
-Each solved a small problem.
-
-But something felt heavy.
-
-## The Component Started Feeling Fragile
-
-Every change required touching multiple places.
-
-The click handler updated three states.  
-Render logic depended on two of them.  
-A small bug appeared if they went out of sync.
-
-Sometimes `selectedItem` was set, but `isItemSelected` wasn’t.  
-Sometimes `activeIndex` updated, but the UI didn’t reflect it correctly.
-
-I started adding guards.
+### After: one source of truth
 
 ```jsx
-if (!isItemSelected) return null
-```
+const [selectedItem, setSelectedItem] = useState(null)
 
-And more conditions.
-
-```jsx
-selectedItem && activeIndex !== null
-```
-
-At this point, I paused.
-
-Not because something was completely broken, but because I didn’t trust the component anymore.
-
-That feeling matters.
-
-## The Question I Finally Asked
-
-Instead of asking:
-
-“What state do I need next?”
-
-I asked:
-
-“What state do I already have that I don’t actually need?”
-
-This was new for me.
-
-I always thought of state as additive.  
-I never thought of removing it.
-
-So I looked at each piece.
-
-## Removing `isItemSelected`
-
-Why did this exist?
-
-Because sometimes `selectedItem` is null.  
-But that already answers the question.
-
-If `selectedItem === null`, no item is selected.
-
-So `isItemSelected` wasn’t real state.
-
-It was derived information.
-
-I removed it.
-
-```jsx
 const isItemSelected = selectedItem !== null
+const activeIndex = items.findIndex(item => item.id === selectedItem?.id)
 ```
 
-Nothing broke.
+Now the state is simple.
+The rendered UI comes from derived values.
+This is the same idea as “computed properties” in other frameworks.
 
-Some code actually became simpler.
+## What to derive instead of store
 
-No more syncing two values.  
-No more forgetting to update both.
+These values usually belong outside of state:
 
-One source of truth.
+- checkbox checked state
+- selected / active flags
+- disabled / hidden conditions
+- index values computed from data
+- counts or summary values
 
-That felt good.
+If the value can be calculated during render and it does not need to be preserved between renders, it usually should not be state.
 
-## Looking at `activeIndex`
+## When state is still the right choice
 
-Next, I questioned `activeIndex`.
+There are cases where state is the correct answer:
 
-Why did I need both `selectedItem` and `activeIndex`?
+- form input values that must persist while editing
+- whether a modal is open or closed
+- user preferences saved in local UI
+- network loading status
+- any value that represents a discrete interaction over time
 
-Because the list rendered by index and the details panel needed the full item object.
+The key is that the value must represent a real, discrete fact about the component, not just a display condition.
 
-Reasonable at first.
+## Refactoring strategy for a simpler component
 
-But the items already had IDs.  
-And `selectedItem` already had an ID.
+1. Identify the state variables that are derived from other values.
+2. Replace them with `const` declarations.
+3. Keep the minimal state that represents the actual user intent.
+4. Remove any effects that only exist to sync derived values.
 
-So instead of storing the index, I derived it.
+### Example: simplify the click handler
 
-```jsx
-const activeIndex = items.findIndex(
-  item => item.id === selectedItem?.id
-)
-```
-
-Was this slower? Technically yes.  
-Did it matter? Not at all.
-
-The list was small.  
-The benefit was clarity.
-
-## What Changed After Removing State
-
-I expected the component to become harder to read.
-
-The opposite happened.
-
-There was less mental load.  
-Fewer things that could break.  
-Fewer edge cases.
-
-The click handler went from this:
+Before:
 
 ```jsx
 onClick={() => {
@@ -216,6 +135,51 @@ onClick={() => {
   setActiveIndex(index)
 }}
 ```
+
+After:
+
+```jsx
+onClick={() => {
+  setSelectedItem(item)
+}}
+```
+
+The component behavior remains the same. The state is now easier to reason about.
+
+## A practical checklist for cleaner React state
+
+- Can this value be derived from existing state or props?
+- Will this value ever need to update independently?
+- Is the value part of the data model, or just a view condition?
+- Do I need a hook to keep it in sync?
+- If I remove this state, does the component become clearer?
+
+If you can answer “yes” to the last question, you likely should.
+
+## Why this matters
+
+Too much state is not just a performance problem.
+It is a maintainability problem.
+
+When state is duplicated, your component can still work.
+It just becomes harder to change without introducing subtle bugs.
+
+The best React components are not the ones with the fewest lines of code.
+They are the ones where the data and the UI agree.
+
+## The lesson
+
+State is a tool, not a habit.
+Use it when you need it.
+Stop using it when it starts to fight your own component.
+
+If you want a simple rule of thumb:
+
+> Store the minimal amount of state needed to represent the actual intent of the UI.
+
+The rest can be derived.
+
+Once you start asking better questions, your code becomes calmer, faster, and easier to change.
 
 To this:
 

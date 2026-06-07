@@ -1,6 +1,7 @@
 ---
 title: "What I Care About More Than Frameworks"
 date: 2026-01-04
+lastmod: 2026-06-07
 slug: "what-i-care-about-more-than-frameworks"
 tags:
   - Build In Public
@@ -26,7 +27,7 @@ thumbnailAlt: >-
   Detailed visual guide and illustration for What I Care About More Than Frameworks, focusing on Build In Public best practices and tutorials.
 ---
 
-Frameworks change.  
+Frameworks change.
 This is not a complaint. It’s just a fact.
 
 In frontend development, frameworks come and go, evolve, split, merge, and sometimes disappear. New ones promise better performance, cleaner code, and easier mental models. Old ones get rewritten, renamed, or replaced.
@@ -37,227 +38,146 @@ But over time, I realized that frameworks are not the most important thing in my
 
 There are a few things I care about more.
 
-## I Care About Understanding Over Memorizing
+## The three questions I ask before choosing a framework
 
-Earlier in my career, I thought being good at frontend meant remembering a lot of things.
+Every time I evaluate a new tool, I ask:
 
-- Which hook to use  
-- Which option to pass  
-- Which pattern is considered correct  
+1. Does this solve the real problem I have today?
+2. Will it make the code easier to understand in six months?
+3. Does it fit the constraints of the team and the project?
 
-When something broke, I searched for the right syntax or copied examples.
+If the answer is no to any of those, I don’t adopt the tool.
 
-Now, I care more about understanding what is actually happening.
+## What I care about first
 
-Not:  
-“Which function fixes this?”
+I care about systems that are:
 
-But:  
-“Why is this behaving this way?”
+- predictable
+- changeable
+- visible
+- easy to explain
 
-Frameworks give you tools, but they also hide details. That’s useful, but it can also create confusion when something goes wrong.
+If a framework hides state or behavior behind too much magic, it loses value for me.
 
-Understanding how things work underneath helps me reason about problems instead of guessing.
+That is why I care about understanding more than memorizing.
 
-## I Care About Clarity More Than Cleverness
+## A practical framework checklist
+
+Before I choose a new framework, I run it through this checklist:
+
+- Does it make the problem simpler or just different?
+- Is the mental model easy to explain to another developer?
+- Can a new teammate read this code in a few hours?
+- Does it avoid surprising defaults?
+- Will the code still make sense if the framework changes?
+
+If the answer is unclear, I slow down.
+
+## Why clarity beats cleverness
 
 I used to enjoy writing clever code.
 
-- Short functions  
-- Tricky logic  
-- One-liners that felt smart  
+- Short functions
+- tricky logic
+- one-liners that felt smart
 
-It looked impressive, especially to my past self.
+Then I came back to that code weeks later and struggled to understand it.
 
-Then time passed.
+Now I care more about clarity than cleverness.
 
-I came back to that code weeks later and struggled to understand it. Sometimes I had to read my own code slowly, line by line, to remember what I was thinking.
+If the code is obvious, that is a win.
 
-That was a turning point.
+## How I make code easier to change
 
-Now, I care more about clarity than cleverness.
+Most frontend work is not built once.
+It is changed again and again.
 
-If the code is obvious (like I discussed in [this habit](/blog/one-habit-that-made-my-code-easier-to-read)), even if it’s longer, that’s a win.
+So I ask:
 
-## I Care About Code I Can Change Without Fear
+- Can I rename this without rewriting everything?
+- Can I isolate the behavior to a small module?
+- Can I explain this to someone in one sentence?
 
-Most frontend work is not about building something once.
+That is the real value of chooseable frameworks.
 
-It’s about changing it.
+## Why predictable behavior matters more than patterns
 
-- Design changes  
-- Requirements shift  
-- Users behave differently than expected  
+Frameworks often hide behavior.
 
-Code that is hard to change creates stress.
+That is useful until it isn’t.
 
-Earlier, I didn’t think much about change. I assumed future work would fit the structure I created.
+When I care about predictable behavior, I want to know:
 
-It rarely does.
+- when something updates
+- why something re-renders
+- what causes the side effect
 
-So now I care about writing code that makes change feel safe.
+If I cannot answer those questions quickly, the framework has become noise.
 
-Not perfect.  
-Just manageable.
+## The assumptions I avoid
 
-## I Care About Predictable Behavior
+I used to assume:
 
-Frameworks often abstract away behavior.
-
-That’s helpful until it isn’t.
-
-I care a lot about knowing:
-
-- When something updates  
-- Why something re-renders  
-- What causes a side effect  
-
-Unpredictable behavior makes debugging painful.
-
-When something feels random, it’s usually because I don’t understand it yet.
-
-So I slow down. I trace the flow. I log values. I try to understand what the system is doing instead of blaming the framework.
-
-## I Care About Fewer Assumptions
-
-Earlier, I made many assumptions.
-
-I assumed:
-
-- This state won’t change here  
-- This component will only render once  
-- This logic will never need to change  
+- this state won’t change here
+- this component will only render once
+- this logic will never need to change
 
 Most bugs come from assumptions that didn’t age well.
 
-Now, I care about reducing assumptions.
+Now I care about reducing assumptions and leaving room for change.
 
-I try to write code that makes fewer promises and leaves more room for change.
+## The actual factors I choose before a framework
 
-## I Care About Simple Mental Models
+I care more about:
 
-[Complex mental models](/blog/one-mental-model-that-made-react-easier-for-me) are expensive.
+- clear ownership of state
+- simple data flow
+- obvious responsibilities
+- readable interactions
 
-If I need to keep too many rules in my head to understand a piece of code, that code will cause problems later.
+These things matter more than whether the framework is popular.
 
-I care about:
+## How to evaluate a framework quickly
 
-- Simple data flow  
-- Clear ownership of state  
-- Obvious responsibility boundaries  
+If you are choosing a new framework, try this faster evaluation:
 
-This has nothing to do with which framework I use.
+1. Write the simplest version of the feature in plain JavaScript.
+2. Ask if the framework makes that version easier or harder.
+3. Identify the places where the framework adds overhead.
+4. Keep the feature as small as possible.
 
-## I Care About Reading Code, Not Just Writing It
+If the framework adds more complexity than value, do not use it.
 
-Writing code feels productive.
+## When a framework is the right tool
 
-Reading code feels slow.
+A framework is useful when it:
 
-But reading code is where most understanding comes from.
+- removes repetitive decisions
+- keeps code consistent
+- improves the developer experience
+- does not hide the important behavior
 
-I care about writing code that future me can read without context.
+If it only makes the code shorter, that is not enough.
 
-That means:
-
-- Clear names  
-- Small responsibilities  
-- Fewer surprises  
-
-Frameworks don’t enforce this. Developers do.
-
-## I Care About Being Honest About Trade-offs
-
-No framework solves everything.
-
-Every choice has downsides.
-
-Earlier, I tried to hide those downsides, even from myself. I wanted to believe my choices were the right ones.
-
-Now, I care about being honest.
-
-If something is complicated, I accept that.  
-If a solution has limitations, I acknowledge them.
-
-That honesty makes future decisions easier.
-
-## I Care About Stability Over Novelty
+## When to stop chasing the latest thing
 
 New tools are exciting.
 
-But excitement fades quickly when real work begins.
+But real work is built with things you understand.
 
-I care more about stability now.
+I care more about stability than novelty.
 
-Tools that:
+If the tool is hard to explain, it is probably not worth the switch.
 
-- Are well understood  
-- Have predictable behavior  
-- Don’t surprise me often  
+## What I want other developers to do
 
-Novelty can wait. Stability helps me deliver consistently.
+If you are picking a framework, do these three things:
 
-## I Care About Real Users
+- choose the tool that fits the problem, not the hype
+- prioritize readability over syntax sugar
+- accept that the best stack is the one you can maintain
 
-Frameworks don’t experience the product. Users do.
-
-I care about:
-
-- How fast the UI feels  
-- Whether interactions make sense  
-- Whether errors are understandable  
-
-These things matter more than technical purity.
-
-## I Care About Long-Term Pace
-
-Burnout is real.
-
-Chasing every new thing creates constant pressure.
-
-I care about building a pace I can maintain.
-
-That means:
-
-- Choosing familiar tools  
-- Avoiding unnecessary complexity  
-- Saying no to unnecessary changes  
-
-Frameworks are part of that choice, but not the main part.
-
-## I Care About Communication
-
-Frontend work is not just code.
-
-It’s:
-
-- Explaining decisions  
-- Reviewing changes  
-- Discussing trade-offs  
-
-I care about writing code that supports communication instead of making it harder.
-
-Clear code leads to clearer conversations.
-
-## I Care About Learning That Sticks
-
-Frameworks change fast.
-
-Principles change slowly.
-
-I care about learning things that last:
-
-- How to reason about state  
-- How to manage complexity  
-- How to debug systematically  
-
-These skills move with me, no matter the framework.
-
-## Why Frameworks Matter Less Over Time
-
-Frameworks are important.
-
-But they are not the foundation.
+Frameworks matter. But not as much as the engineering habits they enable.
 
 They sit on top of:
 

@@ -25,31 +25,55 @@ const TableOfContents = ({ toc }: TableOfContentsProps) => {
     useEffect(() => {
         if (!filteredToc || filteredToc.length < 2) return
 
-        const observerOption: IntersectionObserverInit = {
-            rootMargin: '0px 0px -80% 0px',
-            threshold: 0.1, // Trigger when 10% of the element is visible in the top area
-        }
-
-        const observer = new IntersectionObserver((entries) => {
+        const handleScroll = () => {
             if (isManualScroll.current) return
 
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    setActiveId(entry.target.id)
-                }
-            })
-        }, observerOption)
+            let currentActiveId = ''
+            const headerOffset = 120 // Header height (~80px) + safety margin
 
-        filteredToc.forEach((item) => {
-            const id = item.url.replace('#', '')
-            const element = document.getElementById(id)
-            if (element) {
-                observer.observe(element)
+            for (let i = 0; i < filteredToc.length; i++) {
+                const item = filteredToc[i]
+                const id = item.url.replace('#', '')
+                const element = document.getElementById(id)
+                if (element) {
+                    const rect = element.getBoundingClientRect()
+                    if (rect.top <= headerOffset) {
+                        currentActiveId = id
+                    } else {
+                        break
+                    }
+                }
             }
-        })
+
+            // Special case: if at the bottom of the page, highlight the last item
+            const isAtBottom = window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight - 50
+            if (isAtBottom && filteredToc.length > 0) {
+                const lastId = filteredToc[filteredToc.length - 1].url.replace('#', '')
+                setActiveId(lastId)
+                return
+            }
+
+            if (currentActiveId) {
+                setActiveId(currentActiveId)
+            } else {
+                if (window.scrollY < 100) {
+                    setActiveId('')
+                } else if (filteredToc.length > 0) {
+                    setActiveId(filteredToc[0].url.replace('#', ''))
+                }
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        
+        // Initial setup and fallback interval
+        const timer = setTimeout(handleScroll, 200)
+        const interval = setInterval(handleScroll, 1000)
 
         return () => {
-            observer.disconnect()
+            window.removeEventListener('scroll', handleScroll)
+            clearTimeout(timer)
+            clearInterval(interval)
         }
     }, [filteredToc])
 

@@ -113,3 +113,11 @@ body {
         word-break: normal;
     }
 }
+
+/* Collapse empty Google AdSense slots */
+ins.adsbygoogle[data-ad-status="unfilled"],
+ins.adsbygoogle[data-adsbygoogle-status="done"]:not([data-ad-status]) {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}

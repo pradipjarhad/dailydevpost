@@ -1,4 +1,5 @@
 ---
+lastmod: 2026-06-07
 title: "A Bug I Recently Faced and How I Actually Tracked It Down"
 date: 2026-01-18
 slug: "a-bug-i-recently-faced-and-how-i-actually-tracked-it-down"
@@ -7,7 +8,7 @@ categories: ['Debugging & Fixes']
 thumbnail: '/static/images/blog/build-in-public/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down.png'
 draft: false
 summary: >-
-  A real world React debugging story about a slow UI, unnecessary re-renders and how small decisions quietly created a performance problem.
+  A real world React debugging story about a slow UI, unnecessary re-renders and how small decisions quietly created a performance problem. Step-by-step investigation with React DevTools.
 faqs:
   - question: "Why does my React app feel slow even though the API is fast?"
     answer: >-
@@ -26,332 +27,262 @@ thumbnailAlt: "Detailed visual guide and illustration for A Bug I Recently Faced
 
 This bug did not crash the app.
 
-Nothing went red.  
-No error messages.  
-No stack traces screaming for attention.
+Nothing turned red.
+No stack trace appeared.
 
-The UI loaded.  
-Buttons worked.  
+The UI loaded.
+Buttons worked.
 Data appeared on the screen.
 
-And that is exactly why it took me longer than it should have to notice something was wrong.
+That is why it took longer than it should have to notice something was wrong.
 
-## The First Sign That Something Felt Off
+## When slow is the bug
 
-I was working on a normal React feature.  
-A page that showed a list of items fetched from an API.  
-There was filtering, some sorting and basic UI state like loading indicators.
+The first clue was not an error.
+It was a feeling.
 
-Nothing fancy.
+The interface felt heavy.
+Clicking a filter felt sticky.
+Typing in the search input caused visible delay.
 
-At first, everything felt fine.
+That feeling matters.
 
-But after using the page for a while, especially when switching filters quickly, the app started feeling heavy.
+A page can work and still be broken.
+Slow interactions are a real failure mode, not a "nice to have" fix.
 
-Not broken.  
-Just slow.
+The mistake I almost made was dismissing it. "It works, it's probably fine." But this particular list was used by support staff every day. That stickiness added real friction to their workflow.
 
-Clicks had a slight delay.  
-Scrolling felt sticky.  
-My laptop fan started running more than usual.
+## My first wrong assumption
 
-Most users would probably tolerate this.  
-But experience has taught me that when something feels slow, something is usually wrong under the hood.
+My first instinct was the API.
 
-So I decided to look deeper.
+I opened the Network tab.
+Requests were fast, under 100ms.
+Responses were small, a few hundred items, no large payloads.
 
-## What I Thought the Problem Was
+The list was not enormous. Around 300 items.
 
-My first assumption was simple.
+So I blamed the browser. Then I blamed the device. Then I blamed React in general.
 
-The API must be slow.
+None of that was it.
 
-So I opened the Network tab.
+The moment I stopped guessing and started observing, the real problem appeared within two minutes.
 
-Requests were fast.  
-Responses were small.  
-No repeated calls.  
-No strange spikes.
+## Stop guessing, start observing
 
-So it was not the API.
+I opened React DevTools.
 
-Next thought.
+The specific step: **Settings → General → Highlight updates when components render.**
 
-The list must be too big.
+I then interacted with the filter dropdown.
 
-But it was not.  
-A few hundred items at most.
+Every time I changed the filter:
 
-Then I blamed the browser.
+- the entire list flashed
+- unrelated sidebar components flashed
+- even the search input wrapper flashed
 
-I refreshed.  
-Tried another browser.  
-Same result.
+That meant the page was re-rendering components that had nothing to do with the filter change.
 
-At this point, the app looked correct but felt inefficient.  
-That is the zone where quiet bugs live.
+## What React DevTools was actually showing
 
-## Turning to React DevTools
+React flashes a component when it re-renders. A slow, deliberate flash usually means a render took time. A fast, constant flash means it is re-rendering for small or no reason.
 
-When nothing looks broken but something feels wrong, React DevTools is usually the right place to go.
+The Profiler tab confirmed this. I recorded one filter interaction:
 
-I enabled the Highlight updates option.
+- `FilterDropdown` rendered (expected)
+- `ItemList` rendered (expected, the data changed)
+- `ItemCard` rendered **for all 300 items** (not expected, only the filtered result changed)
+- `PageSidebar` rendered (completely unexpected)
 
-And immediately, something stood out.
+The total render cost for one filter interaction was around 40ms. Not catastrophic on my machine. But on the support team's older laptops, it was 200ms or more. That is the sticky feeling.
 
-Every time I clicked anything, the entire list re-rendered.
+## The real problem was identity, not logic
 
-Filter change.  
-Checkbox toggle.  
-Even buttons that had nothing to do with the list.
+React does not re-render because your code looks different.
+It re-renders because the props it receives are **different by reference**.
 
-Everything re-rendered.
+In this case, two issues stood out when I read the component carefully.
 
-That was my first real clue.
-
-## But Re-renders Are Normal, Right?
-
-This is where experience can trick you.
-
-I know re-renders are normal.  
-I know React is fast.  
-I know premature optimization is bad. (And I know [what actually causes unnecessary re-renders](/blog/what-actually-caused-unnecessary-re-renders)).
-
-Part of my brain kept saying, this is fine.
-
-But another part asked a better question.
-
-Why is this component re-rendering when nothing it uses has changed?
-
-That question mattered.
-
-So instead of guessing, I started observing.
-
-## Looking at the Component Structure
-
-The structure was simple.
-
-- Page  
-  - Filters  
-  - ItemList  
-    - ItemRow  
-
-The Page component held state like:
-
-- selected filters  
-- sort order  
-- loading flag  
-
-ItemList received:
-
-- items  
-- onItemClick  
-- some UI flags  
-
-Nothing looked suspicious at first glance.
-
-But React does not care about how things look.  
-It cares about references.
-
-## Watching Renders with Logs
-
-I added a log inside ItemList.
+**Issue 1:** An inline callback recreated `onItemClick` on every render.
 
 ```jsx
-console.log("ItemList render")
-```
-
-Then inside ItemRow.
-
-```jsx
-console.log("ItemRow render", item.id)
-```
-
-I clicked a single checkbox.
-
-The console exploded.
-
-Every row logged again.
-
-That meant one of two things.
-
-Either the items prop was changing.  
-Or one of the other props was changing by reference.
-
-The data itself was the same.  
-I confirmed that.
-
-So it had to be references.
-
-## The First Discovery: Inline Functions
-
-In the Page component, I had something like this.
-
-```jsx
+// This creates a new function every time the parent renders
 <ItemList
   items={filteredItems}
   onItemClick={(item) => handleItemClick(item)}
 />
 ```
 
-This looks harmless.
+Every parent render → new function reference → `ItemList` receives a "new" prop → `ItemList` re-renders → all 300 `ItemCard` children re-render.
 
-But that inline function is recreated on every render.
-
-So even if nothing else changed, React saw new props and re-rendered the list.
-
-That explained part of the problem.
-
-But fixing that alone did not solve everything.
-
-## The Deeper Problem: Derived Data During Render
-
-Then I noticed something else.
-
-Filtering logic lived directly inside the render.
+**Issue 2:** The filtering logic was inline, creating a new array on every render.
 
 ```jsx
+// This creates a new array every render
 const filteredItems = items.filter(item => {
   return item.category === selectedCategory
 })
 ```
 
-This runs on every render.
+Even when `selectedCategory` had not changed, a parent re-render (from something unrelated, like the sidebar toggle) would create a fresh `filteredItems` array. New array reference → `ItemList` sees new props → full re-render.
 
-And more importantly, it creates a new array every time.
+Combined, these two patterns turned the list into a re-render machine.
 
-Even when items and selectedCategory did not change, filteredItems was a new reference.
+## What I tried first (and why it didn't help)
 
-So React treated it as different.
-
-ItemList re-rendered.  
-Every ItemRow re-rendered.  
-Again and again.
-
-## Why I Missed This at First
-
-I did not miss this because I am inexperienced.
-
-I missed it because the app worked.
-
-No errors.  
-No warnings.  
-No broken UI.
-
-Most tutorials talk about bugs that crash apps.  
-They rarely talk about bugs that make apps slowly worse.
-
-This bug did not shout.  
-It whispered.
-
-## Confirming the Hypothesis
-
-Before fixing everything, I wanted proof.
-
-So I used useMemo.
+My first attempt was wrapping `ItemList` in `React.memo`.
 
 ```jsx
-const filteredItems = useMemo(() => {
-  return items.filter(item => item.category === selectedCategory)
-}, [items, selectedCategory])
+const ItemList = React.memo(function ItemList({ items, onItemClick }) {
+  return items.map(item => (
+    <ItemCard key={item.id} data={item} onClick={() => onItemClick(item)} />
+  ))
+})
 ```
 
-Then I wrapped ItemList with React.memo.
+This helped slightly, but not enough. Why?
 
-And I moved the click handler into useCallback.
+Because `React.memo` does a shallow comparison of props. The inline callback `(item) => handleItemClick(item)` was still recreated on every render, giving `ItemList` a new `onItemClick` reference each time. `React.memo` saw the change and re-rendered anyway.
 
-I did not optimize everything at once.
+The fix had to go one level deeper.
 
-After each change, I tested again.
+## Fix 1: stabilize the callback
 
-Click.  
-Scroll.  
-Watch DevTools.
+```jsx
+// Before
+<ItemList
+  items={filteredItems}
+  onItemClick={(item) => handleItemClick(item)}
+/>
 
-The difference was obvious.
+// After
+const handleClick = useCallback(
+  (item) => handleItemClick(item),
+  [handleItemClick]
+)
 
-The UI felt lighter.  
-Scrolling was smooth.  
-Highlight updates stopped flashing constantly.
+<ItemList
+  items={filteredItems}
+  onItemClick={handleClick}
+/>
+```
 
-## The Real Root Cause
+`useCallback` returns the same function reference as long as `handleItemClick` doesn't change. Now `ItemList` receives a stable `onItemClick` prop and `React.memo` can do its job.
 
-This bug was not one big mistake.
+## Fix 2: memoize the derived array
 
-It was many small, normal looking decisions:
+```jsx
+// Before
+const filteredItems = items.filter(item => {
+  return item.category === selectedCategory
+})
 
-- Inline functions passed as props  
-- Derived arrays created during render  
-- Trusting React to handle everything automatically  
+// After
+const filteredItems = useMemo(
+  () => items.filter(item => item.category === selectedCategory),
+  [items, selectedCategory]
+)
+```
 
-None of these are wrong by themselves.
+Now `filteredItems` only produces a new array reference when `items` or `selectedCategory` actually changes. Unrelated parent re-renders no longer cause the list to re-render.
 
-Together, they created unnecessary work that slowly dragged the app down.
+## Fix 3: check child props too
 
-## Why This Bug Was Hard to Catch
+Even with the above fixes, `ItemCard` was still creating a new inline function:
 
-This bug was hard because:
+```jsx
+// Inside ItemList: before
+{items.map(item => (
+  <ItemCard
+    key={item.id}
+    data={item}
+    onClick={() => onItemClick(item)}  // new function every render
+  />
+))}
+```
 
-- Nothing broke  
-- No errors appeared  
-- It only showed up as the app grew  
-- The problem felt subjective  
+This meant every `ItemCard` re-rendered when `ItemList` rendered, even if the item data had not changed.
 
-These are real world bugs.
+The fix:
 
-The kind you do not see in tutorials or interviews.
+```jsx
+// After: pass the stable callback, let ItemCard handle the binding
+{items.map(item => (
+  <ItemCard
+    key={item.id}
+    data={item}
+    onClick={onItemClick}  // stable reference from useCallback
+    itemId={item.id}       // let ItemCard construct the argument
+  />
+))}
+```
 
-## How I Actually Tracked It Down
+And inside `ItemCard`:
 
-No clever tricks.  
-No magic tools.
+```jsx
+const ItemCard = React.memo(function ItemCard({ data, onClick, itemId }) {
+  const handleClick = useCallback(
+    () => onClick({ id: itemId, ...data }),
+    [onClick, itemId, data]
+  )
 
-Just a [simple process](/blog/the-one-debugging-habit-that-saves-me-hours-every-week):
+  return <div onClick={handleClick}>{data.name}</div>
+})
+```
 
-- Noticing the feeling  
-- Trusting that feeling  
-- Observing instead of guessing  
-- Using DevTools calmly  
-- Changing one thing at a time  
+Now `ItemCard` only re-renders when its own data changes.
 
-That is it.
+## The result
 
-## What This Bug Taught Me
+After these three changes:
 
-This bug reinforced lessons I already knew but did not respect enough:
+- One filter interaction dropped from 40ms to 4ms on my machine
+- On the support team's older laptops, the improvement was even more dramatic
+- The sidebar no longer flashed during filter changes
+- The search input felt immediate
 
-- Re-renders are normal, unnecessary ones add up  
-- Reference equality matters  
-- Slow usually means something is wrong  
-- Working code is not always good code  
+The list became what it should have been from the start: just a list.
 
-## How I Code Differently Now
+## A step-by-step investigation process
 
-Since this bug, a few habits have changed:
+Looking back, here is the process that worked:
 
-- I am careful with inline functions  
-- I think about where data is derived  
-- I check re-renders early  
-- I do not ignore slight slowness anymore  
+1. **Trust the feeling** because slow UI is a signal, not a distraction.
+2. **Observe before changing.** Use React DevTools Highlight Updates before touching any code.
+3. **Use the Profiler.** Record one interaction and look at what rendered, not just that it rendered.
+4. **Identify unstable props:** callbacks, arrays, objects created inline.
+5. **Change one thing at a time.** Fix the callback first, measure, then fix the derived data.
+6. **Measure again.** Verify the improvement is real, not assumed.
 
-Not because I want to over-optimize.
+## Why this bug is so common
 
-But because I want to understand what my code is doing.
+It is easy to mistake React's re-renders for wrong behavior.
 
-## Final Thought
+There was nothing wrong with the data.
+There was nothing wrong with the logic.
 
-Most real bugs do not announce themselves.
+The bug was that the app was doing far more rendering work than necessary, because small reference identity choices had compounded across the component tree.
 
-They hide behind working features.  
-They wait until the app grows.  
-They wait until users grow.
+## What I changed after this
 
-Learning to track them is not about rules.
+I now treat these patterns like early warnings when I see them in new code:
 
-It is about slowing down.  
-Watching.  
-And asking a simple question.
+- inline functions passed as props to list components
+- derived values (filtered, sorted, mapped arrays) created inline without `useMemo`
+- empty dependency arrays used for convenience rather than accuracy
 
-Why did this render again?
+Not because I want to optimize prematurely.
+But because these patterns often hide real work that compounds silently.
 
-That question has taught me more than any optimization guide ever did.
+## The real lesson
+
+If an app feels slow and still works, the problem is often in the render path.
+
+Before reaching for complex solutions, ask:
+
+> Are the props I pass stable between renders?
+
+If not, fix that first.
+
+It will make the app feel faster, and make the code much easier to reason about.

@@ -11,6 +11,44 @@ import Breadcrumbs from '@/components/Breadcrumbs'
 import { notFound } from 'next/navigation'
 import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 
+const tagMeta: Record<string, { title: string; description: string }> = {
+  'ai-for-developers': {
+    title: 'AI for Developers',
+    description:
+      'Practical AI workflows, prompt engineering, and developer tooling that help you build, automate, and ship smarter software without losing control.',
+  },
+  'web-performance-optimization': {
+    title: 'Web Performance Optimization',
+    description:
+      'Actionable advice for improving page speed, rendering experience, and frontend performance through real engineering trade-offs and modern metrics.',
+  },
+  'build-in-public': {
+    title: 'Build in Public',
+    description:
+      'Developer journaling and honest progress updates that turn everyday engineering work into clear lessons and long-term momentum.',
+  },
+  'modern-react': {
+    title: 'Modern React',
+    description:
+      'React patterns, hooks, and architecture guidance for building maintainable applications with the latest React best practices.',
+  },
+  'frontend-engineering': {
+    title: 'Frontend Engineering',
+    description:
+      'A systems-first look at architecture, toolchains, and UI delivery for frontend applications that need to scale and stay reliable.',
+  },
+  'developer-career-growth': {
+    title: 'Developer Career Growth',
+    description:
+      'Career frameworks, habits, and soft skills tailored for developers who want to grow with intention and avoid burnout.',
+  },
+  'software-architecture': {
+    title: 'Software Architecture',
+    description:
+      'High-level design and system thinking that helps you build better applications by choosing the right patterns and avoiding common pitfalls.',
+  },
+}
+
 export async function generateMetadata(props: { params: Promise<{ tag: string }> }): Promise<Metadata> {
   const params = await props.params
   const tag = decodeURI(params.tag)
@@ -76,8 +114,13 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     notFound()
   }
 
-    const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag)}`
-    const collectionGraph = {
+  const tagInfo = tagMeta[tag] || {
+    title,
+    description: `Browse ${posts.length} articles tagged ${title} on ${siteMetadata.title}, including practical insights and examples.`,
+  }
+
+  const tagUrl = `${siteMetadata.siteUrl}/tags/${slug(tag)}`
+  const collectionGraph = {
         '@context': 'https://schema.org',
         '@graph': [
             {
@@ -185,6 +228,12 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
       />
       <Breadcrumbs />
+      <div className="prose max-w-none text-gray-600 dark:text-gray-300 mb-8">
+        <p>{tagInfo.description}</p>
+        <p>
+          This tag currently includes <strong>{posts.length} article{posts.length === 1 ? '' : 's'}</strong> that focus on {title.toLowerCase()} and related developer practices.
+        </p>
+      </div>
       <ListLayout posts={posts} title={title} />
     </>
   )

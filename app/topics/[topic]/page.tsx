@@ -50,6 +50,7 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
     notFound()
   }
 
+  const postCount = filteredPosts.length
   const pageNumber = 1
   const initialDisplayPosts = filteredPosts.slice(
     postsPerPage * (pageNumber - 1),
@@ -63,6 +64,13 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
   return (
     <>
       <Breadcrumbs />
+      <div className="prose max-w-none text-gray-600 dark:text-gray-300 mb-8">
+        <p>{meta.detail}</p>
+        <p>
+          This topic collects <strong>{postCount} article{postCount === 1 ? '' : 's'}</strong> that explain the core ideas, patterns, and decisions behind {meta.title.toLowerCase()}.
+          Use this page as your reference for practical engineering insights, performance trade-offs, and scalable frontend design.
+        </p>
+      </div>
       <ListLayoutWithCategories
         posts={filteredPosts}
         initialDisplayPosts={initialDisplayPosts}

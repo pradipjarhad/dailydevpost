@@ -71,7 +71,7 @@ In a standard Next.js application, **React Server Components (RSC)** effectively
 ### When RSC is NOT Enough
 As you scale, you hit the "Boundary Problem." If you have a Mobile app (iOS/Android) and a Web app, you cannot share RSC logic with Swift or Kotlin. A dedicated BFF service (Node.js/Go) ensures that business logic and data shaping are centralized.
 
-There's also the **Compute Density** issue. If your orchestration involves heavy data processing—like generating PDFs or manipulating large Kafka event streams—moving that to a dedicated service prevents your frontend server from becoming a bottleneck.
+There's also the **Compute Density** issue. If your orchestration involves heavy data processing (like generating PDFs or manipulating large Kafka event streams), moving that to a dedicated service prevents your frontend server from becoming a bottleneck.
 
 ---
 

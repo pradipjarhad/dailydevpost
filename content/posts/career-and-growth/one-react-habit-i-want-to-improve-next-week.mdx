@@ -1,4 +1,5 @@
 ---
+lastmod: 2026-06-07
 title: "One React Habit I Want to Improve Next Week"
 date: 2026-01-17
 slug: "one-react-habit-i-want-to-improve-next-week"
@@ -9,7 +10,7 @@ categories: ['Career & Growth']
 thumbnail: '/static/images/blog/build-in-public/one-react-habit-i-want-to-improve-next-week.png'
 draft: false
 summary: >-
-  I realized one small React habit was slowing me down. Next week, I'm fixing it by clearly defining component responsibility before writing code.
+  I spent three hours debugging a React component that I had built without a clear plan. This post is about the habit I am changing: defining component responsibility in plain words before writing any code.
 faqs:
   - question: "How can I stop my React components from becoming too 'heavy'?"
     answer: >-
@@ -27,302 +28,207 @@ thumbnailAlt: >-
   Detailed visual guide and illustration for One React Habit I Want to Improve Next Week, focusing on Build In Public, Modern React best practices and tutorials.
 ---
 
-There are many things I could say I want to improve in React.
+Three hours.
 
-I could say performance.  
-I could say architecture.  
-I could say learning new APIs.  
-I could say writing fewer bugs.
+That is how long I spent debugging a component last week that I had built from scratch two weeks earlier.
 
-But none of those are habits.
+Not a large component. Not a complex feature. A user profile card with some editing logic. Maybe 80 lines of JSX when I first wrote it.
 
-They are outcomes.
+By the time I needed to change it, it had grown to 200 lines, had three pieces of state that were more or less syncing the same idea, had two effects that I could not fully explain, and had a prop interface that no longer matched what the component actually did.
 
-When I think honestly about my React work, the biggest improvements never came from learning a new concept. They came from changing small daily behaviors. Quiet habits that affect how I write code, not what features I know.
+I built that mess. And I built it exactly the way I always build components: by starting with the JSX.
 
-So next week, there is **one React habit I want to improve**.
+That is the habit I am changing this week.
 
-Not forever.  
-Not perfectly.  
-Just next week.
+## How I usually build components (and why it causes problems)
 
-That habit is this:
+My default process looks like this:
 
-**Before writing code, I want to slow down and clearly describe what the component actually does in plain words.**
+1. Open a new file
+2. Start writing JSX: what does this need to render?
+3. Notice I need some state: add `useState`
+4. Notice I need to fetch something: add `useEffect`
+5. Notice a prop is missing: add it to the interface
+6. Fix things until it works
+7. Ship it and move on
 
-No JSX.  
-No hooks.  
-No logic.
+This feels productive because things are appearing on screen quickly. The component takes shape fast.
 
-Just words.
+The problem is that I am making all my architectural decisions in the middle of the implementation. And architectural decisions made in the middle of an implementation are the most expensive kind to undo.
 
-It sounds simple.  
-Almost too simple.
+When I add that third `useState` because the logic feels easier that way, I am making a structural choice with incomplete information. When I add an `useEffect` to "sync" two pieces of state, I am usually working around a design problem I did not notice yet. When I add a prop "just in case," I am speculating about the future and adding surface area to the interface without a reason.
 
-But this habit is something I repeatedly skip and it shows up later as confusion, re-renders, tangled props, and components that feel “heavy” for no clear reason.
+All of these decisions accumulate. Three weeks later, when a requirement changes slightly, every one of them becomes a constraint that makes the change harder.
 
-This post is about why this habit matters, how I currently fail at it and how I want to practice it next week.
+## The component I should have written
 
-## How I Usually Start Writing React Components
+Here is a simplified version of what the profile card actually became:
 
-Most of the time, my workflow looks like this:
+```jsx
+function UserProfileCard({ userId }) {
+  const [userData, setUserData] = useState(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const [editedName, setEditedName] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [error, setError] = useState(null)
 
-- I get a requirement  
-- I already have a picture of the UI in my head  
-- I open the file  
-- I start typing JSX  
-- I add state  
-- I add effects  
-- I pass props  
-- I adjust things until it works  
+  useEffect(() => {
+    fetchUser(userId).then(data => {
+      setUserData(data)
+      setEditedName(data.name) // sync the edit state
+    })
+  }, [userId])
 
-At no point do I stop and ask:
+  const handleSave = async () => {
+    setIsSaving(true)
+    try {
+      await updateUser(userId, { name: editedName })
+      setUserData(prev => ({ ...prev, name: editedName })) // sync again
+      setIsEditing(false)
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setIsSaving(false)
+    }
+  }
 
-**“What is this component’s responsibility, exactly?”**
-
-Not vaguely.  
-Not mentally.  
-But clearly.
-
-Because in my head, it feels obvious.
-
-But obvious in the head is often unclear in code.
-
-I’ve noticed that when I skip this thinking step, I tend to:
-
-- Add state “just in case”  
-- Pass too many props  
-- Mix UI logic and data logic  
-- Put side effects where they don’t belong  
-- Keep refactoring the same component again and again  
-
-Nothing breaks.  
-The app works.
-
-But the code feels harder than it should be.
-
-## The Habit I Want to Build (Very Specifically)
-
-The habit is not:
-
-- “Think more”  
-- “Design better”  
-- “Write clean code”  
-
-Those are too abstract.
-
-The habit I want to build is this:
-
-> **Before writing any React code, write 3–5 plain English sentences describing what the component does and does NOT do.**
-
-That’s it.
-
-No diagrams.  
-No documentation.  
-No long notes.
-
-Just a short description like:
-
-- What this component is responsible for  
-- What decisions it makes  
-- What decisions it does not make  
-- What data it needs  
-- What it shows when things go wrong  
-
-If I can’t explain that clearly, I’m not ready to write the component.
-
-## Why This Habit Matters More Than It Sounds
-
-React itself is not the hard part anymore.
-
-JSX is simple.  
-Hooks are familiar.  
-Most bugs are not syntax problems.
-
-The real difficulty comes from [unclear responsibility](/blog/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me).**
-
-When a component does too many things, everything becomes harder:
-
-- Testing feels painful  
-- Re-renders become unpredictable  
-- Props feel confusing  
-- Small changes cause unexpected issues  
-
-All of this often traces back to one root cause:
-
-**I didn’t decide what the component was responsible for before I wrote it.**
-
-By forcing myself to describe the component in words first, I’m forced to make decisions early when changes are cheap.
-
-## A Real Example From My Own Code
-
-Let me give a very common example.
-
-Imagine a `UserProfile` component.
-
-In my usual flow, I might:
-
-- Fetch user data inside it  
-- Handle loading state  
-- Handle error state  
-- Render user details  
-- Handle edit mode  
-- Handle save action  
-- Show success messages  
-
-All inside one component.
-
-It works.  
-But over time, it becomes messy.
-
-Now imagine I stop and write this before coding:
-
-> “This component is responsible for displaying user profile information.  
-> It does not fetch data.  
-> It does not handle saving.  
-> It only receives user data and display state as props.  
-> It shows loading and error states based on input, not internal logic.”
-
-Suddenly, many decisions are made for me.
-
-- Fetching moves outside  
-- Saving moves outside  
-- The component becomes predictable  
-- Props become clearer  
-- Re-renders are easier to reason about  
-
-The code becomes simpler not because I used a new pattern, but because I clarified responsibility early.
-
-## Why I Skip This Habit (If I’m Honest)
-
-I don’t skip this habit because I don’t know it’s useful.
-
-I skip it because:
-
-- It feels slow  
-- It feels unnecessary for “small components”  
-- I’m eager to see something on the screen  
-- Writing words feels less productive than writing code  
-
-There’s also a quiet confidence trap.
-
-I think:  
-“I already know what this component does.”
-
-But knowing something in your head and expressing it clearly are not the same thing.
-
-If I can’t explain a component simply, I usually don’t understand it as well as I think.
-
----
-
-## How This Habit Helps With Other React Problems
-
-What I like about this habit is that it indirectly improves many other areas.
-
-### 1. Better State Placement
-
-When I describe responsibilities clearly, it becomes obvious:
-
-- Which state belongs here  
-- Which state should live higher  
-- Which state doesn’t belong at all  
-
-I stop adding state by instinct.
-
-### 2. Cleaner Props
-
-When a component has a clear job, props become easier to name and limit.
-
-I stop passing “just one more prop” because the description already sets boundaries.
-
-### 3. Fewer Effects
-
-Many unnecessary `useEffect` hooks come from unclear responsibilities.
-
-When the component’s job is clear, effects either clearly belong or clearly don’t.
-
-### 4. Easier Refactoring
-
-When I come back to the code weeks later, that original description acts like a mental anchor.
-
-I remember what the component was supposed to do not what it accidentally grew into.
-
-## How I Want to Practice This Next Week
-
-I’m not trying to change everything at once.
-
-Next week, my rules are simple:
-
-- I will do this for **new components only**  
-- I will write the description as comments at the top of the file  
-- I will not overthink the wording  
-- I will allow myself to adjust the description if needed  
-
-Even something like this is enough:
-
-```text
-This component displays a list of posts.
-It does not fetch data.
-It receives posts and loading state as props.
-It handles empty states.
-It does not manage pagination logic.
+  // ... 80 more lines
+}
 ```
 
-That’s it.
+See the problem? `editedName` is synced from `userData.name` in the effect, and then `userData` is synced back from `editedName` on save. Two pieces of state representing the same concept. An effect that exists only to sync them. A save handler that needs to update both.
 
-No perfection.  
-No documentation pressure.
+Every time I changed one, I had to remember to update the other.
 
-Just clarity.
+## What I should have started with
 
-## What I Expect to Feel (And Accept)
+If I had stopped before writing any code and answered one question, "What is this component responsible for?", I would have written something like this:
 
-I expect a few things to happen:
+> `UserProfileCard` displays a user's profile. It does not own the user data. It receives `user` and `onSave` as props. It manages a local editing state that is discarded on cancel and submitted via `onSave` on confirm.
 
-- I’ll feel slightly slower at first  
-- I’ll feel tempted to skip it  
-- I’ll think “this is obvious” sometimes  
+That description reveals something immediately: this component does not need to fetch data at all. Fetching is the parent's job. The card just displays and edits.
 
-And that’s okay.
+With that clarity, the implementation becomes:
 
-This habit is not about speed.  
-It’s about reducing future friction.
+```jsx
+function UserProfileCard({ user, onSave, isSaving }) {
+  const [editedName, setEditedName] = useState(user.name)
+  const [isEditing, setIsEditing] = useState(false)
 
-I’ve learned that most React pain doesn’t come from today’s code.  
-It comes from code written weeks ago without clear intent.
+  const handleCancel = () => {
+    setEditedName(user.name) // reset to what we received
+    setIsEditing(false)
+  }
 
-## Why I’m Writing This Publicly
+  const handleSave = () => {
+    onSave({ name: editedName })
+    setIsEditing(false)
+  }
 
-I’m writing this not because I’ve mastered this habit.
+  if (!isEditing) {
+    return (
+      <div>
+        <span>{user.name}</span>
+        <button onClick={() => setIsEditing(true)}>Edit</button>
+      </div>
+    )
+  }
 
-I haven’t.
+  return (
+    <div>
+      <input
+        value={editedName}
+        onChange={e => setEditedName(e.target.value)}
+      />
+      <button onClick={handleSave} disabled={isSaving}>
+        {isSaving ? 'Saving...' : 'Save'}
+      </button>
+      <button onClick={handleCancel}>Cancel</button>
+    </div>
+  )
+}
+```
 
-I’m writing it because naming the habit makes it real.
+No effects. No syncing. No ambiguity about who owns the data. The component does exactly one thing: let the user view and optionally edit a name, and report the result upward.
 
-When I say “I want to improve React,” nothing changes.  
-When I say “I want to describe component responsibility before coding,” I know exactly what to do tomorrow.
+The parent now owns fetching and saving:
 
-This also fits how I want to learn and write:
+```jsx
+function ProfilePage({ userId }) {
+  const { user, refetch } = useUser(userId)
+  const [isSaving, setIsSaving] = useState(false)
 
-- Slowly
-- Honestly  
-- Without pretending I have it all figured out
+  const handleSave = async (updates) => {
+    setIsSaving(true)
+    await updateUser(userId, updates)
+    await refetch()
+    setIsSaving(false)
+  }
 
-## Final Thought
+  return (
+    <UserProfileCard
+      user={user}
+      onSave={handleSave}
+      isSaving={isSaving}
+    />
+  )
+}
+```
 
-If I improve only one React habit next week, I want it to be this one.
+This separation is cleaner, easier to test, and easier to change. If the save logic needs to change, I change the parent. If the display logic needs to change, I change the card.
 
-Not learning something new.  
-Not optimizing prematurely.  
-Not chasing patterns.
+## The template I am starting with this week
 
-Just slowing down enough to ask:
+Before I write any JSX, I am going to answer these four questions in a comment at the top of the file:
 
-**“What is this component actually responsible for?”**
+```jsx
+// Responsibility: displays user profile data and handles inline editing
+// Does NOT: fetch data, manage save requests, know about userId
+// Props: user (object), onSave (function), isSaving (boolean)
+// States: isEditing (local), editedName (local draft, discarded on cancel)
+```
 
-And answering that in simple words before touching the keyboard.
+That is 4 lines. It takes maybe 30 seconds.
 
-That small pause might save hours later.  
-And more importantly, it might make my React code feel lighter, calmer and easier to live with.
+But those 30 seconds force me to decide the component's boundaries before I have any implementation to defend. Once you start writing JSX, you develop attachment to the approach. The mental cost of changing direction goes up. Planning before you start keeps the cost low.
 
-That’s a habit worth practicing.
+## What this does to the codebase over time
+
+The individual effect is small. One component with clear responsibility is not dramatically different from one component with fuzzy responsibility, at least not immediately.
+
+The compounding effect is the difference.
+
+A codebase where most components have clear, defended boundaries is a codebase where:
+
+- changes are localized, so you know what you are allowed to touch
+- bugs are easier to find because the component is not doing six things that could be wrong
+- reviews are faster since the reviewer can see immediately whether the component stays within its declared scope
+- new engineers onboard faster because the component's purpose is readable without running the code
+
+I have worked in codebases on both ends of this spectrum. The difference in daily friction is not subtle.
+
+## The habit I am actually building
+
+The habit is not "write a description first." The habit is "decide the component's job before you implement it."
+
+The description is just a forcing function for the decision.
+
+If I can write a clean two-sentence description of what a component does and does not do, the implementation usually follows naturally. If I cannot write that description, it means I do not understand the design well enough yet. And implementing something I do not understand yet is how I get back to three hours of debugging.
+
+The description is the signal. The implementation is the output.
+
+## Final thought
+
+The biggest React improvements I have made rarely came from learning a new API.
+
+They came from changing one small habit.
+
+This one is small. It costs 30 seconds per component. It has already saved me hours.
+
+The most valuable assumption to challenge is this:
+
+> "I can start writing before I understand the component clearly."
+
+If you can not answer "what does this component do and not do?" in one sentence, wait until you can.
+
+The code will be better for it.
