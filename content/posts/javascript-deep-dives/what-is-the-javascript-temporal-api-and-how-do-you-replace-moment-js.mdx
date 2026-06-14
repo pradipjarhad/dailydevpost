@@ -34,9 +34,9 @@ That is the answer.
 
 Now let’s talk about why you should care.
 
-# The Problem: Why We Needed a Moment.js Replacement
+## The Problem: Why We Needed a Moment.js Replacement
 
-## Why Moment.js Was Deprecated
+### Why Moment.js Was Deprecated
 
 I used Moment.js for years.
 
@@ -61,7 +61,7 @@ Moment never fixed the root problem.
 
 JavaScript’s `Date`.
 
-## Why the JavaScript Date Object Is Fundamentally Broken
+### Why the JavaScript Date Object Is Fundamentally Broken
 
 `Date` is not evil. It is just confusing.
 
@@ -86,7 +86,7 @@ That is how Moment became popular.
 
 But the real solution had to come from the language itself.
 
-# The Solution: How the JavaScript Temporal API Fixes Date and Time
+## The Solution: How the JavaScript Temporal API Fixes Date and Time
 
 Temporal fixes the model.
 
@@ -100,7 +100,7 @@ Three design decisions matter.
 
 Let me show you.
 
-## Clear Object Types Instead of One Confused Date
+### Clear Object Types Instead of One Confused Date
 
 Temporal does not overload everything into one object.
 
@@ -129,7 +129,7 @@ const now = Temporal.Now.instant();
 
 Clear intent. No guessing.
 
-## Temporal vs Moment.js vs JavaScript Date
+### Temporal vs Moment.js vs JavaScript Date
 
 | Feature | JavaScript Date | Moment.js | Temporal API |
 |----------|----------------|------------|--------------|
@@ -145,13 +145,13 @@ Temporal makes timezone an explicit part of the type system.
 
 That changes how you think about time.
 
-# Implementation: JavaScript Temporal API Migration Guide
+## Implementation: JavaScript Temporal API Migration Guide
 
 If you are migrating a real codebase, you need patterns. Not theory.
 
 Here is the practical JavaScript Temporal API migration guide I use.
 
-## Audit Your Moment.js Usage
+### Audit Your Moment.js Usage
 
 Do not replace blindly.
 
@@ -173,7 +173,7 @@ Categorize them:
 
 Replace category by category.
 
-## Replacing Moment.js Parsing
+### Replacing Moment.js Parsing
 
 Before:
 
@@ -197,7 +197,7 @@ const instant = Temporal.Instant.from("2026-01-01T10:15:30Z");
 
 No implicit local assumptions.
 
-## Replacing Moment.js Timezone Handling
+### Replacing Moment.js Timezone Handling
 
 Moment:
 
@@ -227,7 +227,7 @@ const kolkataTime = instant.toZonedDateTimeISO("Asia/Kolkata");
 
 Timezone is not an afterthought. It is part of the object.
 
-## Performing Date Arithmetic
+### Performing Date Arithmetic
 
 Moment:
 
@@ -253,7 +253,7 @@ console.log(tomorrow.toString());
 
 `today` remains unchanged.
 
-## Formatting Dates
+### Formatting Dates
 
 Moment:
 
@@ -273,7 +273,7 @@ const formatted = date.toLocaleString("en-IN", {
 
 Temporal relies on standards. Not custom token systems.
 
-## Comparisons
+### Comparisons
 
 Moment:
 
@@ -295,7 +295,7 @@ Temporal.Instant.compare(instantA, instantB) > 0;
 
 Explicit. Predictable.
 
-## Handling Timezone Correctly Using Temporal.ZonedDateTime
+### Handling Timezone Correctly Using Temporal.ZonedDateTime
 
 Schedule a meeting at 9 AM New York time:
 
@@ -317,7 +317,7 @@ const tokyoMeeting = meeting.withTimeZone("Asia/Tokyo");
 
 Wall clock changes. The instant remains correct.
 
-# Performance and Bundle Size
+## Performance and Bundle Size
 
 Moment adds weight.
 
@@ -327,9 +327,9 @@ Migrating to Temporal plus `Intl` often reduces bundle size and simplifies code.
 
 Backend performance in Node 20+ is competitive and often faster due to fewer internal conversions.
 
-# Pitfalls: What Can Still Go Wrong
+## Pitfalls: What Can Still Go Wrong
 
-## Mixing Date and Temporal
+### Mixing Date and Temporal
 
 ```js
 const instant = Temporal.Now.instant();
@@ -344,7 +344,7 @@ const instantFromDate = Temporal.Instant.from(date.toISOString());
 
 Be deliberate.
 
-## Choosing the Wrong Temporal Type
+### Choosing the Wrong Temporal Type
 
 - Absolute moment in time → `Instant`  
 - User-facing event tied to timezone → `ZonedDateTime`  
@@ -352,7 +352,7 @@ Be deliberate.
 
 Be explicit about intent.
 
-## Browser and Environment Support
+### Browser and Environment Support
 
 ```js
 import "@js-temporal/polyfill";
@@ -360,7 +360,7 @@ import "@js-temporal/polyfill";
 
 Use the official polyfill if required.
 
-# Final Thoughts: Should You Adopt Temporal in 2026?
+## Final Thoughts: Should You Adopt Temporal in 2026?
 
 If you are starting a new project in 2026, do not use Moment.js.
 
