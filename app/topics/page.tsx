@@ -1,4 +1,5 @@
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import Link from '@/components/Link'
 import Breadcrumbs from '@/components/Breadcrumbs'
@@ -6,7 +7,7 @@ import { formatCategoryTitle } from '@/utils/formatCategoryTitle'
 import categoryData from 'app/category-data.json'
 import topicMeta from '@/data/topicMeta'
 
-export const metadata = genPageMetadata({
+export const metadata: Metadata = genPageMetadata({
   title: 'Topics',
   path: 'topics',
   description: 'Browse DailyDevPost topics for frontend engineering, AI developer tooling, debugging, performance optimization, and career growth.',
@@ -24,7 +25,7 @@ export default function TopicsPage() {
         <div className="mx-auto max-w-6xl space-y-6 mb-12">
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-primary-500">Topics</p>
           <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
-            Discover the developer topics that matter in 2026
+            Discover the developer topics
           </h1>
           <p className="max-w-5xl text-lg leading-8 text-gray-600 dark:text-gray-300">
             DailyDevPost organizes the best frontend engineering, AI workflow, debugging, performance, and product development content into practical topic hubs you can use right away.

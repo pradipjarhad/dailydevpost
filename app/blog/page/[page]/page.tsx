@@ -3,6 +3,7 @@ import { allBlogs } from 'contentlayer/generated'
 import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
 const POSTS_PER_PAGE = 6
@@ -15,7 +16,7 @@ export const generateStaticParams = async () => {
     return paths
 }
 
-export async function generateMetadata(props: { params: Promise<{ page: string }> }) {
+export async function generateMetadata(props: { params: Promise<{ page: string }> }): Promise<Metadata> {
     const params = await props.params
     const page = parseInt(params.page)
     return genPageMetadata({

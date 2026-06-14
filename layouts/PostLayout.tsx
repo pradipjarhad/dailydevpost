@@ -77,8 +77,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
       <ScrollTopAndComment commentsEnabled={commentsEnabled} />
       <article className="relative">
         <Breadcrumbs items={breadcrumbItems} />
-        <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-          <header className="pt-6 xl:pb-10">
+        <div className="lg:divide-y lg:divide-gray-200 lg:dark:divide-gray-700">
+          <header className="pt-6 lg:pb-10">
             <div className="space-y-4 text-center">
               <dl className="space-y-10">
                 <div>
@@ -104,8 +104,8 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </div>
             </div>
           </header>
-          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-5 xl:gap-x-10 xl:divide-y-0">
-            <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
+          <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 lg:grid lg:grid-cols-5 lg:gap-x-10 lg:divide-y-0">
+            <dl className="pb-10 pt-6 lg:border-b lg:border-gray-200 lg:pt-11 lg:dark:border-gray-700">
               <dt className="sr-only">Thumbnail</dt>
               <dd>
                 {content.thumbnail && (
@@ -122,10 +122,10 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 )}
               </dd>
             </dl>
-            <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
+            <div className="divide-y divide-gray-200 dark:divide-gray-700 lg:col-span-3 lg:row-span-2 lg:pb-0">
               {/* Mobile Table of Contents */}
               {toc && (
-                <div className="block xl:hidden mb-10 pt-6">
+                <div className="block lg:hidden mb-10 pt-6">
                   <TableOfContents toc={toc as TocItem[]} />
                 </div>
               )}
@@ -198,14 +198,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </div>
 
             {/* Desktop Table of Contents Sidebar */}
-            <div className="hidden xl:col-start-5 xl:row-span-2 xl:block pt-10">
+            <div className="hidden lg:col-start-5 lg:row-span-2 lg:block pt-10">
               {toc && <TableOfContents toc={toc as TocItem[]} />}
             </div>
 
-            <footer className="xl:col-start-1 xl:row-start-2 xl:sticky xl:top-8 self-start">
-              <div className="divide-gray-200 text-sm font-medium leading-5 xl:divide-y dark:divide-gray-700">
+            <footer className="lg:col-start-1 lg:row-start-2 lg:sticky lg:top-8 self-start">
+              <div className="divide-gray-200 text-sm font-medium leading-5 lg:divide-y dark:divide-gray-700">
                 {tags && (
-                  <div className="py-4 xl:py-8">
+                  <div className="py-4 lg:py-8">
                     <h2 className="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400">
                       Tags
                     </h2>
@@ -217,7 +217,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </div>
                 )}
                 {(next || prev) && (
-                  <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
+                  <div className="flex justify-between py-4 lg:block lg:space-y-8 lg:py-8">
                     {prev && prev.path && (
                       <div>
                         <h2 className="text-xs uppercase tracking-wide text-gray-600 dark:text-gray-400">
@@ -241,7 +241,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   </div>
                 )}
               </div>
-              <div className="pt-4 xl:pt-8">
+              <div className="pt-4 lg:pt-8">
                 <Link
                   href={`/${basePath}`}
                   className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"

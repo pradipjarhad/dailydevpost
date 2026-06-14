@@ -3,9 +3,10 @@ import PageTitle from '@/components/PageTitle'
 import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({
+export const metadata: Metadata = genPageMetadata({
   title: 'Terms and Conditions',
   description: `Terms and Conditions for ${siteMetadata.title} - Read our rules, user responsibilities, and legal disclaimers for using our website.`,
   path: 'terms-and-conditions',
@@ -20,7 +21,7 @@ export default function Page() {
       <Breadcrumbs />
       <article className="py-6">
         <PageTitle>Terms and Conditions</PageTitle>
-        <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
+        <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
           <p>
             Welcome to <strong>{siteMetadata.title}</strong>. These terms and conditions outline the rules and
             regulations for the use of <strong>{siteMetadata.title}</strong>&apos;s Website, located at

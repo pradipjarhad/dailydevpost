@@ -16,7 +16,7 @@ faqs:
       Use container queries for component-level responsiveness (e.g., a card component) and media queries for page-level layout adjustments (e.g., changing the number of columns in a grid).
   - question: "Are CSS container queries widely supported?"
     answer: >-
-      Yes, container queries are supported in all modern browsers. For older browsers, they gracefully fall back to default styles unless a polyfill is used.
+      Yes, size container queries are widely supported in all major modern browsers (Chrome 105+, Firefox 110+, Safari 16+, Edge 105+). For legacy environments, you can use a polyfill or rely on graceful degradation where components render mobile-first default styles.
   - question: "Can I use both media queries and container queries together?"
     answer: >-
       Absolutely. A common strategy is to use media queries for page-level layouts (like sidebars and grids) and container queries for individual component responsiveness (like cards).
@@ -26,7 +26,8 @@ faqs:
   - question: "Are CSS container queries better than media queries?"
     answer: >-
       They are better for component driven architecture. They are not a replacement for global layout logic. In most real projects, you will use both.
-thumbnailAlt: "Detailed visual guide and illustration for What Are CSS Container Queries and Why Are They Replacing Media Queries?, focusing on Frontend Engineering best practices and tutorials."
+thumbnailAlt: >-
+  Detailed visual guide and illustration for What Are CSS Container Queries and Why Are They Replacing Media Queries?, focusing on Frontend Engineering best practices and tutorials.
 ---
 
 If you’re still building responsive components with only media queries, you’re solving the wrong problem.
@@ -53,6 +54,32 @@ Media queries work. I am not here to say they are broken.
 But they assume one thing. The viewport is the source of truth.
 
 That assumption starts to fall apart when your UI is component driven.
+
+Here is a visual representation of how viewport-centric and container-centric responsiveness compare in a dashboard layout:
+
+```mermaid
+graph TD
+    subgraph VP [Viewport: 1200px Wide]
+        direction LR
+        subgraph SB [Sidebar: 300px Wide]
+            C1[Card A: Should be Stacked]
+        end
+        subgraph MC [Main Content: 900px Wide]
+            C2[Card B: Should be Horizontal]
+        end
+    end
+```
+
+### The Visual Breakdowns
+
+- **Media Query (Viewport-Based):**
+  - Both **Card A** and **Card B** check the viewport width (1200px).
+  - Because `1200px > 768px`, both cards respond the same way, switching to a horizontal, flex-row layout.
+  - **Result:** Card A breaks, overflowing its narrow 300px sidebar container.
+- **Container Query (Container-Based):**
+  - **Card A** checks the sidebar container width (300px) and stays in a stacked vertical layout.
+  - **Card B** checks the main content container width (900px) and switches to a horizontal layout.
+  - **Result:** Both cards render perfectly, responding independently to their immediate layout context.
 
 ## The Limits of Media Queries in Component-Based UI
 
@@ -164,7 +191,9 @@ That matters in:
 - Dashboard applications  
 - Reusable component libraries  
 
-When I switched a card system in one project to CSS container queries, something interesting happened. The component stopped caring about where it lived.
+I remember refactoring a complex customer-details dashboard where a single card component had to be reused in three different locations: a narrow 300px sidebar, a main 900px analytics panel, and a sliding detail modal. With traditional media queries, we had to write custom wrapper modifiers like `.card--sidebar` and `.card--modal` and trigger them manually using CSS class names or JavaScript props depending on where the card was placed. It was a maintenance nightmare.
+
+When we switched the card system to CSS container queries, we deleted all those helper classes and container check logic. The card component became completely self-contained. It instantly adopted a stacked, space-saving format in the sidebar, while spreading out into a rich multi-column layout in the main analytics view. The component stopped caring about its page-level position and started responding purely to its physical bounding box. It was the first time our responsive code felt truly modular.
 
 That is powerful.
 
@@ -221,6 +250,80 @@ If the panel is narrow, the card stacks.
 If the panel grows, the card becomes two columns.
 
 We did not touch the viewport.
+
+## Advanced Container Query Features
+
+Container queries go beyond simple width queries. To leverage the full power of CSS containment, you can use these advanced features in your design systems:
+
+### Named Containers (`container-name`)
+
+By default, `@container` targets the nearest parent container. However, if you have nested containers, you can name them to target a specific parent container using `container-name` (or the `container` shorthand).
+
+```css
+.dashboard-layout {
+  container-type: inline-size;
+  container-name: dashboard;
+}
+
+.widget-panel {
+  container-type: inline-size;
+  container-name: widget;
+}
+
+/* Target the outer dashboard container specifically, ignoring the widget container */
+@container dashboard (min-width: 900px) {
+  .card-title {
+    font-size: 1.5rem;
+  }
+}
+```
+
+You can also combine these in the `container` shorthand property:
+```css
+.dashboard-layout {
+  container: dashboard / inline-size;
+}
+```
+
+### Container Query Units
+
+Container queries introduce new relative length units that are evaluated based on the query container's dimensions instead of the viewport:
+
+- **`cqw`**: 1% of the query container's width.
+- **`cqh`**: 1% of the query container's height.
+- **`cqi`**: 1% of the query container's inline size (width in horizontal writing modes).
+- **`cqb`**: 1% of the query container's block size (height in horizontal writing modes).
+- **`cqmin`**: The smaller of `cqi` or `cqb`.
+- **`cqmax`**: The larger of `cqi` or `cqb`.
+
+For example, you can dynamically size headings based on the container width, ensuring text scales harmoniously in any layout:
+
+```css
+.card-title {
+  font-size: clamp(1rem, 4cqi, 2.5rem);
+}
+```
+
+### Style Queries (`container style`)
+
+Style queries allow you to query the computed style of a parent container rather than its size. The most common use case is querying CSS Custom Properties (variables).
+
+```css
+.card-wrapper {
+  --theme: dark;
+}
+
+@container style(--theme: dark) {
+  .card {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-color: #333333;
+  }
+}
+```
+
+> [!NOTE]
+   > While size container queries are universally supported, style queries (`@container style(...)`) are still emerging. They are supported in Chromium-based browsers (Chrome/Edge 111+), with Safari and Firefox currently working on implementing them.
 
 ## Converting Media Queries to Container Queries
 
@@ -281,7 +384,7 @@ Hybrid works well.
 | Design System Friendly | Yes | Partially |
 | Reusability | High | Context dependent |
 | Architecture Fit | Component driven | Page driven |
-| Browser Support | Modern browsers | Universal |
+| Browser Support | Chrome 105+, Firefox 110+, Safari 16+ | Universal |
 
 In short:
 
@@ -320,7 +423,17 @@ Do not introduce container queries just because they are new.
 
 ### Browser Support and Fallback Strategy
 
-If you support legacy environments:
+Container queries are fully supported across all major modern desktop and mobile browsers. Here is the minimum version data:
+
+| Browser | Minimum Version | Release Date | Support Details |
+| :--- | :--- | :--- | :--- |
+| **Chrome** | 105+ | August 2022 | Full support for size queries (`inline-size`, `size`) |
+| **Firefox** | 110+ | February 2023 | Full support for size queries (`inline-size`, `size`) |
+| **Safari** | 16+ | September 2022 | Full support for size queries (`inline-size`, `size`) |
+| **Edge** | 105+ | August 2022 | Full support for size queries (`inline-size`, `size`) |
+| **Opera** | 91+ | September 2022 | Full support for size queries (`inline-size`, `size`) |
+
+If you must support legacy environments, write a fallback using `@supports` or let the styles gracefully degrade:
 
 ```css
 @supports (container-type: inline-size) {
@@ -330,7 +443,7 @@ If you support legacy environments:
 }
 ```
 
-Older browsers will ignore container queries and fall back to default stacked layout.
+Older browsers will ignore container queries and fall back to the default styles (often a mobile-first, stacked single-column layout). Alternatively, you can include a JS-based polyfill like the [Google Chrome Labs Container Query Polyfill](https://github.com/GoogleChromeLabs/container-query-polyfill) to enable support on legacy browser engines.
 
 ## When Should You Use Container Queries Instead of Media Queries?
 

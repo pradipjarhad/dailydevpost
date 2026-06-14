@@ -22,7 +22,7 @@ const Header = () => {
               priority
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <div className="text-base min-[375px]:text-xl sm:text-2xl xl:text-3xl leading-tight font-bold whitespace-nowrap">
+              <div className="text-base min-[375px]:text-xl sm:text-2xl lg:text-3xl leading-tight font-bold whitespace-nowrap">
                 {siteMetadata.headerTitle}
               </div>
             ) : (
@@ -32,14 +32,14 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 xl:space-x-6">
+      <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 lg:space-x-6">
         {headerNavLinks
           .filter((link) => link.href !== '/')
           .map((link) => (
             <Link
               key={link.title}
               href={link.href}
-              className="hidden font-medium text-gray-900 hover:text-primary-500 transition-colors dark:text-gray-100 dark:hover:text-primary-400 xl:block"
+              className="hidden font-medium text-gray-900 hover:text-primary-500 transition-colors dark:text-gray-100 dark:hover:text-primary-400 lg:block"
             >
               {link.title}
             </Link>

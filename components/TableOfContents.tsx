@@ -105,9 +105,9 @@ const TableOfContents = ({ toc }: TableOfContentsProps) => {
     if (!filteredToc || filteredToc.length < 2) return null
 
     return (
-        <div className="xl:sticky xl:top-8">
+        <div className="lg:sticky lg:top-8">
             {/* Mobile Toggle */}
-            <div className="xl:hidden mb-6">
+            <div className="lg:hidden mb-6">
                 <button
                     onClick={() => setIsMobileOpen(!isMobileOpen)}
                     className="flex items-center justify-between w-full p-4 text-left text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
@@ -150,7 +150,7 @@ const TableOfContents = ({ toc }: TableOfContentsProps) => {
             </div>
 
             {/* Desktop Sidebar */}
-            <div className="hidden xl:block">
+            <div className="hidden lg:block">
                 <div className="flex items-center gap-2 mb-6 text-[11px] font-black uppercase tracking-[0.2em] text-gray-400 dark:text-gray-500 border-b border-gray-100 dark:border-gray-800 pb-2">
                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M4 6h16M4 12h16M4 18h7" />

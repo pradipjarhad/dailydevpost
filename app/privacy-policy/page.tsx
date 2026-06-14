@@ -3,9 +3,10 @@ import PageTitle from '@/components/PageTitle'
 import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({
+export const metadata: Metadata = genPageMetadata({
   title: 'Privacy Policy',
   description: `Privacy Policy for ${siteMetadata.title} - Learn how we collect, use, and protect your data, including Google AdSense and cookie disclosures.`,
   path: 'privacy-policy',
@@ -20,7 +21,7 @@ export default function Page() {
       <Breadcrumbs />
       <article className="py-6">
         <PageTitle>Privacy Policy</PageTitle>
-        <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 prose-a:text-blue-600 dark:prose-a:text-blue-400">
+        <div className="prose max-w-none mt-6 text-gray-600 dark:text-gray-300 dark:prose-invert prose-a:text-blue-600 dark:prose-a:text-blue-400">
           <p>
             Welcome to <strong>{siteMetadata.title}</strong>. Your privacy is critically important to us.
             This Privacy Policy document contains types of information that is collected and recorded by

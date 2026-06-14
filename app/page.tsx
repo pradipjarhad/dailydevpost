@@ -5,12 +5,13 @@ import Main from './Main'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 
 // Revalidate the homepage every 60 seconds so newly published posts show up
 // shortly after deployment without a full redeploy.
 export const revalidate = 60
 
-export const metadata = genPageMetadata({ 
+export const metadata: Metadata = genPageMetadata({ 
   title: siteMetadata.title,
   description: siteMetadata.description,
 })

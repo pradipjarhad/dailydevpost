@@ -64,7 +64,7 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
   return (
     <>
       <Breadcrumbs />
-      <div className="prose max-w-none text-gray-600 dark:text-gray-300 mb-8">
+      <div className="prose max-w-none text-gray-600 dark:text-gray-300 dark:prose-invert mb-8">
         <p>{meta.detail}</p>
         <p>
           This topic collects <strong>{postCount} article{postCount === 1 ? '' : 's'}</strong> that explain the core ideas, patterns, and decisions behind {meta.title.toLowerCase()}.

@@ -5,9 +5,10 @@ import tagData from 'app/tag-data.json';
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({
+export const metadata: Metadata = genPageMetadata({
   title: 'Tags',
   description: 'Explore topics and technologies I write about, such as React, Next.js, performance optimization, and more.',
   path: 'tags',

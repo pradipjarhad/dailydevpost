@@ -2,12 +2,13 @@ import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs } from 'contentlayer/generated'
 import ListLayoutWithCategories from '@/layouts/ListLayoutWithCategories'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import { postsPerPage } from '@/data/siteMetadata'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 
-export const metadata = genPageMetadata({ title: 'Blog', path: 'blog' })
+export const metadata: Metadata = genPageMetadata({ title: 'Blog', path: 'blog' })
 
 export default async function BlogPage() {
     const posts = allCoreContent(sortPosts(allBlogs))

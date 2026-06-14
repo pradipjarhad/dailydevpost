@@ -17,7 +17,7 @@ const SearchButton = () => {
     return (
       <SearchButtonWrapper aria-label="Search">
         {/* Desktop Version */}
-        <div className="hidden cursor-pointer items-center space-x-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 transition-colors hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 xl:flex xl:w-64">
+        <div className="hidden cursor-pointer items-center space-x-2 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 transition-colors hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700 lg:flex lg:w-64">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -41,7 +41,7 @@ const SearchButton = () => {
           </span>
         </div>
         {/* Mobile/Tablet/Laptop Icon Version */}
-        <div className="flex items-center justify-center p-2 xl:hidden">
+        <div className="flex items-center justify-center p-2 lg:hidden">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

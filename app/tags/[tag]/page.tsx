@@ -228,7 +228,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
         dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionGraph) }}
       />
       <Breadcrumbs />
-      <div className="prose max-w-none text-gray-600 dark:text-gray-300 mb-8">
+      <div className="prose max-w-none text-gray-600 dark:text-gray-300 dark:prose-invert mb-8">
         <p>{tagInfo.description}</p>
         <p>
           This tag currently includes <strong>{posts.length} article{posts.length === 1 ? '' : 's'}</strong> that focus on {title.toLowerCase()} and related developer practices.

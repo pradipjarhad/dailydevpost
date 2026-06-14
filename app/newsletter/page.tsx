@@ -1,8 +1,9 @@
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import NewsletterSignup from './NewsletterSignup'
 
-export const metadata = genPageMetadata({
+export const metadata: Metadata = genPageMetadata({
   title: 'Newsletter',
   path: 'newsletter',
   description: 'Subscribe to the DailyDevPost newsletter for developer workflows, Next.js performance tips, AI tools, and weekly coding insights.',

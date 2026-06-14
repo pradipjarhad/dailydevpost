@@ -10,6 +10,8 @@ import AeoAnswer from './AeoAnswer'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
+import PullQuote from './PullQuote'
+
 const BlogNewsletterForm = dynamic(() => import('pliny/ui/BlogNewsletterForm'))
 const DynamicMermaid = dynamic(() => import('./Mermaid'))
 
@@ -50,6 +52,7 @@ export const components: MDXComponents = {
   Warning,
   Caution,
   AeoAnswer,
+  PullQuote,
   table: ({ children }) => (
     <div className="w-full overflow-x-auto">
       <table>{children}</table>

@@ -2,9 +2,10 @@ import projectsData from '@/data/projectsData'
 import Card from '@/components/Card'
 import siteMetadata from '@/data/siteMetadata'
 import { genPageMetadata } from 'app/seo'
+import { Metadata } from 'next'
 import Breadcrumbs from '@/components/Breadcrumbs'
 
-export const metadata = genPageMetadata({ title: 'Projects', path: 'projects' })
+export const metadata: Metadata = genPageMetadata({ title: 'Projects', path: 'projects' })
 
 export default function Projects() {
 
