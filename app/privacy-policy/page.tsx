@@ -13,7 +13,7 @@ export const metadata: Metadata = genPageMetadata({
 })
 
 export default function Page() {
-  const effectiveDate = 'March 22, 2026'
+  const effectiveDate = 'June 14, 2026'
 
   
   return (
@@ -82,7 +82,18 @@ export default function Page() {
             <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer"> policies.google.com/technologies/partner-sites</a>.
           </p>
 
-          <h2>4. Use of Data</h2>
+          <h2>4. Email Newsletter & Third-Party Processors</h2>
+          <p>
+            If you choose to subscribe to our newsletter, we collect your email address for the sole purpose of sending you blog updates, newsletter issues, technical insights, and announcements.
+          </p>
+          <p>
+            We use <strong>EmailOctopus</strong> as our third-party email marketing platform. By subscribing, you acknowledge that the email address you provide will be transferred to EmailOctopus for processing in accordance with their privacy policy and terms.
+          </p>
+          <p>
+            We will never sell, rent, or distribute your email address to unauthorized third parties. You can opt out or unsubscribe from our newsletter at any time by clicking the &quot;unsubscribe&quot; link included at the bottom of each email, or by contacting us directly.
+          </p>
+
+          <h2>5. Use of Data</h2>
           <p>{siteMetadata.title} uses the collected data for various purposes:</p>
           <ul>
             <li>To provide and maintain our Service</li>
@@ -93,7 +104,7 @@ export default function Page() {
             <li>To detect, prevent and address technical issues</li>
           </ul>
 
-          <h2>5. GDPR and CCPA Compliance</h2>
+          <h2>6. GDPR and CCPA Compliance</h2>
           <p>
             We are committed to ensuring that your data is handled according to the General Data Protection Regulation (GDPR)
             and the California Consumer Privacy Act (CCPA).
@@ -103,26 +114,26 @@ export default function Page() {
             including the right to access, update, or delete the information we have on you.
           </p>
 
-          <h2>6. Third-Party Links</h2>
+          <h2>7. Third-Party Links</h2>
           <p>
             Our Service may contain links to other sites that are not operated by us. If you click on a third-party link,
             you will be directed to that third party&apos;s site. We strongly advise you to review the Privacy Policy of every site you visit.
           </p>
 
-          <h2>7. Data Security</h2>
+          <h2>8. Data Security</h2>
           <p>
             The security of your data is important to us, but remember that no method of transmission over the Internet,
             or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to
             protect your Personal Data, we cannot guarantee its absolute security.
           </p>
 
-          <h2>8. Updates to This Policy</h2>
+          <h2>9. Updates to This Policy</h2>
           <p>
             We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new
             Privacy Policy on this page and updating the &quot;effective date&quot; at the top of this Privacy Policy.
           </p>
 
-          <h2>9. Contact Us</h2>
+          <h2>10. Contact Us</h2>
           <p>
             If you have any questions about this Privacy Policy, please contact us:
           </p>

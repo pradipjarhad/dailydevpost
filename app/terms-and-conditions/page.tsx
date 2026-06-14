@@ -13,7 +13,7 @@ export const metadata: Metadata = genPageMetadata({
 })
 
 export default function Page() {
-  const effectiveDate = 'March 22, 2026'
+  const effectiveDate = 'June 14, 2026'
 
 
   return (
@@ -61,7 +61,18 @@ export default function Page() {
             <li>Post or transmit any message which is libelous, defamatory, or which discloses private or personal matters concerning any person.</li>
           </ul>
 
-          <h2>3. Disclaimers</h2>
+          <h2>3. Newsletter Subscriptions</h2>
+          <p>
+            By subscribing to our newsletter, you agree to receive periodic emails from <strong>{siteMetadata.title}</strong>. These emails may include blog post updates, newsletters, tutorials, technical tips, and marketing promotions.
+          </p>
+          <p>
+            You agree to provide a valid, active email address that you own. We reserve the right to suspend, terminate, or cancel your subscription at our sole discretion without notice, particularly if we believe the email address is invalid, inactive, or being used for spamming or malicious activities.
+          </p>
+          <p>
+            You can unsubscribe at any time by clicking the &quot;unsubscribe&quot; link found at the bottom of any newsletter email, or by contacting us directly.
+          </p>
+
+          <h2>4. Disclaimers</h2>
           <p>
             The information provided on <strong>{siteMetadata.title}</strong> is for general informational and educational
             purposes only. All information on the site is provided in good faith, however, we make no representation
@@ -72,7 +83,7 @@ export default function Page() {
             Your use of the site and your reliance on any information on the site is solely at your own risk.
           </p>
 
-          <h2>4. Limitation of Liability</h2>
+          <h2>5. Limitation of Liability</h2>
           <p>
             In no event shall {siteMetadata.author} or <strong>{siteMetadata.title}</strong> be liable for any
             indirect, consequential, special, incidental, or punitive damages, including without limitation, loss of
@@ -85,7 +96,7 @@ export default function Page() {
             <li>Unauthorized access, use, or alteration of your transmissions or content.</li>
           </ul>
 
-          <h2>5. Indemnification</h2>
+          <h2>6. Indemnification</h2>
           <p>
             You agree to defend, indemnify, and hold harmless {siteMetadata.author} and its contributors from and
             against any and all claims, damages, obligations, losses, liabilities, costs or debt, and expenses
@@ -93,27 +104,27 @@ export default function Page() {
             access of the Service, or b) a breach of these Terms.
           </p>
 
-          <h2>6. Third-Party Links</h2>
+          <h2>7. Third-Party Links</h2>
           <p>
             Our website may contain links to third-party web sites or services that are not owned or controlled by us.
             We have no control over, and assume no responsibility for, the content, privacy policies, or practices
             of any third party web sites or services.
           </p>
 
-          <h2>7. Changes to Terms</h2>
+          <h2>8. Changes to Terms</h2>
           <p>
             We reserve the right, at our sole discretion, to modify or replace these Terms at any time. What constitutes
             a material change will be determined at our sole discretion. By continuing to access or use our site after
             those revisions become effective, you agree to be bound by the revised terms.
           </p>
 
-          <h2>8. Governing Law</h2>
+          <h2>9. Governing Law</h2>
           <p>
             These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which
             the site owner resides, without regard to its conflict of law provisions.
           </p>
 
-          <h2>9. Contact Us</h2>
+          <h2>10. Contact Us</h2>
           <p>
             If you have any questions about these Terms, please contact us:
           </p>
