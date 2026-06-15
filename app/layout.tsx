@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProviders>
           <Analytics gaId={siteMetadata.analytics?.googleAnalytics?.googleAnalyticsId || ''} />
           <SectionContainer>
-            <div className="flex h-screen flex-col justify-between font-sans">
+            <div className="flex min-h-screen flex-col justify-between font-sans">
               <SearchProviderWrapper searchConfig={siteMetadata.search as SearchConfig}>
                 <Header />
                 <main className="mb-auto">
