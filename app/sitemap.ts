@@ -26,10 +26,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const tagRoutes = Object.keys(tagCounts)
     .filter((tag) => tagCounts[tag] >= 3)
     .map((tag) => {
-      // Ensure any spaces are replaced with valid hyphens
-      const tagSlug = slug(tag);
+      const tagSlug = slug(tag)
+      // Compute lastModified from the most recent post lastmod in this tag
+      const tagPosts = posts.filter(
+        (post) => post.tags && post.tags.map((t: string) => slug(t)).includes(tagSlug)
+      )
+      const lastModified = tagPosts.reduce<string>((latest, post) => {
+        const d = new Date(post.lastmod || post.date)
+        return d > new Date(latest) ? String(post.lastmod || post.date) : latest
+      }, String(tagPosts[0]?.lastmod || tagPosts[0]?.date || new Date().toISOString()))
+
       return {
         url: `${siteUrl}/tags/${tagSlug}`,
+        lastModified,
         changeFrequency: 'weekly' as const,
         priority: 0.7,
       }
@@ -38,11 +47,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const categoryCounts = categoryData as Record<string, number>
   const categoryRoutes = Object.keys(categoryCounts)
     .filter((cat) => categoryCounts[cat] >= 3)
-    .map((cat) => ({
-      url: `${siteUrl}/topics/${slug(cat)}`,
-      changeFrequency: 'weekly' as const,
-      priority: 0.7,
-    }))
+    .map((cat) => {
+      const catSlug = slug(cat)
+      // Compute lastModified from the most recent post lastmod in this category
+      const catPosts = posts.filter(
+        (post) => post.category && slug(post.category) === catSlug
+      )
+      const lastModified = catPosts.reduce<string>((latest, post) => {
+        const d = new Date(post.lastmod || post.date)
+        return d > new Date(latest) ? String(post.lastmod || post.date) : latest
+      }, String(catPosts[0]?.lastmod || catPosts[0]?.date || new Date().toISOString()))
+
+      return {
+        url: `${siteUrl}/topics/${catSlug}`,
+        lastModified,
+        changeFrequency: 'weekly' as const,
+        priority: 0.7,
+      }
+    })
 
   const routes = [
     '',

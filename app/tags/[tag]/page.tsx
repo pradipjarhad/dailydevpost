@@ -53,19 +53,10 @@ export async function generateMetadata(props: { params: Promise<{ tag: string }>
   const params = await props.params
   const tag = decodeURI(params.tag)
   const title = formatCategoryTitle(tag)
-  
-  // Count posts for this tag to decide on indexing (must match TagPage logic)
-  const postCount = allBlogs.filter(
-    (post) => post.tags && post.tags.map((t) => slug(t)).includes(slug(tag))
-  ).length
 
   return genPageMetadata({
     title: title,
     path: `tags/${slug(tag)}`,
-    robots: { 
-      index: postCount >= 3, // NoIndex if less than 3 posts to avoid "thin content" issues
-      follow: true 
-    },
     alternates: {
       canonical: `${siteMetadata.siteUrl}/tags/${slug(tag)}`,
       types: {
@@ -109,8 +100,11 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
     sortedPosts.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag))
   )
 
-  // If the tag doesn't exist, return not found
-  if (posts.length === 0) {
+  // If the tag has no posts or fewer than 3 posts, return 404.
+  // Thin tag pages (< 3 posts) should not be indexed — returning 404 sends
+  // a clear signal to Google rather than rendering a noindex page that
+  // still consumes crawl budget.
+  if (posts.length < 3) {
     notFound()
   }
 
