@@ -90,11 +90,11 @@ This is my personal step-by-step [frontend debugging workflow](/blog/a-bug-i-rec
 2. **Find the Boundary Line:** Scan past all lines pointing to `react-dom` or `node_modules` until you hit your own source file.
 3. **Set a Breakpoint in DevTools:** Click the blue file link next to your source file to jump directly to the Sources panel, then click the line number column right before the crash statement.
    
-   <ArticleImage src="/static/images/blog/build-in-public/chrome-devtools-debugging.png" alt="Chrome DevTools Console showing a JavaScript TypeError call stack and runtime error" />
+   <ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/chrome-devtools-debugging.png" alt="Chrome DevTools Console showing a JavaScript TypeError call stack and runtime error" />
 
 4. **Trigger the Crash Interaction:** Refresh the page or click the UI trigger. The browser will pause execution at your breakpoint before the crash happens.
    
-   <ArticleImage src="/static/images/blog/build-in-public/vscode-debugger-breakpoint.png" alt="VS Code Debugger panel showing variables, call stack, and an active breakpoint" />
+   <ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/vscode-debugger-breakpoint.png" alt="VS Code Debugger panel showing variables, call stack, and an active breakpoint" />
 
 5. **Inspect Local Variable Shapes:** Hover over variables in your code or check the Scope panel on the right side of the screen to identify mismatched data shapes.
 6. **Fix the Root Cause:** Wrap execution in fallbacks, check optional chaining, or correct API payloads.
@@ -124,7 +124,7 @@ Debugging React applications introduces unique framework issues. Here are three 
 
 When these runtime crashes happen, React displays a red error overlay in your browser:
 
-<ArticleImage src="/static/images/blog/build-in-public/react-error-overlay.png" alt="React runtime error overlay showing a Red Screen of Death with error boundary details" />
+<ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/react-error-overlay.png" alt="React runtime error overlay showing a Red Screen of Death with error boundary details" />
 
 To prevent this red screen from taking down your production application, wrap your layout components in a **React error boundary**:
 

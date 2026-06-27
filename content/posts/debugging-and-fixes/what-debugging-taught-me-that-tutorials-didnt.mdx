@@ -79,7 +79,7 @@ useEffect(() => {
 }, [postId]);
 ```
 
-<ArticleImage src="/static/images/blog/build-in-public/chrome-devtools-network-panel.png" alt="Chrome DevTools Network tab showing HTTP fetch requests, status codes, and timing waterfalls." />
+<ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/chrome-devtools-network-panel.png" alt="Chrome DevTools Network tab showing HTTP fetch requests, status codes, and timing waterfalls." />
 
 Transitioning from a junior coder to a senior developer requires moving past surface-level syntax confidence. You must learn how systems behave when they fail. Debugging:
 1. **Demystifies Runtime Environments:** You learn how browsers parse JavaScript, allocate heap space, and manage memory cycles.
@@ -146,7 +146,7 @@ Depending on the complexity of the issue, you should have multiple tools in your
 ### 1. Browser Breakpoints (Sources Tab)
 Stop using `console.log` for everything. In Chrome or Edge DevTools, go to the **Sources** tab and set breakpoints on the exact line of code you want to inspect. This pauses execution, allowing you to walk through stack frames, inspect scope variables, and see the call history in real time.
 
-<ArticleImage src="/static/images/blog/build-in-public/chrome-devtools-debugging.png" alt="Chrome DevTools Console showing a JavaScript TypeError call stack and runtime error" />
+<ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/chrome-devtools-debugging.png" alt="Chrome DevTools Console showing a JavaScript TypeError call stack and runtime error" />
 
 ### 2. Binary Search Debugging (Commenting Out)
 If you have a massive component or module and don't know where it's failing, comment out half of the code. If the bug disappears, the issue is in the commented-out half. Repeat this process to pinpoint the exact line in seconds.
@@ -156,7 +156,7 @@ Stack traces tell a chronological story of how your application arrived at an ex
 
 If you're not yet comfortable identifying the boundary in a stack trace, see my detailed guide on [decoding React error logs](/blog/how-to-read-react-stack-trace).
 
-<ArticleImage src="/static/images/blog/build-in-public/react-error-overlay.png" alt="React runtime error overlay showing a Red Screen of Death with error boundary details" />
+<ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/react-error-overlay.png" alt="React runtime error overlay showing a Red Screen of Death with error boundary details" />
 
 ---
 
@@ -173,7 +173,7 @@ Here is the exact data I gathered:
 
 By comparing the two heap snapshots, the memory profiler pointed to a massive buildup of **Detached DOM nodes** (specifically, thousands of unreleased `HTMLDivElement` references).
 
-<ArticleImage src="/static/images/blog/build-in-public/chrome-devtools-heap-snapshot.png" alt="Chrome DevTools Heap Snapshot comparison showing memory growing from 32MB to 148MB due to detached HTMLDivElements." />
+<ArticleImage src="https://ik.imagekit.io/bqu15hkfo/build-in-public/chrome-devtools-heap-snapshot.png" alt="Chrome DevTools Heap Snapshot comparison showing memory growing from 32MB to 148MB due to detached HTMLDivElements." />
 
 By searching the memory allocation paths, I traced the root cause back to an event listener inside a third-party charting library. The listener was added during render but was never cleaned up when the component unmounted. The browser could not garbage-collect the detached DOM nodes because the listener kept a live reference to them.
 
