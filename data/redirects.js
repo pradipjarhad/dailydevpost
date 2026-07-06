@@ -17,6 +17,36 @@ const redirects = [
         "permanent": true
     },
     {
+        "source": "/blog/build-in-public/one-react-habit-i-want-to-improve-next-week",
+        "destination": "/blog/one-react-habit-i-want-to-improve-next-week",
+        "permanent": true
+    },
+    {
+        "source": "/blog/build-in-public/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me",
+        "destination": "/blog/one-frontend-mistake-i-made-earlier-in-my-career-that-shaped-me",
+        "permanent": true
+    },
+    {
+        "source": "/blog/build-in-public/a-bug-caused-by-a-wrong-assumption-i-made",
+        "destination": "/blog/a-bug-caused-by-a-wrong-assumption-i-made",
+        "permanent": true
+    },
+    {
+        "source": "/blog/build-in-public/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down",
+        "destination": "/blog/a-bug-i-recently-faced-and-how-i-actually-tracked-it-down",
+        "permanent": true
+    },
+    {
+        "source": "/blog/frontend-engineering/what-are-css-container-queries-and-why-are-they-replacing-media-queries",
+        "destination": "/blog/what-are-css-container-queries-and-why-are-they-replacing-media-queries",
+        "permanent": true
+    },
+    {
+        "source": "/blog/how-i-learned-to-read-error-messages-better",
+        "destination": "/blog/how-to-read-react-stack-trace",
+        "permanent": true
+    },
+    {
         "source": "/blog/dev-diary/what-debugging-taught-me-about-my-thinking-process",
         "destination": "/blog/what-debugging-taught-me-about-my-thinking-process",
         "permanent": true

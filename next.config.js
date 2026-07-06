@@ -109,6 +109,15 @@ module.exports = () => {
             },
           ],
         },
+        {
+          source: '/feed.xml',
+          headers: [
+            {
+              key: 'X-Robots-Tag',
+              value: 'noindex',
+            },
+          ],
+        },
       ]
     },
     async redirects() {
