@@ -72,6 +72,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'topics',
     'about',
     'contact',
+    // 'pricing',
+    // 'refund-policy',
     'privacy-policy',
     'terms-and-conditions',
   ].map((route) => ({
