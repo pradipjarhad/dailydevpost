@@ -4,6 +4,7 @@ import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import { slug } from 'github-slugger'
+import EbookPromoCard from '@/components/EbookPromoCard'
 
 const MAX_DISPLAY = 5
 
@@ -18,93 +19,50 @@ export default function Home({ posts }) {
     return <div className="mt-8 text-center text-gray-500 dark:text-gray-400">No posts found.</div>
   }
 
-  const heroPost = posts[0]
-  const recentPosts = posts.slice(1, MAX_DISPLAY)
+  const recentPosts = posts.slice(0, MAX_DISPLAY)
   const displayedSlugs = new Set(posts.slice(0, MAX_DISPLAY).map((p) => p.slug))
 
   return (
     <div className="mt-4 md:mt-6 mb-8 flex flex-col gap-6 md:gap-10">
       {/* Hero Section */}
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div className="flex flex-col space-y-6 relative z-10">
-          <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-gray-900 sm:text-5xl lg:text-6xl dark:text-gray-100">
-            Mastering Modern <span className="text-primary-500">Frontend</span> Engineering
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="lg:col-span-7 flex flex-col space-y-6 relative z-10">
+          {/* <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-500/10 to-indigo-500/10 dark:from-primary-500/20 dark:to-indigo-500/20 border border-primary-500/25 dark:border-primary-500/10 px-3.5 py-1.5 rounded-full text-xs font-bold text-primary-600 dark:text-primary-400 w-fit shadow-sm">
+            <span>🎓 Deep-Dive Frontend Insights</span>
+          </div> */}
+
+          <h1 className="text-4xl font-black leading-none tracking-tight text-slate-900 sm:text-5xl lg:text-6xl dark:text-white">
+            Mastering <br className="hidden sm:inline" />
+            <span className="bg-gradient-to-r from-primary-500 via-sky-500 to-indigo-500 bg-clip-text text-transparent">
+              Modern Frontend
+            </span> <br className="hidden sm:inline" />
+            Engineering
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-lg leading-relaxed">
+
+          <p className="text-lg text-slate-600 dark:text-slate-300 max-w-xl leading-relaxed">
             {siteMetadata.description}
           </p>
+
           <div className="pt-2 flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/blog"
-              className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl bg-primary-500 px-8 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 transition-all duration-200"
+              className="w-full sm:w-auto inline-flex justify-center items-center rounded-2xl bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 px-8 py-4 text-base font-extrabold text-white shadow-lg hover:shadow-primary-500/25 dark:hover:shadow-primary-500/15 transition-all duration-300 transform active:scale-98"
             >
               Latest Posts
             </Link>
             <Link
-              href="/topics"
-              className="w-full sm:w-auto inline-flex justify-center items-center rounded-xl border border-gray-300 bg-white px-8 py-3.5 text-base font-semibold text-gray-700 shadow-sm hover:bg-gray-50 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-all duration-200"
+              href="/ebook"
+              className="w-full sm:w-auto inline-flex justify-center items-center rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 px-8 py-4 text-base font-extrabold text-slate-700 shadow-sm hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white transition-all duration-300 transform active:scale-98"
             >
-              Browse Topics
+              Get the eBook
             </Link>
           </div>
         </div>
 
-        {heroPost && (
-          <article className="relative group w-full rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl ring-1 ring-gray-900/5 dark:ring-white/10 transition-transform duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_-15px_rgba(255,255,255,0.1)]">
-            {heroPost.thumbnail ? (
-              <div className="relative aspect-[3/2] w-full overflow-hidden bg-gray-900">
-                <Image
-                  src={heroPost.thumbnail}
-                  alt={heroPost.title}
-                  className="w-full h-full transform group-hover:scale-105 transition-transform duration-700"
-                  width={800}
-                  height={450}
-                  style={{ width: '100%', height: '100%' }}
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 z-20 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-80 pointer-events-none transition-opacity duration-300"></div>
-              </div>
-            ) : (
-              <div className="relative aspect-video w-full bg-gray-100 dark:bg-gray-800"></div>
-            )}
-
-            <div className={`absolute bottom-0 left-0 p-6 sm:p-8 w-full flex flex-col justify-end ${!heroPost.thumbnail ? 'h-full' : ''}`}>
-              <div className="flex flex-wrap gap-2 mb-4 relative z-20">
-                {heroPost.tags.slice(0, 3).map((tag) => (
-                  <Link
-                    key={tag}
-                    href={`/tags/${slug(tag)}`}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-primary-500 hover:bg-primary-600 text-white shadow-sm transition-colors"
-                  >
-                    {tag}
-                  </Link>
-                ))}
-              </div>
-
-              <h2 className={`text-2xl sm:text-3xl lg:text-4xl font-bold ${heroPost.thumbnail ? 'text-white' : 'text-gray-900 dark:text-gray-100'} mb-3 leading-snug group-hover:text-primary-400 transition-colors duration-200`}>
-                <Link href={`/blog/${heroPost.slug}`}>
-                  <span className="absolute inset-0 z-10" aria-hidden="true"></span>
-                  {heroPost.title}
-                </Link>
-              </h2>
-
-              <div className={`${heroPost.thumbnail ? 'text-gray-300' : 'text-gray-500 dark:text-gray-400'} text-sm sm:text-base font-medium flex items-center gap-2 relative z-20`}>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                <time dateTime={heroPost.date}>{formatDate(heroPost.date, siteMetadata.locale)}</time>
-                <span className="mx-1">&bull;</span>
-                <Link
-                  href={`/topics/${heroPost.category}`}
-                  className="text-primary-500 hover:text-primary-400 capitalize transition-colors"
-                >
-                  {heroPost.category.replace(/-/g, ' ')}
-                </Link>
-              </div>
-            </div>
-          </article>
-        )}
+        {/* Ebook Promo Poster Card (Right side) */}
+        <div className="lg:col-span-5 w-full">
+          <EbookPromoCard />
+        </div>
       </section>
 
       {/* Recent Articles Grid */}

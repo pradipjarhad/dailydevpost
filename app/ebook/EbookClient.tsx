@@ -12,6 +12,9 @@ export default function EbookClient() {
   // FAQs expanded state
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
 
+  // Sticky bottom bar visibility
+  const [showStickyBar, setShowStickyBar] = useState(false)
+
   const purchaseSectionRef = useRef<HTMLDivElement>(null)
 
   // Detect user location
@@ -50,6 +53,31 @@ export default function EbookClient() {
       .finally(() => {
         setGeoLoading(false)
       })
+  }, [])
+
+  // Listen to scrolls to toggle the sticky purchase bar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!purchaseSectionRef.current) return
+      
+      const purchaseSectionTop = purchaseSectionRef.current.getBoundingClientRect().top
+      const purchaseSectionHeight = purchaseSectionRef.current.getBoundingClientRect().height
+      const screenHeight = window.innerHeight
+
+      // Show if scrolled past 600px AND the main purchase section is not yet fully visible
+      const isPastHero = window.scrollY > 600
+      const isPurchaseSectionVisible = purchaseSectionTop < screenHeight - 80 && purchaseSectionTop + purchaseSectionHeight > 80
+
+      if (isPastHero && !isPurchaseSectionVisible) {
+        setShowStickyBar(true)
+      } else {
+        setShowStickyBar(false)
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    handleScroll()
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const scrollToPurchase = (e: React.MouseEvent) => {
@@ -617,6 +645,49 @@ export default function EbookClient() {
             )
           })}
         </div>
+      </div>
+
+      {/* Sticky Purchase Bar */}
+      <div 
+        className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-3xl bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border border-slate-200 dark:border-slate-800 rounded-2xl p-3 shadow-2xl flex items-center justify-between transition-all duration-500 ease-out ${
+          showStickyBar ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="flex items-center space-x-3.5 pl-1.5">
+          {/* Small Cover Image */}
+          <div className="relative w-10 h-14 rounded-md overflow-hidden shadow-sm border border-slate-200 dark:border-slate-800 flex-shrink-0">
+            <Image
+              src="/static/images/ebook/the-future-proof-frontend-dev/front-page-cover.png"
+              alt="Ebook cover"
+              fill
+              sizes="40px"
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white leading-tight line-clamp-1">
+              The Future-Proof Frontend Developer
+            </h4>
+            <div className="flex items-center space-x-2 mt-0.5">
+              <span className="text-sm font-black text-slate-800 dark:text-slate-200">
+                {isIndia ? "₹299" : "$9.99"}
+              </span>
+              <span className="text-[10px] text-slate-400 line-through">
+                {isIndia ? "₹599" : "$19.99"}
+              </span>
+              <span className="hidden sm:inline-block px-1.5 py-0.5 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-600 dark:text-emerald-400 text-[9px] font-bold rounded">
+                50% OFF
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={handlePurchaseClick}
+          className="bg-gradient-to-r from-primary-600 to-indigo-600 hover:from-primary-500 hover:to-indigo-500 text-white text-xs sm:text-sm font-extrabold px-5 py-3 rounded-xl shadow-md hover:shadow-primary-500/25 transition duration-300 transform active:scale-95"
+        >
+          Buy Now &rarr;
+        </button>
       </div>
 
     </div>
