@@ -4,6 +4,11 @@
 
 const redirects = [
     {
+        "source": "/book",
+        "destination": "/ebook",
+        "permanent": true
+    },
+    {
         "source": "/categories",
         "destination": "/topics",
         "permanent": true

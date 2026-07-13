@@ -72,6 +72,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     'topics',
     'about',
     'contact',
+    'ebook',
     // 'pricing',
     // 'refund-policy',
     'privacy-policy',

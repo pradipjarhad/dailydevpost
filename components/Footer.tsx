@@ -18,7 +18,7 @@ export default function Footer() {
         
         <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-8 text-sm font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">
           <Link href="/" className="hover:text-primary-500 transition-colors">Home</Link>
-          <Link href="/pricing" className="hover:text-primary-500 transition-colors">Pricing</Link>
+          <Link href="/ebook" className="hover:text-primary-500 transition-colors">eBook</Link>
           <Link href="/blog" className="hover:text-primary-500 transition-colors">Archive</Link>
           <Link href="/about" className="hover:text-primary-500 transition-colors">Expertise</Link>
           <Link href="/contact" className="hover:text-primary-500 transition-colors">Connect</Link>
@@ -31,7 +31,7 @@ export default function Footer() {
             <Link href="/" className="hover:text-primary-500 transition-colors">{siteMetadata.title}</Link>
           </div>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-            <Link href="/pricing" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Pricing</Link>
+            <Link href="/ebook" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">eBook</Link>
             <Link href="/refund-policy" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Refund Policy</Link>
             <Link href="/privacy-policy" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Privacy</Link>
             <Link href="/terms-and-conditions" className="hover:text-gray-900 dark:hover:text-gray-100 transition-colors underline decoration-gray-200 dark:decoration-gray-700 underline-offset-4">Terms</Link>

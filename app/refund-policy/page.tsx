@@ -37,11 +37,6 @@ export default function Page() {
           <p>
             Where required by applicable consumer protection laws, refunds will be provided in accordance with those laws. We respect and comply with national and international consumer protection standards.
           </p>
-
-          <h2>Paddle Merchant of Record</h2>
-          <p>
-            Refund requests may also be processed through Paddle, our Merchant of Record. Paddle is the reseller of our digital goods and handles all billing compliance, customer support queries related to payments, and refund processing on our behalf.
-          </p>
         </div>
       </article>
     </SectionContainer>
