@@ -13,6 +13,7 @@ import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import { notFound } from 'next/navigation'
+import EbookFloatingCTA from '@/components/EbookFloatingCTA'
 
 const defaultLayout = 'PostLayout'
 const layouts = {
@@ -253,6 +254,7 @@ export default async function Page(props: {
             <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
                 <MdxWrapper code={post.body.code} toc={post.toc} />
             </Layout>
+            <EbookFloatingCTA />
         </>
     )
 }

@@ -17,6 +17,15 @@ export default function EbookClient() {
 
   const purchaseSectionRef = useRef<HTMLDivElement>(null)
 
+  // Track that the user has visited the landing page
+  useEffect(() => {
+    try {
+      localStorage.setItem('has_visited_ebook_landing', 'true')
+    } catch (e) {
+      console.error('Failed to set localStorage', e)
+    }
+  }, [])
+
   // Detect user location
   useEffect(() => {
     setGeoLoading(true)

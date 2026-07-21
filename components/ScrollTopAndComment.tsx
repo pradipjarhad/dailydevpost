@@ -9,6 +9,7 @@ interface Props {
 
 const ScrollTopAndComment = ({ commentsEnabled = false }: Props) => {
   const [show, setShow] = useState(false)
+  const [ctaVisible, setCtaVisible] = useState(false)
 
   useEffect(() => {
     const handleWindowScroll = () => {
@@ -20,6 +21,14 @@ const ScrollTopAndComment = ({ commentsEnabled = false }: Props) => {
     return () => window.removeEventListener('scroll', handleWindowScroll)
   }, [])
 
+  useEffect(() => {
+    const handleCtaVisibility = (e: Event) => {
+      setCtaVisible((e as CustomEvent).detail)
+    }
+    window.addEventListener('ebook-cta-visible', handleCtaVisibility)
+    return () => window.removeEventListener('ebook-cta-visible', handleCtaVisibility)
+  }, [])
+
   const handleScrollTop = () => {
     window.scrollTo({ top: 0 })
   }
@@ -28,7 +37,9 @@ const ScrollTopAndComment = ({ commentsEnabled = false }: Props) => {
   }
   return (
     <div
-      className={`fixed bottom-8 right-8 z-50 flex-col gap-3 ${show ? 'flex' : 'hidden'}`}
+      className={`fixed z-50 flex-col gap-3 transition-all duration-[350ms] ${
+        ctaVisible ? 'bottom-[130px] md:bottom-8' : 'bottom-8'
+      } right-8 ${show ? 'flex' : 'hidden'}`}
     >
       {commentsEnabled && siteMetadata.comments?.provider && (
         <button
