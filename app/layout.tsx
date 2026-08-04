@@ -56,6 +56,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [siteMetadata.socialBanner],
   },
+  verification: {
+    ...(siteMetadata.verification?.google && { google: siteMetadata.verification.google }),
+    other: {
+      'msvalidate.01': siteMetadata.verification?.bing || 'A0655A8E50F113A4FADD3B6F601EEBA5',
+    },
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

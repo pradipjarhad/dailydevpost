@@ -116,6 +116,11 @@ const siteMetadata = {
     personJobTitle: 'Software Developer',
     personDescription: "Software Developer specializing in UI/UX and Ethical Design. Pradip translates daily development struggles into actionable lessons on React, JavaScript, and high-performance engineering.",
     personKnowsAbout: ['React', 'Next.js', 'JavaScript', 'TypeScript', 'User Experience Design', 'Frontend Engineering'],
+    // Search Engine Verification
+    verification: {
+        google: '',
+        bing: 'A0655A8E50F113A4FADD3B6F601EEBA5',
+    },
 }
 
 module.exports = siteMetadata
